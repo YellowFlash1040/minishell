@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:52:21 by akovtune          #+#    #+#             */
-/*   Updated: 2025/02/20 13:13:34 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:34:00 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define FILE_INIT_ERR 140
 # define FILE_OPEN_ERR 141
 # define FD_DUP_ERR 142
+# define EMPTY_FILE_MODE_ERR 143
 
 typedef enum e_write_mode
 {

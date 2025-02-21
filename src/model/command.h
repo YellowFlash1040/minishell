@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:54:06 by akovtune          #+#    #+#             */
-/*   Updated: 2025/02/19 18:55:24 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:48:30 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct command
 	t_file			*output_file;
 	t_file			*error_file;
 	int				exit_status_code;
+	int				unused_pipe_end;
 }					t_command;
 
 t_command			*init_command(void);

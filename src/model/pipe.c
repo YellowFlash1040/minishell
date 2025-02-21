@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:52:07 by akovtune          #+#    #+#             */
-/*   Updated: 2025/02/20 13:16:10 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/02/20 13:55:18 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,15 @@ t_pipe	*init_pipe(void)
 
 void	destroy_pipe(t_pipe **pipe)
 {
+	t_pipe	*pipe_v;
+
 	if (!pipe || !*pipe)
 		return ;
+	pipe_v = *pipe;
+	if (pipe_v->cmd1)
+		destroy_command(&pipe_v->cmd1);
+	if (pipe_v->cmd2)
+		destroy_command(&pipe_v->cmd2);
 	free(*pipe);
 	*pipe = NULL;
 }

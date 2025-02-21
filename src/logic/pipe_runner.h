@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipeline.h                                         :+:      :+:    :+:   */
+/*   pipe_runner.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/14 15:05:50 by akovtune          #+#    #+#             */
-/*   Updated: 2025/02/21 14:43:43 by akovtune         ###   ########.fr       */
+/*   Created: 2025/02/20 13:16:49 by akovtune          #+#    #+#             */
+/*   Updated: 2025/02/20 14:07:37 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPELINE_H
-# define PIPELINE_H
+#ifndef PIPE_RUNNER_H
+# define PIPE_RUNNER_H
 
-# include "list.h"
+# include "command_runner.h"
 # include "pipe.h"
-# include <stdlib.h>
 
-# define PIPELINE_INIT_ERR 20
+# define PIPE_FUNC_ERR 180
 
-typedef struct pipeline
-{
-	t_list	*pipes;
-	int		status_code;
-}			t_pipeline;
-
-t_pipeline	*init_pipeline(void);
-void		destroy_pipeline(t_pipeline **pipeline);
+int	run_a_pipe(t_pipe *pipe);
 
 #endif

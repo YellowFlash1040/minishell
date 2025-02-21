@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:52:04 by akovtune          #+#    #+#             */
-/*   Updated: 2025/02/19 18:52:06 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:01:14 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,13 @@
 # include "command.h"
 # include <stdlib.h>
 
-# define PIPE_INIT_ERR
+# define PIPE_INIT_ERR 170
+
+typedef enum e_pipe_end
+{
+	READ_END = 0,
+	WRITE_END = 1
+}				t_pipe_end;
 
 typedef struct pipe
 {

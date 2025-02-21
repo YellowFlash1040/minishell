@@ -6,11 +6,12 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:37:57 by akovtune          #+#    #+#             */
-/*   Updated: 2025/02/19 18:38:35 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:26:31 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command_runner.h"
+#include <stdio.h>
 
 int	setup_redirections(t_command *command);
 int	launch_binary(t_command *command);
@@ -27,6 +28,8 @@ int	run_a_command(t_command *command)
 	command->id = pid;
 	if (CHILD_PROCESS)
 	{
+		if (command->unused_pipe_end != -1)
+			close(command->unused_pipe_end);
 		result = setup_redirections(command);
 		if (result != SUCCESS)
 			return (result);
@@ -38,12 +41,35 @@ int	run_a_command(t_command *command)
 int	handle_child_process(t_command *command)
 {
 	int	exit_status;
+	int	result;
+	int	signal_number;
+	int	stop_signal;
 
-	waitpid(command->id, &exit_status, 0);
+	result = waitpid(command->id, &exit_status, 0);
+	if (result == -1)
+		return (CHILD_HANDLER_ERR);
 	if (WIFEXITED(exit_status))
 		command->exit_status_code = WEXITSTATUS(exit_status);
+	// else
+	// 	return (FORCED_PROCESS_EXIT_ERR);
+	else if (WIFSIGNALED(exit_status))
+	{
+		signal_number = WTERMSIG(exit_status);
+		fprintf(stderr, "Child process terminated by signal: %d\n",
+			signal_number);
+		return (FORCED_PROCESS_EXIT_ERR);
+	}
+	else if (WIFSTOPPED(exit_status))
+	{
+		stop_signal = WSTOPSIG(exit_status);
+		fprintf(stderr, "Child process stopped by signal: %d\n", stop_signal);
+		return (FORCED_PROCESS_EXIT_ERR);
+	}
 	else
-		return (FAILURE);
+	{
+		fprintf(stderr, "Child process ended with an unknown status\n");
+		return (FORCED_PROCESS_EXIT_ERR);
+	}
 	return (SUCCESS);
 }
 
@@ -54,7 +80,7 @@ int	launch_binary(t_command *command)
 	launch_result = execve(command->executable, command->arguments,
 			command->environment);
 	if (launch_result == -1)
-		return (FAILURE);
+		return (BINARY_LAUNCH_ERR);
 	return (SUCCESS);
 }
 
@@ -75,6 +101,9 @@ int	setup_redirections(t_command *command)
 			result = open_file(redirections[i].file);
 			if (result != SUCCESS)
 				return (result);
+		}
+		if (redirections[i].file->fd != redirections[i].standard_fd)
+		{
 			result = redirect(redirections[i].standard_fd,
 					redirections[i].file->fd);
 			if (result != SUCCESS)

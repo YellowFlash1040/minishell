@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:54:12 by akovtune          #+#    #+#             */
-/*   Updated: 2025/02/19 18:54:13 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:48:51 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_command	*init_command(void)
 	command->output_file = NULL;
 	command->error_file = NULL;
 	command->exit_status_code = 0;
+	command->unused_pipe_end = -1;
 	return (command);
 }
 

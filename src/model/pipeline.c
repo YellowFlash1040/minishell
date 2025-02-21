@@ -6,13 +6,13 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 15:05:53 by akovtune          #+#    #+#             */
-/*   Updated: 2025/02/14 15:05:54 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:44:17 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipeline.h"
 
-void		free_command(void *value);
+void		free_pipe(void *value);
 
 t_pipeline	*init_pipeline(void)
 {
@@ -21,7 +21,7 @@ t_pipeline	*init_pipeline(void)
 	pipeline = (t_pipeline *)malloc(sizeof(t_pipeline));
 	if (!pipeline)
 		return (NULL);
-	pipeline->commands = NULL;
+	pipeline->pipes = NULL;
 	pipeline->status_code = 0;
 	return (pipeline);
 }
@@ -33,17 +33,17 @@ void	destroy_pipeline(t_pipeline **pipeline)
 	if (!pipeline || !*pipeline)
 		return ;
 	pipeline_v = *pipeline;
-	if (pipeline_v->commands)
-		clear_list(pipeline_v->commands, free_command);
-	free(pipeline_v->commands);
+	if (pipeline_v->pipes)
+		clear_list(pipeline_v->pipes, free_pipe);
+	free(pipeline_v->pipes);
 	free(pipeline_v);
 	*pipeline = NULL;
 }
 
-void	free_command(void *value)
+void	free_pipe(void *value)
 {
-	t_command	*command;
+	t_pipe	*pipe;
 
-	command = (t_command *)value;
-	destroy_command(&command);
+	pipe = (t_pipe *)value;
+	destroy_pipe(&pipe);
 }

@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:52:14 by akovtune          #+#    #+#             */
-/*   Updated: 2025/02/20 13:02:06 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:33:47 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	open_file(t_file *file)
 {
 	if (!file || !file->path)
 		return (FAILURE);
+	if (file->mode == NONE)
+		return (EMPTY_FILE_MODE_ERR);
 	file->fd = open(file->path, file->mode, 0777);
 	if (file->fd == -1)
 		return (FILE_OPEN_ERR);
