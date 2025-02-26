@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipeline.h                                         :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/14 15:05:50 by akovtune          #+#    #+#             */
-/*   Updated: 2025/02/21 15:27:12 by akovtune         ###   ########.fr       */
+/*   Created: 2025/02/14 13:27:17 by akovtune          #+#    #+#             */
+/*   Updated: 2025/02/16 14:37:58 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPELINE_H
-# define PIPELINE_H
+#include "parser.h"
 
-# include "list.h"
-# include "pipe.h"
-# include <stdlib.h>
-
-# define PIPELINE_INIT_ERR 20
-
-typedef struct pipeline
+int	parse(char *string, t_prompt **prompt)
 {
-	t_list	*commands;
-	int		status_code;
-}			t_pipeline;
+	int	result;
 
-t_pipeline	*init_pipeline(void);
-void		destroy_pipeline(t_pipeline **pipeline);
+	(void)string;
+	result = build_prompt(prompt);
+	if (result != SUCCESS)
+		return (result);
+	return (SUCCESS);
+}
 
-#endif
+/*
+I can split all of the commands using pipes '|' with ft_split function
+and then inside each of the commands the first string always supposed to be
+*/
