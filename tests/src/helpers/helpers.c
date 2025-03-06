@@ -1,6 +1,5 @@
 #include "helpers.h"
 
-
 void	run_a_test(int (*test)(void), int index)
 {
 	int result;
@@ -11,7 +10,6 @@ void	run_a_test(int (*test)(void), int index)
 		printf("✅\n");
 	else
 		printf("❌. Error %d\n", result);
-	// ok
 }
 
 t_command	*create_command(char *exe_path, char **args, char *input_file,

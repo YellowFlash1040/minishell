@@ -15,18 +15,17 @@
 
 #include "pipeline_runner.h"
 
-
 void	setup_command_fds(t_command *command, int *prev_pipe,
-		int *current_pipe);
+			int *current_pipe);
 
 int	run_a_pipeline(t_pipeline *pipeline)
 {
-	int result;
-	int i;
-	t_list_node *node;
-	t_command *command;
-	int current_pipe[2];
-	int prev_pipe[2];
+	int			result;
+	int			i;
+	t_list_node	*node;
+	t_command	*command;
+	int			current_pipe[2];
+	int			prev_pipe[2];
 
 	i = -1;
 	node = pipeline->commands->head;

@@ -1,7 +1,6 @@
 #include "command_runner.h"
 #include "helpers.h"
 
-
 int	test1(void);
 int	test2(void);
 

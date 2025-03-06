@@ -1,7 +1,6 @@
 #include "helpers.h"
 #include "pipeline_runner.h"
 
-
 int	test1(void);
 int	test2(void);
 

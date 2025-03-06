@@ -16,15 +16,14 @@
 #include "command_runner.h"
 #include <stdio.h>
 
-
 int	setup_redirections(t_command *command);
 int	launch_binary(t_command *command);
 int	handle_child_process(t_command *command);
 
 int	run_a_command(t_command *command)
 {
-	pid_t pid;
-	int result;
+	pid_t	pid;
+	int		result;
 
 	pid = fork();
 	if (pid == -1)
@@ -44,10 +43,10 @@ int	run_a_command(t_command *command)
 
 int	handle_child_process(t_command *command)
 {
-	int exit_status;
-	int result;
-	int signal_number;
-	int stop_signal;
+	int	exit_status;
+	int	result;
+	int	signal_number;
+	int	stop_signal;
 
 	result = waitpid(command->id, &exit_status, 0);
 	if (result == -1)
@@ -79,7 +78,7 @@ int	handle_child_process(t_command *command)
 
 int	launch_binary(t_command *command)
 {
-	int launch_result;
+	int	launch_result;
 
 	launch_result = execve(command->executable, command->arguments,
 			command->environment);
@@ -90,9 +89,9 @@ int	launch_binary(t_command *command)
 
 int	setup_redirections(t_command *command)
 {
-	t_redirection redirections[3];
-	int result;
-	int i;
+	t_redirection	redirections[3];
+	int				result;
+	int				i;
 
 	redirections[0] = (t_redirection){STDIN_FILENO, command->input_file};
 	redirections[1] = (t_redirection){STDOUT_FILENO, command->output_file};
