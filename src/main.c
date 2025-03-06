@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2025/02/11 16:03:52 by akovtune          #+#    #+#             */
 /*   Updated: 2025/02/26 14:59:34 by akovtune         ###   ########.fr       */
 /*                                                                            */
@@ -34,6 +37,7 @@
 #include "pipeline_runner.h"
 #include <stdio.h>
 
+
 char	*ft_strdup(const char *s);
 char	**create_arguments(char *exe_path);
 char	**create_envp(char *envp[]);
@@ -43,11 +47,11 @@ void	setup_command_3(t_command *command, char *envp[]);
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	int			result;
-	t_pipeline	*pipeline;
-	t_command	*cmd1;
-	t_command	*cmd2;
-	t_command	*cmd3;
+	int result;
+	t_pipeline *pipeline;
+	t_command *cmd1;
+	t_command *cmd2;
+	t_command *cmd3;
 
 	(void)argc;
 	(void)argv;
@@ -76,8 +80,8 @@ int	main(int argc, char *argv[], char *envp[])
 
 char	*ft_strdup(const char *s)
 {
-	char	*dup;
-	int		i;
+	char *dup;
+	int i;
 
 	i = 0;
 	while (s[i])
@@ -97,11 +101,11 @@ char	*ft_strdup(const char *s)
 
 char	**create_envp(char *envp[])
 {
-	t_list	*list;
-	char	**env;
-	int		i;
-	bool	success;
-	char	*string;
+	t_list *list;
+	char **env;
+	int i;
+	bool success;
+	char *string;
 
 	list = init_list();
 	i = -1;
@@ -121,7 +125,7 @@ char	**create_envp(char *envp[])
 
 void	setup_command_1(t_command *command, char *envp[])
 {
-	char	*exe_path;
+	char *exe_path;
 
 	exe_path = "/bin/ls";
 	command->executable = ft_strdup(exe_path);
@@ -133,7 +137,7 @@ void	setup_command_1(t_command *command, char *envp[])
 
 void	setup_command_2(t_command *command, char *envp[])
 {
-	char	*exe_path;
+	char *exe_path;
 
 	exe_path = "/bin/grep";
 	command->executable = ft_strdup(exe_path);
@@ -148,7 +152,7 @@ void	setup_command_2(t_command *command, char *envp[])
 
 void	setup_command_3(t_command *command, char *envp[])
 {
-	char	*exe_path;
+	char *exe_path;
 
 	exe_path = "/bin/wc";
 	command->executable = ft_strdup(exe_path);
