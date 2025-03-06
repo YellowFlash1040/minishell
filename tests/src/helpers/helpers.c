@@ -2,14 +2,27 @@
 
 void	run_a_test(int (*test)(void), int index)
 {
+	pid_t pid;
 	int result;
+	int exit_status;
 
-	result = test();
-	printf("Test %d ", index);
+	pid = fork();
+	if (pid == 0)
+	{
+		int fd = open("/dev/null", O_WRONLY);
+		dup2(fd, STDOUT_FILENO);
+		dup2(fd, STDERR_FILENO);
+		close(fd);
+		exit(test());
+	}
+	waitpid(pid, &exit_status, 0);
+	if (WIFEXITED(exit_status))
+		result = WEXITSTATUS(exit_status);
+	printf("Test %d", index);
 	if (result == SUCCESS)
-		printf("✅\n");
+		printf("\t✅\n");
 	else
-		printf("❌. Error %d\n", result);
+		printf("\t❌. Error %d\n", result);
 }
 
 t_command	*create_command(char *exe_path, char **args, char *input_file,

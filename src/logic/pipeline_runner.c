@@ -47,8 +47,8 @@ int	run_a_pipeline(t_pipeline *pipeline)
 		command = (t_command *)node->value;
 		setup_command_fds(command, prev_pipe, current_pipe);
 		result = run_a_command(command);
-		if (result != SUCCESS)
-			return (result);
+		// if (result != SUCCESS)
+		// 	return (result);
 		node = node->next;
 		if (current_pipe[WRITE_END] != STDOUT_FILENO)
 			close(current_pipe[WRITE_END]);

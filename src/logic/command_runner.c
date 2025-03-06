@@ -73,7 +73,8 @@ int	handle_child_process(t_command *command)
 		fprintf(stderr, "Child process ended with an unknown status\n");
 		return (FORCED_PROCESS_EXIT_ERR);
 	}
-	return (SUCCESS);
+	// return (SUCCESS);
+	return (command->exit_status_code);
 }
 
 int	launch_binary(t_command *command)
