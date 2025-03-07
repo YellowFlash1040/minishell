@@ -60,21 +60,3 @@ void	setup_command(t_command *command, char *exe_path, char **args,
 		command->output_file->mode = TRUNCATE;
 	}
 }
-
-char	*ft_strdup(const char *s)
-{
-	char *dup;
-	int i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	dup = (char *)malloc(sizeof(char) * (i + 1));
-	if (!dup)
-		return (NULL);
-	i = -1;
-	while (s[++i])
-		dup[i] = s[i];
-	dup[i] = '\0';
-	return (dup);
-}

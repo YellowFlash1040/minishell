@@ -14,8 +14,8 @@
 # define PIPELINE_H
 
 # include "list.h"
-# include "pipe.h"
 # include <stdlib.h>
+# include "command.h"
 
 # define PIPELINE_INIT_ERR 20
 

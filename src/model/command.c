@@ -31,25 +31,25 @@ t_command	*init_command(void)
 	return (command);
 }
 
-void	destroy_command(t_command **command)
+void	destroy_command(t_command **command_ref)
 {
-	t_command	*command_v;
+	t_command	*command;
 
-	if (!command || !*command)
+	if (!command_ref || !*command_ref)
 		return ;
-	command_v = *command;
-	if (command_v->executable)
-		free(command_v->executable);
-	if (command_v->arguments)
-		free_array(command_v->arguments);
-	if (command_v->environment)
-		free_array(command_v->environment);
-	if (command_v->input_file)
-		destroy_file(&command_v->input_file);
-	if (command_v->output_file)
-		destroy_file(&command_v->output_file);
-	if (command_v->error_file)
-		destroy_file(&command_v->error_file);
-	free(command_v);
-	*command = NULL;
+	command = *command_ref;
+	if (command->executable)
+		free(command->executable);
+	if (command->arguments)
+		destroy_string_array(&command->arguments);
+	if (command->environment)
+		destroy_string_array(&command->environment);
+	if (command->input_file)
+		destroy_file(&command->input_file);
+	if (command->output_file)
+		destroy_file(&command->output_file);
+	if (command->error_file)
+		destroy_file(&command->error_file);
+	free(command);
+	*command_ref = NULL;
 }

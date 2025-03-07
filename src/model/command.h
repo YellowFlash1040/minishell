@@ -23,15 +23,12 @@
 
 # define COMMAND_INIT_ERR 10
 
-typedef char		*t_executable;
-typedef char		*t_argument;
-
 typedef struct command
 {
 	pid_t			id;
-	t_executable	executable;
-	char			**arguments;
-	char			**environment;
+	t_string		executable;
+	t_string_array	arguments;
+	t_string_array	environment;
 	t_file			*input_file;
 	t_file			*output_file;
 	t_file			*error_file;

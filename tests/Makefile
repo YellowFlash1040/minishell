@@ -1,12 +1,18 @@
+#-----------------------COMPILATION------------------------------------------------------
 # Compiler and Flags
 CC				:= cc
 CFLAGS			 = -Wall -Wextra -Werror $(INCLUDES) -g
 LDFLAGS			:= -L.. -lminishell
+INCLUDES		 = -I$(HELPERS_DIR) \
+					$(addprefix -I, $(shell find ../src -type d)) \
+					$(addprefix -I, $(shell find ../libraries -type d))
 
+#-----------------------BINARIES---------------------------------------------------------
 # Output Files
 TEST_BINS		 = $(patsubst $(TESTS_DIR)/%.test.c,$(BIN_DIR)/%.test,$(TEST_FILES))
 MINISHELL		 = $(MINISHELL_DIR)/libminishell.a
 
+#-----------------------FOLDERS----------------------------------------------------------
 # Directories
 SRC_DIR			:= src
 OBJ_DIR			:= obj
@@ -21,11 +27,7 @@ TESTS_DIR		:= $(SRC_DIR)/tests
 SRC_DIRS		:= $(TESTS_DIR) \
 					$(HELPERS_DIR)
 
-# Includes
-INCLUDES		:= -I$(HELPERS_DIR) \
-					$(addprefix -I, $(shell find ../src -type d)) \
-					$(addprefix -I, $(shell find ../libraries -type d))
-
+#-----------------------FILES------------------------------------------------------------
 # Sources
 C_FILES			:= $(wildcard $(HELPERS_DIR)/*.c)
 TEST_FILES		:= $(wildcard $(TESTS_DIR)/*.c)
@@ -33,12 +35,14 @@ TEST_FILES		:= $(wildcard $(TESTS_DIR)/*.c)
 # Objects
 OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(C_FILES)))
 
+#-----------------------COLORS-----------------------------------------------------------
 # Colors for Output
 GREEN			:= \033[0;32m
 RED				:= \033[31m
 BOLD_BLUE		:= \033[1;34m
 RESET			:= \033[0m
 
+#-----------------------RULES------------------------------------------------------------
 vpath %.c $(SRC_DIRS)
 
 # Default Target

@@ -81,8 +81,7 @@ int	launch_binary(t_command *command)
 {
 	int	launch_result;
 
-	launch_result = execve(command->executable, command->arguments,
-			command->environment);
+	launch_result = execve(command->executable, command->arguments, NULL);
 	if (launch_result == -1)
 		return (BINARY_LAUNCH_ERR);
 	return (SUCCESS);

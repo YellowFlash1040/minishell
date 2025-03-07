@@ -1,55 +1,69 @@
+#-----------------------COMPILATION------------------------------------------------------
 # Compiler and Flags
-CC				:= cc
-CFLAGS			 = -Wall -Wextra -Werror $(INCLUDES) -g
+CC						:= cc
+CFLAGS				 	 = -Wall -Wextra -Werror $(INCLUDES) -g
+INCLUDES				 = $(addprefix -I,$(SRC_DIRS)) $(addprefix -I,$(LIB_DIRS))
 
+#-----------------------BINARIES---------------------------------------------------------
 # Output Files
-NAME			:= minishell
-EXECUTOR		:= libminishell.a
+NAME					:= minishell
+EXECUTOR				:= libminishell.a
 
+#-----------------------FOLDERS----------------------------------------------------------
 # Directories
-SRC_DIR			:= src
-OBJ_DIR			:= obj
-LIB_DIR 		:= libraries
+SRC_DIR					:= src
+OBJ_DIR					:= obj
+LIB_DIR 				:= libraries
 
 # Source directories
-BUILDERS_DIR	:= $(SRC_DIR)/builders
-HELPERS_DIR		:= $(SRC_DIR)/helpers
-LOGIC_DIR		:= $(SRC_DIR)/logic
-MODEL_DIR		:= $(SRC_DIR)/model
-SHARED_DIR		:= $(SRC_DIR)/shared
+BUILDERS_DIR			:= $(SRC_DIR)/builders
+HELPERS_DIR				:= $(SRC_DIR)/helpers
+LOGIC_DIR				:= $(SRC_DIR)/logic
+MODEL_DIR				:= $(SRC_DIR)/model
+SHARED_DIR				:= $(SRC_DIR)/shared
 
 # List of all source directories
-SRC_DIRS		:= $(SRC_DIR) \
-					$(BUILDERS_DIR) \
-					$(HELPERS_DIR) \
-					$(LOGIC_DIR) \
-					$(MODEL_DIR) \
-					$(SHARED_DIR)
+SRC_DIRS				:= $(SRC_DIR) \
+							$(BUILDERS_DIR) \
+							$(HELPERS_DIR) \
+							$(LOGIC_DIR) \
+							$(MODEL_DIR) \
+							$(SHARED_DIR)
 
-# Libraries directories
-LIST_LIB_DIR	:= $(LIB_DIR)/list
+# Library directories
+LIST_LIB_DIR			:= $(LIB_DIR)/list
+STRING_ARRAY_LIB_DIR	:= $(LIB_DIR)/string_array
+STRING_LIB_DIR			:= $(LIB_DIR)/ft_string
 
-# Includes
-INCLUDES		:= $(addprefix -I,$(SRC_DIRS)) -I$(LIST_LIB_DIR)
+# List of all library directories
+LIB_DIRS				:= $(LIST_LIB_DIR) \
+							$(STRING_ARRAY_LIB_DIR) \
+							$(STRING_LIB_DIR)
 
+#-----------------------FILES------------------------------------------------------------
 # Sources
-C_FILES := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
-HEADERS := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.h))
+C_FILES 				:= $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+HEADERS 				:= $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.h))
 
 # Objects
-OBJ     		:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(C_FILES)))
+OBJ     				:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(C_FILES)))
 
+#-----------------------LIBRARIES--------------------------------------------------------
 # Library files
-LIST_LIB		:= $(LIST_LIB_DIR)/list.a
+LIST_LIB				:= $(LIST_LIB_DIR)/list.a
+STRING_ARRAY_LIB		:= $(STRING_ARRAY_LIB_DIR)/string_array.a
 
 # Libraries
-LIBRARIES		:= $(LIST_LIB)
+LIBRARIES				:= $(LIST_LIB) \
+							$(STRING_ARRAY_LIB)
 
+#-----------------------COLORS-----------------------------------------------------------
 # Colors for Output
-GREEN			:= \033[0;32m
-RED				:= \033[31m
-RESET			:= \033[0m
+GREEN					:= \033[0;32m
+RED						:= \033[31m
+RESET					:= \033[0m
 
+#-----------------------RULES------------------------------------------------------------
 vpath %.c $(SRC_DIRS)
 
 # Default Target
@@ -68,14 +82,15 @@ $(OBJ_DIR)/%.o: %.c $(HEADERS)
 # Compile libraries
 %.a:
 	@cd $(dir $@); $(MAKE) > /dev/null; $(MAKE) clean > /dev/null
-	@# echo "$(GREEN)Compiled $(notdir $@) successfully!$(RESET)"
 
 $(EXECUTOR): $(OBJ) $(LIBRARIES)
-	@cp $(LIBRARIES) $@
+	@for lib in $(LIBRARIES); do \
+		ar x $$lib ; \
+		ar src $(EXECUTOR) *.o ; \
+		rm *.o ; \
+	done
 	@ar src $@ $(OBJ)
 	@ar d $@ main.o
-	@# @cat $(HEADERS) > $(basename $(EXECUTOR)).h
-	@# @sed -i '/# include/d; /\/\*/d' $(basename $(EXECUTOR)).h
 
 # Clean up Object Files
 clean:
@@ -84,7 +99,6 @@ clean:
 	@for lib in $(LIB_DIR)/*/; do \
 		$(MAKE) -C $$lib clean > /dev/null; \
 	done
-	@# echo "$(RED)Removed libraries object files$(RESET)"
 
 # Clean up All Generated Files
 fclean: clean
@@ -93,7 +107,6 @@ fclean: clean
 	@for lib in $(LIB_DIR)/*/; do \
 		$(MAKE) -C $$lib fclean > /dev/null; \
 	done
-	@# echo "$(RED)Removed .a libraries$(RESET)"
 
 # Rebuild the Project
 re: fclean all
