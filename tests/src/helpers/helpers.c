@@ -16,6 +16,7 @@ void	run_a_test(int (*test)(void), int index)
 		exit(test());
 	}
 	waitpid(pid, &exit_status, 0);
+	result = SUCCESS;
 	if (WIFEXITED(exit_status))
 		result = WEXITSTATUS(exit_status);
 	printf("Test %d", index);
