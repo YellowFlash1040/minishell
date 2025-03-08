@@ -14,16 +14,22 @@ int	test10(void);
 
 int	main(void)
 {
-	run_a_test(test1, 1);
-	run_a_test(test2, 2);
-	run_a_test(test3, 3);
-	run_a_test(test4, 4);
-	run_a_test(test5, 5);
-	run_a_test(test6, 6);
-	run_a_test(test7, 7);
-	run_a_test(test8, 8);
-	run_a_test(test9, 9);
-	run_a_test(test10, 10);
+	int (*tests[])(void) =
+		{
+			test1,
+			test2,
+			test3,
+			test4,
+			test5,
+			test6,
+			test7,
+			test8,
+			test9, 
+			test10
+		};
+
+	for (int i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++)
+		run_a_test(tests[i], i + 1, true);
 }
 
 int	test1(void)

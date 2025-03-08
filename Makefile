@@ -22,13 +22,18 @@ LOGIC_DIR				:= $(SRC_DIR)/logic
 MODEL_DIR				:= $(SRC_DIR)/model
 SHARED_DIR				:= $(SRC_DIR)/shared
 
+EXECUTOR_DIR			:= $(LOGIC_DIR)/executor
+BUILTINS_DIR			:= $(LOGIC_DIR)/builtins
+
 # List of all source directories
 SRC_DIRS				:= $(SRC_DIR) \
 							$(BUILDERS_DIR) \
 							$(HELPERS_DIR) \
 							$(LOGIC_DIR) \
 							$(MODEL_DIR) \
-							$(SHARED_DIR)
+							$(SHARED_DIR) \
+							$(EXECUTOR_DIR) \
+							$(BUILTINS_DIR)
 
 # Library directories
 LIST_LIB_DIR			:= $(LIB_DIR)/list

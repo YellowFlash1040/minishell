@@ -33,6 +33,7 @@
 // #include "pipeline_builder.h"
 // #include "pipeline_runner.h"
 #include <stdio.h>
+#include "echo.h"
 
 
 int	main(int argc, char *argv[], char *envp[])
@@ -41,11 +42,21 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	(void)envp;
 
-	int i;
+	// int i;
 
-	i=-1;
-	while (envp[++i])
-		printf("%s\n", envp[i]);
+	// i=-1;
+	// while (envp[++i])
+	// 	printf("%s\n", envp[i]);
+
+	t_string_array args;
+
+	args = init_string_array(2);
+	if (!args)
+		printf("Malloc failed\n");
+	args[0] = ft_strdup("hello");
+	args[1] = ft_strdup("world");
+
+	echo(args);
 
 	return (0);
 }

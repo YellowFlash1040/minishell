@@ -1,6 +1,6 @@
 #include "helpers.h"
 
-void	run_a_test(int (*test)(void), int index)
+void	run_a_test(int (*test)(void), int index, bool suppress_child_output)
 {
 	pid_t pid;
 	int result;
@@ -9,10 +9,13 @@ void	run_a_test(int (*test)(void), int index)
 	pid = fork();
 	if (pid == 0)
 	{
-		int fd = open("/dev/null", O_WRONLY);
-		dup2(fd, STDOUT_FILENO);
-		dup2(fd, STDERR_FILENO);
-		close(fd);
+		if (suppress_child_output)
+		{
+			int fd = open("/dev/null", O_WRONLY);
+			dup2(fd, STDOUT_FILENO);
+			dup2(fd, STDERR_FILENO);
+			close(fd);
+		}
 		exit(test());
 	}
 	waitpid(pid, &exit_status, 0);

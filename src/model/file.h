@@ -22,6 +22,7 @@
 # define FILE_OPEN_ERR 141
 # define FD_DUP_ERR 142
 # define EMPTY_FILE_MODE_ERR 143
+# define EMPTY_FILE_REF_OR_PATH_ERR 144
 
 typedef enum e_write_mode
 {

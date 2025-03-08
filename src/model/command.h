@@ -16,7 +16,7 @@
 # include "file.h"
 # include "list.h"
 # include "string_array.h"
-# include "wait.h"
+# include <wait.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <unistd.h>

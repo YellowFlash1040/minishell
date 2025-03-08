@@ -27,12 +27,16 @@ int	run_a_command(t_command *command)
 
 	pid = fork();
 	if (pid == -1)
-		return (FAILURE);
+		return (FORK_FUNC_ERR);
 	command->id = pid;
 	if (CHILD_PROCESS)
 	{
 		if (command->unused_pipe_end != -1)
-			close(command->unused_pipe_end);
+		{
+			result = close(command->unused_pipe_end);
+			if (result == -1)
+				return (CLOSE_FUNC_ERR);
+		}
 		result = setup_redirections(command);
 		if (result != SUCCESS)
 			return (result);
@@ -73,8 +77,9 @@ int	handle_child_process(t_command *command)
 		fprintf(stderr, "Child process ended with an unknown status\n");
 		return (FORCED_PROCESS_EXIT_ERR);
 	}
-	// return (SUCCESS);
-	return (command->exit_status_code);
+	// printf("exit status = %d\n", command->exit_status_code);
+	// return (command->exit_status_code);
+	return (SUCCESS);
 }
 
 int	launch_binary(t_command *command)

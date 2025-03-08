@@ -56,7 +56,7 @@ int	redirect(int old_fd, int new_fd)
 int	open_file(t_file *file)
 {
 	if (!file || !file->path)
-		return (FAILURE);
+		return (EMPTY_FILE_REF_OR_PATH_ERR);
 	if (file->mode == NONE)
 		return (EMPTY_FILE_MODE_ERR);
 	file->fd = open(file->path, file->mode, 0777);

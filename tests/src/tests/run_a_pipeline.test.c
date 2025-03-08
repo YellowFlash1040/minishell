@@ -12,14 +12,53 @@ int	test8(void);
 
 int	main(void)
 {
-	run_a_test(test1, 1);
-	run_a_test(test2, 2);
-	run_a_test(test3, 3);
-	run_a_test(test4, 4);
-	run_a_test(test5, 5);
-	run_a_test(test6, 6);
-	run_a_test(test7, 7);
-	run_a_test(test8, 8);
+	int (*tests[])(void) = 
+	{
+		test1, 
+		test2, 
+		test3, 
+		test4, 
+		test5,
+		test6, 
+		test7, 
+		test8
+	};
+
+	for (int i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++)
+		run_a_test(tests[i], i + 1, false);
+}
+
+int run_with_output_manipulations(int (*run_a_pipeline)(t_pipeline *p), t_pipeline *pipeline)
+{
+	int result;
+	// bool need_detailed_info = true;
+	bool need_detailed_info = false;
+
+	int saved_stdout = dup(STDOUT_FILENO);
+	int fd = open("/dev/null", O_WRONLY);
+	dup2(fd, STDOUT_FILENO);
+	dup2(fd, STDERR_FILENO);
+	close(fd);
+	result = run_a_pipeline(pipeline);
+	if (result != SUCCESS)
+		return (result);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdout);
+	if (need_detailed_info)
+	{
+		t_command *command;
+		t_list_node *node;
+		node = pipeline->commands->head;
+		int i = -1;
+		while (++i < pipeline->commands->count)
+		{
+			command = (t_command *)node->value;
+			// printf("exit status = %d\n", command->exit_status_code);
+			printf("%s: %d\n", command->executable, command->exit_status_code);
+			node = node->next;
+		}
+	}
+	return (result);
 }
 
 int	test1(void)
@@ -44,7 +83,7 @@ int	test1(void)
 	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
 	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
 
-	result = run_a_pipeline(pipeline);
+	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
 	destroy_pipeline(&pipeline);
 	return (result);
@@ -69,7 +108,7 @@ int	test2(void)
 	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
 	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
 
-	result = run_a_pipeline(pipeline);
+	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
 	destroy_pipeline(&pipeline);
 	return (result);
@@ -97,7 +136,7 @@ int	test3(void)
 	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
 	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
 
-	result = run_a_pipeline(pipeline);
+	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
 	destroy_pipeline(&pipeline);
 	return (result);
@@ -125,7 +164,7 @@ int	test4(void)
 	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
 	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
 
-	result = run_a_pipeline(pipeline);
+	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
 	destroy_pipeline(&pipeline);
 	return (result);
@@ -153,7 +192,7 @@ int	test5(void)
 	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
 	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
 
-	result = run_a_pipeline(pipeline);
+	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
 	destroy_pipeline(&pipeline);
 	return (result);
@@ -181,7 +220,7 @@ int	test6(void)
 	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
 	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
 
-	result = run_a_pipeline(pipeline);
+	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
 	destroy_pipeline(&pipeline);
 	return (result);
@@ -212,7 +251,7 @@ int	test7(void)
 	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
 	add_to_list(pipeline->commands, create_command(exe4, args4, NULL, NULL));
 
-	result = run_a_pipeline(pipeline);
+	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
 	destroy_pipeline(&pipeline);
 	return (result);
@@ -240,7 +279,7 @@ int	test8(void)
 	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
 	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
 
-	result = run_a_pipeline(pipeline);
+	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
 	destroy_pipeline(&pipeline);
 	return (result);
