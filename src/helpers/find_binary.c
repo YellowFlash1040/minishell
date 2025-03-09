@@ -1,0 +1,91 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_binary.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/09 13:41:12 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/09 17:02:27 by akovtune         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "find_binary.h"
+#include <stdio.h>
+
+void	check_using_abs_rel_path(t_string path, t_string *result);
+int		check_using_env_path(t_string path, t_string *result);
+int		search_binary_in_folders(t_string binary, t_string_array folders,
+			t_string *result);
+
+int	find_binary(t_string path, t_string *result)
+{
+	int		status_code;
+
+	*result = NULL;
+	if (!path)
+		return (EMPTY_PATH_ERR);
+	if (index_of('/', path) != -1)
+		return (check_using_abs_rel_path(path, result), SUCCESS);
+	status_code = check_using_env_path(path, result);
+	if (status_code != SUCCESS)
+		return (status_code);
+	return (SUCCESS);
+}
+
+void	check_using_abs_rel_path(t_string path, t_string *result)
+{
+	*result = NULL;
+	if (access(path, F_OK) == 0)
+		*result = path;
+}
+
+int	check_using_env_path(t_string path, t_string *result)
+{
+	t_string		env_path;
+	t_string_array	folders;
+	int				status_code;
+
+	*result = NULL;
+	env_path = getenv("PATH");
+	if (!env_path)
+		return (0);
+	folders = ft_split(env_path, ':');
+	if (!folders)
+		return (MALLOC_FAIL_ERR);
+	status_code = search_binary_in_folders(path, folders, result);
+	destroy_string_array(&folders);
+	if (status_code != SUCCESS)
+		return (status_code);
+	return (SUCCESS);
+}
+
+int	search_binary_in_folders(t_string binary, t_string_array folders,
+		t_string *result)
+{
+	int			i;
+	t_string	slash_binary;
+	t_string	full_path;
+
+	*result = NULL;
+	slash_binary = ft_strjoin("/", binary);
+	if (!slash_binary)
+		return (MALLOC_FAIL_ERR);
+	i = -1;
+	while (folders[++i])
+	{
+		if (folders[i][ft_strlen(folders[i]) - 1] == '/')
+			full_path = ft_strjoin(folders[i], binary);
+		else
+			full_path = ft_strjoin(folders[i], slash_binary);
+		if (!full_path)
+			return (free(slash_binary), MALLOC_FAIL_ERR);
+		if (access(full_path, F_OK) == 0)
+		{
+			*result = full_path;
+			return (free(slash_binary), SUCCESS);
+		}
+		free(full_path);
+	}
+	return (free(slash_binary), SUCCESS);
+}
