@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:35:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/07 16:25:24 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/09 13:55:48 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,9 @@ bool	ft_strcmp(char *s1, char *s2);
 char	*ft_strdup(char *str);
 void	replace(char *str, char old, char new);
 char	*ft_strjoin(char *s1, char *s2);
+char	*ft_substr(char *s, unsigned int start, size_t len);
+int		count_words(char *s, char delimiter);
+char	*extract_word(char *s, int *i, char c);
+char	**ft_split(char *s, char c);
 
 #endif
