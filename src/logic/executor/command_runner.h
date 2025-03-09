@@ -15,13 +15,14 @@
 
 # include "command.h"
 
-# define CHILD_PROCESS pid == 0
+// # define CHILD_PROCESS pid == 0
 
 # define BINARY_LAUNCH_ERR 190
 # define CHILD_HANDLER_ERR 191
 # define FORCED_PROCESS_EXIT_ERR 192
 # define FORK_FUNC_ERR 193
 # define CLOSE_FUNC_ERR 194
+# define UNKNOWN_PROC_EXIT_STATUS_ERR 195
 
 int	run_a_command(t_command *command);
 

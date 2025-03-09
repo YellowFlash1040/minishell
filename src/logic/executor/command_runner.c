@@ -29,7 +29,7 @@ int	run_a_command(t_command *command)
 	if (pid == -1)
 		return (FORK_FUNC_ERR);
 	command->id = pid;
-	if (CHILD_PROCESS)
+	if (pid == 0)
 	{
 		if (command->unused_pipe_end != -1)
 		{
@@ -49,38 +49,22 @@ int	handle_child_process(t_command *command)
 {
 	int	exit_status;
 	int	result;
-	int	signal_number;
-	int	stop_signal;
 
 	result = waitpid(command->id, &exit_status, 0);
 	if (result == -1)
 		return (CHILD_HANDLER_ERR);
 	if (WIFEXITED(exit_status))
 		command->exit_status_code = WEXITSTATUS(exit_status);
-	// else
-	// 	return (FORCED_PROCESS_EXIT_ERR);
 	else if (WIFSIGNALED(exit_status))
-	{
-		signal_number = WTERMSIG(exit_status);
-		fprintf(stderr, "Child process terminated by signal: %d\n",
-			signal_number);
-		return (FORCED_PROCESS_EXIT_ERR);
-	}
+		command->exit_status_code = WTERMSIG(exit_status);
 	else if (WIFSTOPPED(exit_status))
-	{
-		stop_signal = WSTOPSIG(exit_status);
-		fprintf(stderr, "Child process stopped by signal: %d\n", stop_signal);
-		return (FORCED_PROCESS_EXIT_ERR);
-	}
+		command->exit_status_code = WSTOPSIG(exit_status);
 	else
-	{
-		fprintf(stderr, "Child process ended with an unknown status\n");
-		return (FORCED_PROCESS_EXIT_ERR);
-	}
-	// printf("exit status = %d\n", command->exit_status_code);
-	// return (command->exit_status_code);
+		return (UNKNOWN_PROC_EXIT_STATUS_ERR);
 	return (SUCCESS);
 }
+// printf("exit status = %d\n", command->exit_status_code);
+// return (command->exit_status_code);
 
 int	launch_binary(t_command *command)
 {
