@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:35:08 by akovtune          #+#    #+#             */
-/*   Updated: 2025/01/16 15:39:54 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:04:41 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	s1_length = ft_strlen(s1);
 	s2_length = ft_strlen(s2);
-	res = (char *)malloc(sizeof(char) * (s1_length + s2_length) + 1);
+	res = (char *)malloc(sizeof(char) * (s1_length + s2_length + 1));
 	if (!res)
 		return (NULL);
 	i = -1;

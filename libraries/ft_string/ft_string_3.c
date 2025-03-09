@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_string_3.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/09 17:22:07 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/09 17:23:29 by akovtune         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_string.h"
 
-char **ft_split(char *s, char c)
+char	**ft_split(char *s, char c)
 {
-	int i;
-	int words_count;
-	char **res;
-	char **res_head;
+	int		i;
+	int		words_count;
+	char	**res;
+	char	**res_head;
 
 	i = 0;
 	words_count = count_words(s, c);
@@ -29,10 +41,10 @@ char **ft_split(char *s, char c)
 	return (res_head);
 }
 
-char *extract_word(char *s, int *i, char c)
+char	*extract_word(char *s, int *i, char c)
 {
-	int start;
-	int end;
+	int	start;
+	int	end;
 
 	while (s[*i] == c && s[*i] != '\0')
 		(*i)++;
@@ -43,11 +55,11 @@ char *extract_word(char *s, int *i, char c)
 	return (ft_substr(s, start, end - start));
 }
 
-int count_words(char *s, char delimiter)
+int	count_words(char *s, char delimiter)
 {
-	int count;
-	int is_in_word;
-	int i;
+	int	count;
+	int	is_in_word;
+	int	i;
 
 	count = 0;
 	is_in_word = 0;
@@ -65,11 +77,11 @@ int count_words(char *s, char delimiter)
 	return (count);
 }
 
-char *ft_substr(char *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
-	size_t i;
-	char *copy;
-	unsigned int s_length;
+	size_t			i;
+	char			*copy;
+	unsigned int	s_length;
 
 	if (!s)
 		return (NULL);
