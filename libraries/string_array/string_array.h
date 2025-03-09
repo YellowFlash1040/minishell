@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 14:19:50 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/07 16:25:33 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:21:58 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 # define STRING_ARRAY_H
 
 # include <stdlib.h>
-#include "ft_string.h"
+# include "ft_string.h"
 
-# define STRING_ARRAY_INIT_ERR 
+# define STRING_ARRAY_INIT_ERR 29
 
 typedef t_string*	t_string_array;
 
 t_string_array	init_string_array(int size);
-void			destroy_string_array(t_string_array* string_array);
+void			destroy_string_array(t_string_array *string_array);
 
 #endif
