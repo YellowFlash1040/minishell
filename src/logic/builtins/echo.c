@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:57:24 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/08 14:09:57 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:15:16 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	echo(t_string_array args)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (args[++i])
@@ -25,6 +25,5 @@ int	echo(t_string_array args)
 	}
 	printf("\n");
 	destroy_string_array(&args);
-
 	return (SUCCESS);
 }
