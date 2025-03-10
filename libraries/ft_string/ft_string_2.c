@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_string_2.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/09 16:35:08 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/09 17:04:41 by akovtune         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_string_2.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: akovtune <akovtune@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/01/09 16:35:08 by akovtune      #+#    #+#                 */
+/*   Updated: 2025/03/10 15:15:26 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,22 @@ char	*ft_strjoin(char *s1, char *s2)
 		res[index++] = s2[i];
 	res[index] = '\0';
 	return (res);
+}
+
+char	*ft_strchr(char *str, char c)
+{
+	while (*str)
+	{
+		if (*str == (unsigned char)c)
+			return ((char *)str);
+		str++;
+	}
+	if (*str == (unsigned char)c)
+		return ((char *)str);
+	return (NULL);
+}
+
+int	is_whitespace(char c)
+{
+	return (c == ' ');
 }
