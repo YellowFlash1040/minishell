@@ -66,10 +66,12 @@ $(MINISHELL):
 clean:
 	@rm -rf $(OBJ_DIR)
 	@rm -rf $(MINISHELL)
+	@make -C $(MINISHELL_DIR) clean > /dev/null
 
 # Clean up All Generated Files
 fclean: clean
 	@rm -rf $(BIN_DIR)
+	@make -C $(MINISHELL_DIR) fclean > /dev/null
 
 # Rebuild the Project
 re: fclean all
