@@ -6,38 +6,43 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 13:41:12 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/09 17:02:27 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:22:14 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "find_binary.h"
 #include <stdio.h>
 
-void	check_using_abs_rel_path(t_string path, t_string *result);
-int		check_using_env_path(t_string path, t_string *result);
-int		search_binary_in_folders(t_string binary, t_string_array folders,
-			t_string *result);
+int	check_using_abs_rel_path(t_string path, t_string *result);
+int	check_using_env_path(t_string path, t_string *result);
+int	search_binary_in_folders(t_string binary, t_string_array folders,
+		t_string *result);
 
 int	find_binary(t_string path, t_string *result)
 {
-	int		status_code;
-
 	*result = NULL;
 	if (!path)
 		return (EMPTY_PATH_ERR);
+	if (path[0] == '\0')
+		return (SUCCESS);
 	if (index_of('/', path) != -1)
-		return (check_using_abs_rel_path(path, result), SUCCESS);
-	status_code = check_using_env_path(path, result);
-	if (status_code != SUCCESS)
-		return (status_code);
-	return (SUCCESS);
+		return (check_using_abs_rel_path(path, result));
+	return (check_using_env_path(path, result));
 }
 
-void	check_using_abs_rel_path(t_string path, t_string *result)
+int	check_using_abs_rel_path(t_string path, t_string *result)
 {
+	t_string	temp;
+
 	*result = NULL;
 	if (access(path, F_OK) == 0)
-		*result = path;
+	{
+		temp = ft_strdup(path);
+		if (!temp)
+			return (MALLOC_FAIL_ERR);
+		*result = temp;
+	}
+	return (SUCCESS);
 }
 
 int	check_using_env_path(t_string path, t_string *result)

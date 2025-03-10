@@ -14,6 +14,9 @@
 # define COMMAND_RUNNER_H
 
 # include "command.h"
+# include "find_binary.h"
+# include "error_printer.h"
+# include <errno.h>
 
 // # define CHILD_PROCESS pid == 0
 
@@ -23,6 +26,7 @@
 # define FORK_FUNC_ERR 193
 # define CLOSE_FUNC_ERR 194
 # define UNKNOWN_PROC_EXIT_STATUS_ERR 195
+# define WRITE_FUNC_ERR 196
 
 int	run_a_command(t_command *command);
 

@@ -15,15 +15,20 @@ SRC_DIR					:= src
 OBJ_DIR					:= obj
 LIB_DIR 				:= libraries
 
-# Source directories
+# Source directories (src/)
 BUILDERS_DIR			:= $(SRC_DIR)/builders
 HELPERS_DIR				:= $(SRC_DIR)/helpers
 LOGIC_DIR				:= $(SRC_DIR)/logic
 MODEL_DIR				:= $(SRC_DIR)/model
 SHARED_DIR				:= $(SRC_DIR)/shared
 
+# Logic directories (src/logic/)
 EXECUTOR_DIR			:= $(LOGIC_DIR)/executor
 BUILTINS_DIR			:= $(LOGIC_DIR)/builtins
+
+# Executor directories (src/logic/executor/)
+COMMAND_RUNNER_DIR		:= $(EXECUTOR_DIR)/command_runner
+PIPELINE_RUNNER_DIR		:= $(EXECUTOR_DIR)/pipeline_runner
 
 # List of all source directories
 SRC_DIRS				:= $(SRC_DIR) \
@@ -33,9 +38,11 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(MODEL_DIR) \
 							$(SHARED_DIR) \
 							$(EXECUTOR_DIR) \
-							$(BUILTINS_DIR)
+							$(BUILTINS_DIR) \
+							$(COMMAND_RUNNER_DIR) \
+							$(PIPELINE_RUNNER_DIR)
 
-# Library directories
+# Library directories (libraries/)
 LIST_LIB_DIR			:= $(LIB_DIR)/list
 STRING_ARRAY_LIB_DIR	:= $(LIB_DIR)/string_array
 STRING_LIB_DIR			:= $(LIB_DIR)/ft_string

@@ -12,7 +12,12 @@
 
 #include "error_printer.h"
 
-void	print_error(int status)
+int	print_error_message(t_string message)
 {
-	printf("Error %d\n", status);
+	int	result;
+
+	result = write(STDERR_FILENO, message, ft_strlen(message));
+	if (result == -1)
+		return (perror("Error"), FAILURE);
+	return (SUCCESS);
 }

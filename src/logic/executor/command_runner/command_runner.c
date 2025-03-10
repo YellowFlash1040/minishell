@@ -19,6 +19,8 @@
 int	setup_redirections(t_command *command);
 int	launch_binary(t_command *command);
 int	handle_child_process(t_command *command);
+int	setup_binary_path(t_command *command);
+int	print_not_found_err(t_string binary_path);
 
 int	run_a_command(t_command *command)
 {
@@ -68,11 +70,21 @@ int	handle_child_process(t_command *command)
 
 int	launch_binary(t_command *command)
 {
-	int	launch_result;
+	int	result;
 
-	launch_result = execve(command->executable, command->arguments, NULL);
-	if (launch_result == -1)
-		return (BINARY_LAUNCH_ERR);
+	setup_binary_path(command);
+	result = execve(command->executable, command->arguments, NULL);
+	if (result == -1)
+	{
+		if (errno == ENOENT)
+		{
+			result = print_not_found_err(command->executable);
+			if (result != SUCCESS)
+				return (result);
+			return (SUCCESS);
+		}
+		return (perror("Error"), BINARY_LAUNCH_ERR);
+	}
 	return (SUCCESS);
 }
 
@@ -101,6 +113,22 @@ int	setup_redirections(t_command *command)
 			if (result != SUCCESS)
 				return (result);
 		}
+	}
+	return (SUCCESS);
+}
+
+int	setup_binary_path(t_command *command)
+{
+	t_string	binary_path;
+	int			result;
+
+	result = find_binary(command->executable, &binary_path);
+	if (result != SUCCESS)
+		return (result);
+	if (binary_path != NULL)
+	{
+		free(command->executable);
+		command->executable = binary_path;
 	}
 	return (SUCCESS);
 }
