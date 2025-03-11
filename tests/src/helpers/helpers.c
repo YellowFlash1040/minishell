@@ -19,9 +19,14 @@ void	run_a_test(int (*test)(void), int index, bool suppress_child_output)
 		exit(test());
 	}
 	waitpid(pid, &exit_status, 0);
-	result = SUCCESS;
 	if (WIFEXITED(exit_status))
 		result = WEXITSTATUS(exit_status);
+	else if (WIFSIGNALED(exit_status))
+		result = WTERMSIG(exit_status);
+	else if (WIFSTOPPED(exit_status))
+		result = WSTOPSIG(exit_status);
+	else
+		result = FAILURE;
 	printf("Test %d", index);
 	if (result == SUCCESS)
 		printf("\t✅\n");
