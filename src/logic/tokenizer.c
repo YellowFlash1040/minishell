@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 14:25:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/10 16:27:07 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/11 14:50:38 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	get_wlen(char **prompt)
 {
 	int wlen = 0;
 
-	while (**(prompt + wlen) && !ft_strchr(OPERATORS, **(prompt + wlen)) && !is_whitespace(**(prompt + wlen)))
+	while ((*prompt)[wlen] && !ft_strchr(OPERATORS, (*prompt)[wlen]) && !is_whitespace((*prompt)[wlen]))
 		wlen++;
 	return (wlen);
 }
@@ -40,6 +40,7 @@ char	*scan_word(char **prompt)
 	while (i < wlen)
 	{
 		word[i] = **prompt;
+		i++;
 		(*prompt)++;
 	}
 	word[i] = '\0';
@@ -59,7 +60,7 @@ void	tokenize_redir(t_token *token, char **prompt)
 {
 	if (**prompt == '<')
 	{
-		if (**(prompt + 1) && **(prompt + 1) == '<')
+		if ((*prompt)[1] && (*prompt)[1] == '<')
 		{
 			token->type = RedirDelim;
 			(*prompt)++;
@@ -69,7 +70,7 @@ void	tokenize_redir(t_token *token, char **prompt)
 	}
 	else if (**prompt == '>')
 	{
-		if (**(prompt + 1) && **(prompt + 1) == '>')
+		if ((*prompt)[1] && (*prompt)[1] == '>')
 		{
 			token->type = RedirAppend;
 			(*prompt)++;
