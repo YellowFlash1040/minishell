@@ -9,7 +9,7 @@ INCLUDES		 = -I$(HELPERS_DIR) \
 
 #-----------------------BINARIES---------------------------------------------------------
 # Output Files
-TEST_BINS		 = $(patsubst $(TESTS_DIR)/%.test.c,$(BIN_DIR)/%.test,$(TEST_FILES))
+TEST_BINS		 = $(addprefix $(BIN_DIR)/,$(notdir $(TEST_FILES:.c=)))
 MINISHELL		 = $(MINISHELL_DIR)/libminishell.a
 
 #-----------------------FOLDERS----------------------------------------------------------
@@ -22,15 +22,20 @@ MINISHELL_DIR	:= ..
 # Source subdirectories
 HELPERS_DIR		:= $(SRC_DIR)/helpers
 TESTS_DIR		:= $(SRC_DIR)/tests
+EXECUTOR_DIR	:= $(TESTS_DIR)/executor
+BUILTINS_DIR	:= $(TESTS_DIR)/builtins
+
+TESTS_DIRS		:= $(EXECUTOR_DIR) \
+					$(BUILTINS_DIR)
 
 # All source folders
-SRC_DIRS		:= $(TESTS_DIR) \
+SRC_DIRS		:= $(TESTS_DIRS) \
 					$(HELPERS_DIR)
 
 #-----------------------FILES------------------------------------------------------------
 # Sources
 C_FILES			:= $(wildcard $(HELPERS_DIR)/*.c)
-TEST_FILES		:= $(wildcard $(TESTS_DIR)/*.c)
+TEST_FILES		:= $(foreach dir,$(TESTS_DIRS),$(wildcard $(dir)/*.c))
 
 # Objects
 OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(C_FILES)))
