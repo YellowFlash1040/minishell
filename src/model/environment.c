@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 18:41:44 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/11 20:04:04 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:34:15 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		free_variable(void *value);
 t_list	*init_environment(char *envp[])
 {
 	t_list		*environment;
-	t_string	variable;
+	t_variable	*variable;
 	int			i;
 
 	if (!envp)
@@ -35,7 +35,7 @@ t_list	*init_environment(char *envp[])
 		if (!variable)
 			return (clear_list(environment, free_variable), NULL);
 		if (!add_to_list(environment, variable))
-			return (destroy_variable(variable),
+			return (destroy_variable(&variable),
 				clear_list(environment, free_variable), NULL);
 	}
 	return (environment);
@@ -53,7 +53,7 @@ t_variable	*create_variable(t_string env_var)
 		return (NULL);
 	var = init_variable(parts[0]);
 	if (!var)
-		return (destroy_string_array(parts), NULL);
+		return (destroy_string_array(&parts), NULL);
 	var->value = parts[1];
 	var->string_value = env_var;
 	return (var);
@@ -88,7 +88,7 @@ t_string_array	construct_environment_for_export(t_list *env)
 		{
 			export_env[i] = convert_variable_to_string(variable);
 			if (!export_env[i])
-				return (destroy_string_array(export_env), NULL);
+				return (destroy_string_array(&export_env), NULL);
 		}
 		node = node->next;
 		i++;
