@@ -47,6 +47,9 @@ int	test1(void)
 
 	result = run_a_command(command);
 
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
 	destroy_command(&command);
 	return (result);
 }
@@ -58,9 +61,12 @@ int	test2(void)
 
 	char *exe_path = "/bin/cat";
 	char *args[] = {exe_path, NULL};
-	command = create_command(exe_path, args, "assets/test2/input.txt", NULL);
+	command = create_command(exe_path, args, "assets/executor/test2/input.txt", NULL);
 
 	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
 
 	destroy_command(&command);
 	return (result);
@@ -77,6 +83,9 @@ int	test3(void)
 
 	result = run_a_command(command);
 
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
 	destroy_command(&command);
 	return (result);
 }
@@ -91,6 +100,9 @@ int	test4(void)
 	command = create_command(exe_path, args, NULL, NULL);
 
 	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
 
 	destroy_command(&command);
 	return (result);
@@ -107,6 +119,9 @@ int	test5(void)
 
 	result = run_a_command(command);
 
+	if (command->exit_status_code != 2)
+		result = command->exit_status_code;
+
 	destroy_command(&command);
 	return (result);
 }
@@ -118,9 +133,12 @@ int	test6(void)
 
 	char *exe_path = "/bin/grep";
 	char *args[] = {exe_path, "r", NULL};
-	command = create_command(exe_path, args, "assets/test8/input.txt", NULL);
+	command = create_command(exe_path, args, "assets/executor/test8/input.txt", NULL);
 
 	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
 
 	destroy_command(&command);
 	return (result);
@@ -133,9 +151,12 @@ int test7(void)
 
 	char *exe_path = "/bin/wc";
 	char *args[] = {exe_path, "-l", NULL};
-	command = create_command(exe_path, args, "assets/test10/input.txt", NULL);
+	command = create_command(exe_path, args, "assets/executor/test10/input.txt", NULL);
 
 	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
 
 	destroy_command(&command);
 	return (result);
@@ -152,6 +173,9 @@ int test8(void)
 
 	result = run_a_command(command);
 
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
 	destroy_command(&command);
 	return (result);
 }
@@ -163,9 +187,12 @@ int test9(void)
 
 	char *exe_path = "grepo";
 	char *args[] = {exe_path, "h", NULL};
-	command = create_command(exe_path, args, "assets/test11/input.txt", "assets/test11/output.txt");
+	command = create_command(exe_path, args, "assets/executor/test11/input.txt", "assets/executor/test11/output.txt");
 
 	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
 
 	destroy_command(&command);
 	return (result);
@@ -182,6 +209,9 @@ int test10(void)
 
 	result = run_a_command(command);
 
+	if (command->exit_status_code != 1)
+		result = command->exit_status_code;
+
 	destroy_command(&command);
 	return (result);
 }
@@ -197,6 +227,9 @@ int test11(void)
 
 	result = run_a_command(command);
 
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
 	destroy_command(&command);
 	return (result);
 }
@@ -208,9 +241,12 @@ int	test12(void)
 
 	char *exe_path = "/bin/printf";
 	char *args[] = {exe_path, "test", NULL};
-	command = create_command(exe_path, args, NULL, "assets/test9/output.txt");
+	command = create_command(exe_path, args, NULL, "assets/executor/test9/output.txt");
 
 	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
 
 	destroy_command(&command);
 	return (result);
