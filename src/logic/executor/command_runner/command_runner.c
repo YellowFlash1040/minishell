@@ -21,7 +21,6 @@ int	launch_binary(t_command *command);
 int	handle_child_process(t_command *command);
 int	setup_binary_path(t_command *command);
 int	print_not_found_err(t_string binary_path);
-int	run_builtin(t_command *command);
 
 int	run_a_command(t_command *command)
 {
@@ -74,7 +73,7 @@ int	launch_binary(t_command *command)
 	int	result;
 
 	if (is_builtin(command->executable))
-		return (run_builtin(command));
+		return (run_builtin(command->executable, command->arguments));
 	setup_binary_path(command);
 	result = execve(command->executable, command->arguments, NULL);
 	if (result == -1)
