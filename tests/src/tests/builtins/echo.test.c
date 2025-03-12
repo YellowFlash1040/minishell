@@ -13,6 +13,9 @@ int test9(void);
 int test10(void);
 int test11(void);
 int test12(void);
+int test13(void);
+int test14(void);
+int test15(void);
 
 int main(void)
 {
@@ -29,11 +32,14 @@ int main(void)
 			test9,
 			test10,
 			test11,
-			test12
+			test12,
+			test13,
+			test14,
+			test15
 		};
 
 	for (int i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++)
-		run_a_test(tests[i], i + 1, true);
+		run_a_test(tests[i], i + 1, false);
 }
 
 int test1(void)
@@ -50,6 +56,9 @@ int test1(void)
 	command = create_command(exe_path, args, NULL, NULL);
 
 	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
 
 	destroy_command(&command);
 	return (result);
@@ -70,6 +79,9 @@ int test2(void)
 
 	result = run_a_command(command);
 
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
 	destroy_command(&command);
 	return (result);
 }
@@ -88,6 +100,9 @@ int test3(void)
 	command = create_command(exe_path, args, NULL, NULL);
 
 	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
 
 	destroy_command(&command);
 	return (result);
@@ -108,6 +123,9 @@ int test4(void)
 
 	result = run_a_command(command);
 
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
 	destroy_command(&command);
 	return (result);
 }
@@ -126,6 +144,9 @@ int test5(void)
 	command = create_command(exe_path, args, NULL, NULL);
 
 	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
 
 	destroy_command(&command);
 	return (result);
@@ -146,6 +167,9 @@ int test6(void)
 
 	result = run_a_command(command);
 
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
 	destroy_command(&command);
 	return (result);
 }
@@ -164,6 +188,9 @@ int test7(void)
 	command = create_command(exe_path, args, NULL, NULL);
 
 	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
 
 	destroy_command(&command);
 	return (result);
@@ -184,6 +211,9 @@ int test8(void)
 
 	result = run_a_command(command);
 
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
 	destroy_command(&command);
 	return (result);
 }
@@ -202,6 +232,9 @@ int test9(void)
 	command = create_command(exe_path, args, NULL, NULL);
 
 	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
 
 	destroy_command(&command);
 	return (result);
@@ -222,6 +255,9 @@ int test10(void)
 
 	result = run_a_command(command);
 
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
 	destroy_command(&command);
 	return (result);
 }
@@ -241,6 +277,9 @@ int test11(void)
 
 	result = run_a_command(command);
 
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
 	destroy_command(&command);
 	return (result);
 }
@@ -259,6 +298,75 @@ int test12(void)
 	command = create_command(exe_path, args, NULL, NULL);
 
 	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
+	destroy_command(&command);
+	return (result);
+}
+
+int test13(void)
+{
+	int result;
+	t_command *command;
+
+	/*
+		echo -n
+	*/
+
+	char *exe_path = "echo";
+	char *args[] = {exe_path, "-n", NULL};
+	command = create_command(exe_path, args, NULL, NULL);
+
+	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
+	destroy_command(&command);
+	return (result);
+}
+
+int test14(void)
+{
+	int result;
+	t_command *command;
+
+	/*
+		echo -n > output.txt
+	*/
+
+	char *exe_path = "echo";
+	char *args[] = {exe_path, "-n", "ok", NULL};
+	command = create_command(exe_path, args, NULL, "assets/builtins/test14/output.txt");
+
+	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
+	destroy_command(&command);
+	return (result);
+}
+
+int test15(void)
+{
+	int result;
+	t_command *command;
+
+	/*
+		echo < input.txt
+	*/
+
+	char *exe_path = "echo";
+	char *args[] = {exe_path, NULL};
+	command = create_command(exe_path, args, "assets/builtins/test15/input.txt", NULL);
+
+	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
 
 	destroy_command(&command);
 	return (result);
