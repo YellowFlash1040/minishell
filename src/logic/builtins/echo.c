@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:57:24 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/12 14:25:46 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:39:23 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	echo(t_string_array args)
 	bool	n_flag_active;
 	int		i;
 
-	if (!args || !args[1])
+	if (!args)
 		return (FAILURE);
 	n_flag_active = check_for_n_flag(args[1]);
 	if (!n_flag_active)
