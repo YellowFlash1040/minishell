@@ -26,6 +26,8 @@ SHARED_DIR				:= $(SRC_DIR)/shared
 EXECUTOR_DIR			:= $(LOGIC_DIR)/executor
 BUILTINS_DIR			:= $(LOGIC_DIR)/builtins
 
+PARSER_DIR				:= $(LOGIC_DIR)/parser
+
 # Executor directories (src/logic/executor/)
 COMMAND_RUNNER_DIR		:= $(EXECUTOR_DIR)/command_runner
 PIPELINE_RUNNER_DIR		:= $(EXECUTOR_DIR)/pipeline_runner
@@ -40,7 +42,8 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(EXECUTOR_DIR) \
 							$(BUILTINS_DIR) \
 							$(COMMAND_RUNNER_DIR) \
-							$(PIPELINE_RUNNER_DIR)
+							$(PIPELINE_RUNNER_DIR) \
+							$(PARSER_DIR)
 
 # Library directories (libraries/)
 LIST_LIB_DIR			:= $(LIB_DIR)/list
