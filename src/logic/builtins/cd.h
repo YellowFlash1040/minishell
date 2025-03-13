@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_runner_2.c                                 :+:      :+:    :+:   */
+/*   cd.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 14:21:03 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/12 17:23:51 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/12 16:01:26 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/12 17:40:38 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "command_runner.h"
+#ifndef CD_H
+# define CD_H
 
-int	print_not_found_err(t_string binary_path)
-{
-	t_string	message;
-	int			result;
+# include "string_array.h"
+# include "global_status_codes.h"
+# include "error_printer.h"
+# include <unistd.h>
 
-	message = ft_strjoin(binary_path, ": command not found\n");
-	if (!message)
-		return (perror("Error"), MALLOC_FAIL_ERR);
-	result = print_error_message(message);
-	if (result != SUCCESS)
-		return (result);
-	return (SUCCESS);
-}
+int	cd(t_string_array args);
+
+#endif

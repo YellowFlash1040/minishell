@@ -72,6 +72,8 @@ int	launch_binary(t_command *command)
 {
 	int	result;
 
+	if (is_builtin(command->executable))
+		return (run_builtin(command->executable, command->arguments));
 	setup_binary_path(command);
 	result = execve(command->executable, command->arguments, NULL);
 	if (result == -1)
