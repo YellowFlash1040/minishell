@@ -6,13 +6,15 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:01:31 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/12 18:17:57 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:17:37 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cd.h"
 
 int	count_arguments(t_string_array args);
+
+//TODO: handle `cd -` command
 
 int	cd(t_string_array args)
 {
@@ -35,7 +37,7 @@ int	cd(t_string_array args)
 
 int	count_arguments(t_string_array args)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (args[i])
