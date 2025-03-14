@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 
 # define FILE_INIT_ERR 140
 # define FILE_OPEN_ERR 141
