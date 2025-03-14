@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:57:24 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/13 14:49:55 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:22:55 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int	echo(t_string_array args)
 		i = 2;
 	while (args[i])
 	{
-		ft_printf("%s", args[i]);
+		write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
 		if (args[i + 1])
-			ft_printf(" ");
+			write(STDOUT_FILENO, " ", 1);
 		i++;
 	}
 	if (!n_flag_active)
-		ft_printf("\n");
+		write(STDOUT_FILENO, "\n", 1);
 	return (SUCCESS);
 }
 

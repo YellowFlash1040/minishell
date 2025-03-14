@@ -46,13 +46,11 @@ SRC_DIRS				:= $(SRC_DIR) \
 LIST_LIB_DIR			:= $(LIB_DIR)/list
 STRING_ARRAY_LIB_DIR	:= $(LIB_DIR)/string_array
 STRING_LIB_DIR			:= $(LIB_DIR)/ft_string
-FT_PRINTF_LIB_DIR		:= $(LIB_DIR)/ft_printf
 
 # List of all library directories
 LIB_DIRS				:= $(LIST_LIB_DIR) \
 							$(STRING_ARRAY_LIB_DIR) \
-							$(STRING_LIB_DIR) \
-							$(FT_PRINTF_LIB_DIR)
+							$(STRING_LIB_DIR)
 
 #-----------------------FILES------------------------------------------------------------
 # Sources
@@ -66,12 +64,10 @@ OBJ     				:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(C_FILES)))
 # Library files
 LIST_LIB				:= $(LIST_LIB_DIR)/list.a
 STRING_ARRAY_LIB		:= $(STRING_ARRAY_LIB_DIR)/string_array.a
-FT_PRINTF_LIB			:= $(FT_PRINTF_LIB_DIR)/ft_printf.a
 
 # Libraries
 LIBRARIES				:= $(LIST_LIB) \
-							$(STRING_ARRAY_LIB) \
-							$(FT_PRINTF_LIB)
+							$(STRING_ARRAY_LIB)
 
 #-----------------------COLORS-----------------------------------------------------------
 # Colors for Output
