@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 12:48:57 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/12 17:40:14 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:12:05 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 typedef int	(*t_builtin)(t_string_array);
 
 bool	is_builtin(t_string binary_name);
-int		run_builtin(t_string name, t_string_array args);
+int		launch_builtin(t_string name, t_string_array args);
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 13:04:08 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/12 17:40:23 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:12:00 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	is_builtin(t_string binary_name)
 	return (false);
 }
 
-int	run_builtin(t_string name, t_string_array args)
+int	launch_builtin(t_string name, t_string_array args)
 {
 	const t_string	names[] = {"echo", "cd",
 		"pwd", "export", "unset", "env", "exit", NULL};
