@@ -83,10 +83,14 @@ int	test3(void)
 
 	result = run_a_command(command);
 
-	if (command->exit_status_code != SUCCESS)
-		result = command->exit_status_code;
+	int exit_status_code;
+	exit_status_code = command->exit_status_code;
 
 	destroy_command(&command);
+
+	if (exit_status_code != FAILURE)
+		return (FAILURE);
+
 	return (result);
 }
 
@@ -101,10 +105,14 @@ int	test4(void)
 
 	result = run_a_command(command);
 
-	if (command->exit_status_code != SUCCESS)
-		result = command->exit_status_code;
+	int exit_status_code;
+	exit_status_code = command->exit_status_code;
 
 	destroy_command(&command);
+
+	if (exit_status_code != FAILURE)
+		return (FAILURE);
+
 	return (result);
 }
 
@@ -191,10 +199,14 @@ int test9(void)
 
 	result = run_a_command(command);
 
-	if (command->exit_status_code != SUCCESS)
-		result = command->exit_status_code;
+	int exit_status_code;
+	exit_status_code = command->exit_status_code;
 
 	destroy_command(&command);
+
+	if (exit_status_code != FAILURE)
+		return (FAILURE);
+		
 	return (result);
 }
 
