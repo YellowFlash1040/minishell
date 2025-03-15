@@ -27,7 +27,15 @@ int	run_a_pipeline(t_pipeline *pipeline)
 	int			result;
 	int			prev_pipe[2];
 	int			current_pipe[2];
+	t_command*	first_command;
 
+	if (!pipeline || !pipeline->commands || !pipeline->commands->head)
+		return (FAILURE);
+	first_command = (t_command*)pipeline->commands->head->value;
+	if (!first_command)
+		return (FAILURE);
+	if (pipeline->commands->count == 1 && is_builtin(first_command->executable))
+		first_command->needs_a_subshell = false;
 	result = run_commands(pipeline->commands, prev_pipe, current_pipe,
 			&pipeline->status_code);
 	if (result != SUCCESS)
@@ -54,7 +62,7 @@ int	run_commands(t_list *commands, int prev_pipe[2], int current_pipe[2],
 		if (result != SUCCESS)
 			return (result);
 		result = setup_and_run_command(command, prev_pipe, current_pipe);
-		if (result != SUCCESS)
+		if (result != SUCCESS || command->id == 0)
 			return (result);
 		result = move_to_the_next_pipe(prev_pipe, current_pipe);
 		if (result != SUCCESS)
