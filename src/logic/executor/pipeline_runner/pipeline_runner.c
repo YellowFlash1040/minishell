@@ -27,11 +27,11 @@ int	run_a_pipeline(t_pipeline *pipeline)
 	int			result;
 	int			prev_pipe[2];
 	int			current_pipe[2];
-	t_command*	first_command;
+	t_command	*first_command;
 
 	if (!pipeline || !pipeline->commands || !pipeline->commands->head)
 		return (FAILURE);
-	first_command = (t_command*)pipeline->commands->head->value;
+	first_command = (t_command *)pipeline->commands->head->value;
 	if (!first_command)
 		return (FAILURE);
 	if (pipeline->commands->count == 1 && is_builtin(first_command->executable))
