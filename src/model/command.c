@@ -28,6 +28,7 @@ t_command	*init_command(void)
 	command->error_file = NULL;
 	command->exit_status_code = 0;
 	command->unused_pipe_end = -1;
+	command->needs_a_subshell = true;
 	return (command);
 }
 

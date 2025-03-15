@@ -34,6 +34,7 @@ typedef struct command
 	t_file			*error_file;
 	int				exit_status_code;
 	int				unused_pipe_end;
+	bool			needs_a_subshell;
 }					t_command;
 
 t_command			*init_command(void);
