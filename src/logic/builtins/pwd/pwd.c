@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.h                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 12:57:04 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/16 16:28:33 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/16 18:04:41 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/16 18:06:11 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ECHO_H
-# define ECHO_H
+#include "pwd.h"
 
-# include "string_array.h"
-# include "global_status_codes.h"
-# include "command.h"
-# include <unistd.h>
-
-int	echo(t_command *command);
-
-#endif
+int	pwd(t_command *command)
+{
+	(void)command;
+	return (SUCCESS);
+}

@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.h                                             :+:      :+:    :+:   */
+/*   exit_builtin.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 12:57:04 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/16 16:28:33 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/16 18:07:20 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/16 18:20:14 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ECHO_H
-# define ECHO_H
+#ifndef EXIT_BUILTIN_H
+# define EXIT_BUILTIN_H
 
-# include "string_array.h"
-# include "global_status_codes.h"
 # include "command.h"
-# include <unistd.h>
+# include "converter.h"
+# include "error_printer.h"
 
-int	echo(t_command *command);
+int	exit_builtin(t_command *command);
 
 #endif

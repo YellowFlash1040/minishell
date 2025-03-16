@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 12:48:57 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/13 15:12:05 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:13:02 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 
 # include "echo.h"
 # include "cd.h"
+# include "export.h"
+# include "set.h"
+# include "unset.h"
+# include "env.h"
+# include "pwd.h"
+# include "exit_builtin.h"
 
-typedef int	(*t_builtin)(t_string_array);
+typedef int	(*t_builtin)(t_command *command);
 
 bool	is_builtin(t_string binary_name);
-int		launch_builtin(t_string name, t_string_array args);
+int		launch_builtin(t_command *command);
 
 #endif
 
