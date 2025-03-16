@@ -43,8 +43,6 @@ void	destroy_command(t_command **command_ref)
 		free(command->executable);
 	if (command->arguments)
 		destroy_string_array(&command->arguments);
-	if (command->environment)
-		destroy_string_array(&command->environment);
 	if (command->input_file)
 		destroy_file(&command->input_file);
 	if (command->output_file)

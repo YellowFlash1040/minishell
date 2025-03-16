@@ -28,7 +28,7 @@ typedef struct command
 	pid_t			id;
 	t_string		executable;
 	t_string_array	arguments;
-	t_string_array	environment;
+	t_list			*environment;
 	t_file			*input_file;
 	t_file			*output_file;
 	t_file			*error_file;
