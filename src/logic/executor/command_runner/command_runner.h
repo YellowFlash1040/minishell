@@ -17,7 +17,6 @@
 # define COMMAND_RUNNER_H
 
 # include "builtins.h"
-# include "command.h"
 # include "error_printer.h"
 # include <errno.h>
 

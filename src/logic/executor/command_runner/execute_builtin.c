@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:21:03 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/15 12:42:59 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/16 16:24:43 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	execute_builtin(t_command *command)
 	result = setup_command_io(command);
 	if (result != SUCCESS)
 		return (result);
-	result = launch_builtin(command->executable, command->arguments);
+	result = launch_builtin(command);
 	if (result != SUCCESS)
 		return (result);
 	result = restore_standard_fds(standard_fds);
