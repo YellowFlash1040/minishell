@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environment.c                                      :+:      :+:    :+:   */
+/*   env_helpers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 18:41:44 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/12 12:34:15 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/16 15:23:56 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/16 15:27:34 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,27 @@
 
 int			count_variables_for_export(t_list *env);
 t_string	convert_variable_to_string(t_variable *variable);
-t_variable	*create_variable(t_string env_var);
-void		free_variable(void *value);
-
-t_list	*init_environment(char *envp[])
-{
-	t_list		*environment;
-	t_variable	*variable;
-	int			i;
-
-	if (!envp)
-		return (NULL);
-	environment = init_list();
-	if (!environment)
-		return (NULL);
-	i = -1;
-	while (envp[++i])
-	{
-		variable = create_variable(envp[i]);
-		if (!variable)
-			return (clear_list(environment, free_variable), NULL);
-		if (!add_to_list(environment, variable))
-			return (destroy_variable(&variable),
-				clear_list(environment, free_variable), NULL);
-	}
-	return (environment);
-}
 
 t_variable	*create_variable(t_string env_var)
 {
 	t_variable		*var;
-	t_string_array	parts;
+	t_string		parts[2];
+	int				i;
 
 	if (!env_var)
 		return (NULL);
-	parts = ft_split(env_var, '=');
-	if (!parts)
+	i = 0;
+	parts[0] = extract_word(env_var, &i, '=');
+	if (!parts[0])
 		return (NULL);
-	var = init_variable(parts[0]);
+	i++;
+	parts[1] = extract_word(env_var, &i, '\0');
+	if (!parts[1])
+		return (free(parts[0]), NULL);
+	var = init_variable(parts[0], parts[1]);
 	if (!var)
-		return (destroy_string_array(&parts), NULL);
-	var->value = parts[1];
-	var->string_value = env_var;
+		return (free(parts[0]), free(parts[1]), NULL);
+	var->is_exported = true;
 	return (var);
 }
 
@@ -114,4 +93,21 @@ int	count_variables_for_export(t_list *env)
 		node = node->next;
 	}
 	return (count);
+}
+
+t_string	convert_variable_to_string(t_variable *variable)
+{
+	t_string	temp;
+	t_string	result;
+
+	temp = ft_strjoin(variable->name, "=");
+	if (!temp)
+		return (NULL);
+	result = temp;
+	temp = ft_strjoin(result, variable->value);
+	free(result);
+	if (!temp)
+		return (NULL);
+	result = temp;
+	return (result);
 }
