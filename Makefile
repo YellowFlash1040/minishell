@@ -25,10 +25,21 @@ SHARED_DIR				:= $(SRC_DIR)/shared
 # Logic directories (src/logic/)
 EXECUTOR_DIR			:= $(LOGIC_DIR)/executor
 BUILTINS_DIR			:= $(LOGIC_DIR)/builtins
+ENVIRONMENT_DIR			:= $(LOGIC_DIR)/environment
 
 # Executor directories (src/logic/executor/)
 COMMAND_RUNNER_DIR		:= $(EXECUTOR_DIR)/command_runner
 PIPELINE_RUNNER_DIR		:= $(EXECUTOR_DIR)/pipeline_runner
+
+# Builtin directories (src/logic/builtins/)
+CD_DIR					:= $(BUILTINS_DIR)/cd
+ECHO_DIR				:= $(BUILTINS_DIR)/echo
+EXPORT_DIR				:= $(BUILTINS_DIR)/export
+SET_DIR					:= $(BUILTINS_DIR)/set
+UNSET_DIR				:= $(BUILTINS_DIR)/unset
+ENV_DIR					:= $(BUILTINS_DIR)/env
+PWD_DIR					:= $(BUILTINS_DIR)/pwd
+EXIT_DIR				:= $(BUILTINS_DIR)/exit_builtin
 
 # List of all source directories
 SRC_DIRS				:= $(SRC_DIR) \
@@ -40,17 +51,28 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(EXECUTOR_DIR) \
 							$(BUILTINS_DIR) \
 							$(COMMAND_RUNNER_DIR) \
-							$(PIPELINE_RUNNER_DIR)
+							$(PIPELINE_RUNNER_DIR) \
+							$(CD_DIR) \
+							$(ECHO_DIR) \
+							$(EXPORT_DIR) \
+							$(SET_DIR) \
+							$(UNSET_DIR) \
+							$(ENV_DIR) \
+							$(PWD_DIR) \
+							$(EXIT_DIR) \
+							$(ENVIRONMENT_DIR)
 
 # Library directories (libraries/)
 LIST_LIB_DIR			:= $(LIB_DIR)/list
 STRING_ARRAY_LIB_DIR	:= $(LIB_DIR)/string_array
 STRING_LIB_DIR			:= $(LIB_DIR)/ft_string
+CONVERTER_LIB_DIR		:= $(LIB_DIR)/converter
 
 # List of all library directories
 LIB_DIRS				:= $(LIST_LIB_DIR) \
 							$(STRING_ARRAY_LIB_DIR) \
-							$(STRING_LIB_DIR)
+							$(STRING_LIB_DIR) \
+							$(CONVERTER_LIB_DIR)
 
 #-----------------------FILES------------------------------------------------------------
 # Sources
@@ -64,10 +86,12 @@ OBJ     				:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(C_FILES)))
 # Library files
 LIST_LIB				:= $(LIST_LIB_DIR)/list.a
 STRING_ARRAY_LIB		:= $(STRING_ARRAY_LIB_DIR)/string_array.a
+CONVERTER_LIB_DIR		:= $(CONVERTER_LIB_DIR)/converter.a
 
 # Libraries
 LIBRARIES				:= $(LIST_LIB) \
-							$(STRING_ARRAY_LIB)
+							$(STRING_ARRAY_LIB) \
+							$(CONVERTER_LIB_DIR)
 
 #-----------------------COLORS-----------------------------------------------------------
 # Colors for Output
