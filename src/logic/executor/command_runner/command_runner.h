@@ -19,7 +19,6 @@
 # include "builtins.h"
 # include "command.h"
 # include "error_printer.h"
-# include "find_binary.h"
 # include <errno.h>
 
 // # define CHILD_PROCESS pid == 0

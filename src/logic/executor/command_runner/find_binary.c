@@ -6,12 +6,11 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 13:41:12 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/10 14:22:14 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/16 15:36:59 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "find_binary.h"
-#include <stdio.h>
+#include "command_runner.h"
 
 int	check_using_abs_rel_path(t_string path, t_string *result);
 int	check_using_env_path(t_string path, t_string *result);
@@ -22,7 +21,7 @@ int	find_binary(t_string path, t_string *result)
 {
 	*result = NULL;
 	if (!path)
-		return (EMPTY_PATH_ERR);
+		return (FAILURE);
 	if (path[0] == '\0')
 		return (SUCCESS);
 	if (index_of('/', path) != -1)
@@ -39,7 +38,7 @@ int	check_using_abs_rel_path(t_string path, t_string *result)
 	{
 		temp = ft_strdup(path);
 		if (!temp)
-			return (MALLOC_FAIL_ERR);
+			return (FAILURE);
 		*result = temp;
 	}
 	return (SUCCESS);
@@ -57,7 +56,7 @@ int	check_using_env_path(t_string path, t_string *result)
 		return (0);
 	folders = ft_split(env_path, ':');
 	if (!folders)
-		return (MALLOC_FAIL_ERR);
+		return (FAILURE);
 	status_code = search_binary_in_folders(path, folders, result);
 	destroy_string_array(&folders);
 	if (status_code != SUCCESS)
@@ -75,7 +74,7 @@ int	search_binary_in_folders(t_string binary, t_string_array folders,
 	*result = NULL;
 	slash_binary = ft_strjoin("/", binary);
 	if (!slash_binary)
-		return (MALLOC_FAIL_ERR);
+		return (FAILURE);
 	i = -1;
 	while (folders[++i])
 	{
@@ -84,7 +83,7 @@ int	search_binary_in_folders(t_string binary, t_string_array folders,
 		else
 			full_path = ft_strjoin(folders[i], slash_binary);
 		if (!full_path)
-			return (free(slash_binary), MALLOC_FAIL_ERR);
+			return (free(slash_binary), FAILURE);
 		if (access(full_path, F_OK) == 0)
 		{
 			*result = full_path;

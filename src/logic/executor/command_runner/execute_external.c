@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:25:09 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/15 13:09:20 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/16 15:37:16 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	setup_command_io(t_command *command);
 int	launch_binary(t_string name, t_string_array args);
 int	setup_binary_path(t_string *name_ref);
+int	find_binary(t_string path, t_string *result);
 int	print_not_found_err(t_string binary_path);
 
 int	execute_external(t_command *command)
@@ -72,7 +73,7 @@ int	print_not_found_err(t_string binary_path)
 
 	message = ft_strjoin(binary_path, ": command not found\n");
 	if (!message)
-		return (perror("Error"), MALLOC_FAIL_ERR);
+		return (perror("Error"), FAILURE);
 	result = print_error_message(message);
 	free(message);
 	if (result != SUCCESS)
