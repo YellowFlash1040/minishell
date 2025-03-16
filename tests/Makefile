@@ -12,6 +12,7 @@ INCLUDES		 = -I$(HELPERS_DIR) \
 TEST_BINS		 = $(addprefix $(BIN_DIR)/,$(notdir $(TEST_FILES:.c=)))
 # TEST_BINS		 = $(BIN_DIR)/run_a_pipeline.test
 # TEST_BINS		 = $(BIN_DIR)/echo.test
+# TEST_BINS		 = $(BIN_DIR)/export.test
 MINISHELL		 = $(MINISHELL_DIR)/libminishell.a
 
 #-----------------------FOLDERS----------------------------------------------------------
