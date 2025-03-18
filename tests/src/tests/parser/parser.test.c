@@ -5,6 +5,7 @@
 #include "global_status_codes.h"
 #include "ft_string.h"
 #include "class_printer.h"
+#include "pipeline_runner.h"
 
 t_list	*create_token_list(char **prompt)
 {
@@ -17,10 +18,15 @@ t_list	*create_token_list(char **prompt)
 	tokens = init_list();
 	if (!tokens)
 		return (NULL);
-	while (token)
+	while (token && token->type != EndOfInput)
 	{
 		add_to_list(tokens, token);
 		token = get_next_token(prompt);
+	}
+	if (!token)
+	{
+		clear_list(tokens, free);
+		return (NULL);
 	}
 	return (tokens);
 }
@@ -30,7 +36,6 @@ int test1(void)
 	char	*prompt;
 	t_list *tokens;
 	t_pipeline **pipeline;
-	int			cmd;
 
 	pipeline = malloc(sizeof(t_pipeline **));
 	if (!pipeline)
@@ -43,13 +48,11 @@ int test1(void)
 		return (FAILURE);
 	if (!(*pipeline))
 		return (FAILURE);
-	cmd = 0;
-	while (cmd < (*pipeline)->commands->count)
-		print_a_command(get_node(cmd++, (*pipeline)->commands)->value, "\n");
+	run_a_pipeline(*pipeline);
 	return (SUCCESS);
 }
 
 int main(void)
 {
-	test1();
+	run_a_test(test1, 1, false);
 }

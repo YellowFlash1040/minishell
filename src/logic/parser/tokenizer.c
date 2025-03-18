@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 14:25:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/11 14:50:38 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/17 15:31:50 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,45 @@ char	*scan_word(char **prompt)
 	return (word);
 }
 
-void	tokenize_quote(t_token *token, char **prompt)
+char	*read_quote(char quote, char **prompt)
+{
+	int		i;
+	char 	*value;
+
+	i = 0;
+	while ((*prompt)[i + 1] && (*prompt)[i + 1] != quote)
+		i++;
+	if (!(*prompt)[i + 1])
+		return (NULL);
+	value = (char *) malloc(i + 1);
+	if (!value)
+		return (NULL);
+	i = 0;
+	(*prompt)++;
+	while (**prompt != quote)
+	{
+		value[i++] = **prompt;
+		(*prompt)++;
+	}
+	return (value);
+}
+
+int	tokenize_quote(t_token *token, char **prompt)
 {
 	if (**prompt == '\'')
+	{
+		token->value = read_quote('\'', prompt);
 		token->type = SingleQuote;
+	}
 	else if (**prompt == '"')
+	{
+		token->value = read_quote('"', prompt);
 		token->type = DoubleQuote;
+	}
+	if (!token->value)
+		return (FAILURE);
 	(*prompt)++;
+	return (SUCCESS);
 }
 
 void	tokenize_redir(t_token *token, char **prompt)
@@ -87,17 +119,23 @@ void	tokenize_pipe(t_token *token, char **prompt)
 	(*prompt)++;
 }
 
-void	tokenize_env(t_token *token, char **prompt)
+int	tokenize_env(t_token *token, char **prompt)
 {
 	token->type = EnvVariable;
 	(*prompt)++;
 	token->value = scan_word(prompt);
+	if (!token->value)
+		return (FAILURE);
+	return (SUCCESS);
 }
 
-void	tokenize_word(t_token *token, char **prompt)
+int	tokenize_word(t_token *token, char **prompt)
 {
 	token->type = Word;
 	token->value = scan_word(prompt);
+	if (!token->value)
+		return (FAILURE);
+	return (SUCCESS);
 }
 
 t_token	*get_next_token(char **prompt)
@@ -110,16 +148,25 @@ t_token	*get_next_token(char **prompt)
 	while (**prompt && is_whitespace(**prompt))
 		(*prompt)++;
 	if (**prompt && ft_strchr("\"\'", **prompt))
-		tokenize_quote(token, prompt);
+	{
+		if (tokenize_quote(token, prompt) == FAILURE)
+			return (free(token), NULL);
+	}
 	else if (**prompt && ft_strchr("<>", **prompt))
 		tokenize_redir(token, prompt);
 	else if (**prompt == '|')
 		tokenize_pipe(token, prompt);
 	else if (**prompt == '$')
-		tokenize_env(token, prompt);
+	{
+		if (tokenize_env(token, prompt) == FAILURE)
+			return (free(token), NULL);
+	}
 	else if (**prompt && !is_whitespace(**prompt))
-		tokenize_word(token, prompt);
+	{
+		if (tokenize_word(token, prompt) == FAILURE)
+			return (free(token), NULL);
+	}
 	else
-		return (NULL);
+		token->type = EndOfInput;
 	return (token);
 }

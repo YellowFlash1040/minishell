@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 15:11:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/13 16:05:37 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/17 14:59:14 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 #include "parser_utils.h"
 #include "parser.h"
 #include "global_status_codes.h"
+
+// int nt_file(t_list *tokens, int *depth, char **file)
+// {
+// 	return (0);
+// }
 
 int nt_redir(t_list *tokens, int *depth, t_command **command)
 {
@@ -31,9 +36,20 @@ int nt_redir(t_list *tokens, int *depth, t_command **command)
 	if (!token || token->type != Word)
 		return (FAILURE);
 	if (redir == RedirInput)
+	{
 		(*command)->input_file->path = token->value;
+		(*command)->output_file->mode = READ;
+	}
 	else if (redir == RedirOutput)
+	{
 		(*command)->output_file->path = token->value;
+		(*command)->output_file->mode = TRUNCATE;
+	}
+	else if (redir == RedirAppend)
+	{
+		(*command)->output_file->path = token->value;
+		(*command)->output_file->mode = APPEND;
+	}
 	*depth = index;
 	return (SUCCESS);
 }

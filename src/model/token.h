@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 14:22:40 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/10 16:26:02 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/17 13:28:42 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ typedef enum token_type {
 	RedirAppend,
 	Pipe,
 	EnvVariable,
-	Word
+	Word,
+	EndOfInput
 } t_token_type;
 
 typedef struct token {
