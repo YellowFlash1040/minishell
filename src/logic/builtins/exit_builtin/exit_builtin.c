@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.h                                               :+:      :+:    :+:   */
+/*   exit_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 16:01:26 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/12 17:40:38 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/16 18:08:18 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/16 18:20:34 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CD_H
-# define CD_H
+#include "exit_builtin.h"
 
-# include "string_array.h"
-# include "global_status_codes.h"
-# include "error_printer.h"
-# include <unistd.h>
+int	count_arguments(t_string_array args);
 
-int	cd(t_string_array args);
+int	exit_builtin(t_command *command)
+{
+	int	exit_status;
 
-#endif
+	if (count_arguments(command->arguments) > 2)
+		return (print_error_message("exit: too many arguments\n"),
+			FAILURE);
+	exit_status = SUCCESS;
+	if (command->arguments[1])
+		exit_status = ft_atoi(command->arguments[1]);
+	exit(exit_status);
+}

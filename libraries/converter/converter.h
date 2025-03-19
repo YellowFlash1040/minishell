@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   variable.h                                         :+:      :+:    :+:   */
+/*   converter.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 18:29:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/15 16:54:36 by akovtune         ###   ########.fr       */
+/*   Created: 2025/01/16 15:25:10 by akovtune          #+#    #+#             */
+/*   Updated: 2025/01/16 15:25:55 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VARIABLE_H
-# define VARIABLE_H
+#ifndef CONVERTER_H
+# define CONVERTER_H
 
-# include "ft_string.h"
-
-typedef struct variable
-{
-	t_string	name;
-	t_string	value;
-	bool		is_exported;
-}	t_variable;
-
-t_variable	*init_variable(t_string name, t_string value);
-void		destroy_variable(t_variable **variable);
+int		ft_atoi(const char *str);
+char	*ft_itoa(int n);
 
 #endif

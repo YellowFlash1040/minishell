@@ -9,6 +9,8 @@ int	test5(void);
 int	test6(void);
 int	test7(void);
 int	test8(void);
+int	test9(void);
+int	test10(void);
 
 int	main(void)
 {
@@ -21,30 +23,42 @@ int	main(void)
 		test5,
 		test6,
 		test7,
-		test8
+		test8,
+		test9,
+		test10
 	};
 
 	for (int i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++)
-		run_a_test(tests[i], i + 1, false);
+		run_a_test(tests[i], i + 1, true);
 }
 
 int run_with_output_manipulations(int (*run_a_pipeline)(t_pipeline *p), t_pipeline *pipeline)
 {
 	int result;
-	// bool need_detailed_info = true;
-	bool need_detailed_info = false;
+	// bool need_output = true;
+	bool need_output = false;
+	// bool need_status_codes = true;
+	bool need_status_codes = false;
 
-	int saved_stdout = dup(STDOUT_FILENO);
-	int fd = open("/dev/null", O_WRONLY);
-	dup2(fd, STDOUT_FILENO);
-	dup2(fd, STDERR_FILENO);
-	close(fd);
-	result = run_a_pipeline(pipeline);
+	if (!need_output)
+	{
+		int saved_stdout = dup(STDOUT_FILENO);
+		int saved_stderr = dup(STDERR_FILENO);
+		int fd = open("/dev/null", O_WRONLY);
+		dup2(fd, STDOUT_FILENO);
+		dup2(fd, STDERR_FILENO);
+		close(fd);
+		result = run_a_pipeline(pipeline);
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
+		dup2(saved_stderr, STDERR_FILENO);
+		close(saved_stderr);
+	}
+	else
+		result = run_a_pipeline(pipeline);
 	if (result != SUCCESS)
 		return (result);
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdout);
-	if (need_detailed_info)
+	if (need_status_codes)
 	{
 		t_command *command;
 		t_list_node *node;
@@ -53,7 +67,6 @@ int run_with_output_manipulations(int (*run_a_pipeline)(t_pipeline *p), t_pipeli
 		while (++i < pipeline->commands->count)
 		{
 			command = (t_command *)node->value;
-			// printf("exit status = %d\n", command->exit_status_code);
 			printf("%s: %d\n", command->executable, command->exit_status_code);
 			node = node->next;
 		}
@@ -85,7 +98,28 @@ int	test1(void)
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
+	t_command*		command;
+	t_list_node*	node;
+	int exit_status_codes[3];
+	int pipeline_length;
+
+	pipeline_length = pipeline->commands->count;
+	node = pipeline->commands->head;
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		command = (t_command *)node->value;
+		exit_status_codes[i] = command->exit_status_code;
+		node = node->next;
+	}
+
 	destroy_pipeline(&pipeline);
+
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		if (exit_status_codes[i] != SUCCESS)
+			return (exit_status_codes[i]);
+	}
+
 	return (result);
 }
 
@@ -110,7 +144,28 @@ int	test2(void)
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
+	t_command*		command;
+	t_list_node*	node;
+	int exit_status_codes[3];
+	int pipeline_length;
+
+	pipeline_length = pipeline->commands->count;
+	node = pipeline->commands->head;
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		command = (t_command *)node->value;
+		exit_status_codes[i] = command->exit_status_code;
+		node = node->next;
+	}
+
 	destroy_pipeline(&pipeline);
+
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		if (exit_status_codes[i] != SUCCESS)
+			return (exit_status_codes[i]);
+	}
+
 	return (result);
 }
 
@@ -138,7 +193,28 @@ int	test3(void)
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
+	t_command*		command;
+	t_list_node*	node;
+	int exit_status_codes[3];
+	int pipeline_length;
+
+	pipeline_length = pipeline->commands->count;
+	node = pipeline->commands->head;
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		command = (t_command *)node->value;
+		exit_status_codes[i] = command->exit_status_code;
+		node = node->next;
+	}
+
 	destroy_pipeline(&pipeline);
+
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		if (exit_status_codes[i] != SUCCESS)
+			return (exit_status_codes[i]);
+	}
+
 	return (result);
 }
 
@@ -166,7 +242,28 @@ int	test4(void)
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
+	t_command*		command;
+	t_list_node*	node;
+	int exit_status_codes[3];
+	int pipeline_length;
+	pipeline_length = pipeline->commands->count;
+	node = pipeline->commands->head;
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		command = (t_command *)node->value;
+		if (command->id == 0)
+			break;
+		exit_status_codes[i] = command->exit_status_code;
+		node = node->next;
+	}
 	destroy_pipeline(&pipeline);
+	if (exit_status_codes[0] != SUCCESS)
+		return (exit_status_codes[0]);
+	if (exit_status_codes[1] != FAILURE)
+		return (FAILURE);
+	if (exit_status_codes[2] != SUCCESS)
+		return (exit_status_codes[2]);
+
 	return (result);
 }
 
@@ -194,7 +291,28 @@ int	test5(void)
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
+	t_command*		command;
+	t_list_node*	node;
+	int exit_status_codes[3];
+	int pipeline_length;
+
+	pipeline_length = pipeline->commands->count;
+	node = pipeline->commands->head;
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		command = (t_command *)node->value;
+		exit_status_codes[i] = command->exit_status_code;
+		node = node->next;
+	}
+
 	destroy_pipeline(&pipeline);
+
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		if (exit_status_codes[i] != SUCCESS)
+			return (exit_status_codes[i]);
+	}
+
 	return (result);
 }
 
@@ -222,7 +340,28 @@ int	test6(void)
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
+	t_command*		command;
+	t_list_node*	node;
+	int exit_status_codes[3];
+	int pipeline_length;
+
+	pipeline_length = pipeline->commands->count;
+	node = pipeline->commands->head;
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		command = (t_command *)node->value;
+		exit_status_codes[i] = command->exit_status_code;
+		node = node->next;
+	}
+
 	destroy_pipeline(&pipeline);
+
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		if (exit_status_codes[i] != SUCCESS)
+			return (exit_status_codes[i]);
+	}
+
 	return (result);
 }
 
@@ -253,7 +392,28 @@ int	test7(void)
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
+	t_command*		command;
+	t_list_node*	node;
+	int exit_status_codes[4];
+	int pipeline_length;
+
+	pipeline_length = pipeline->commands->count;
+	node = pipeline->commands->head;
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		command = (t_command *)node->value;
+		exit_status_codes[i] = command->exit_status_code;
+		node = node->next;
+	}
+
 	destroy_pipeline(&pipeline);
+
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		if (exit_status_codes[i] != SUCCESS)
+			return (exit_status_codes[i]);
+	}
+
 	return (result);
 }
 
@@ -281,6 +441,133 @@ int	test8(void)
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
+	t_command*		command;
+	t_list_node*	node;
+	int exit_status_codes[3];
+	int pipeline_length;
+
+	pipeline_length = pipeline->commands->count;
+	node = pipeline->commands->head;
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		command = (t_command *)node->value;
+		exit_status_codes[i] = command->exit_status_code;
+		node = node->next;
+	}
+
 	destroy_pipeline(&pipeline);
+
+	if (exit_status_codes[0] != SUCCESS)
+		return (exit_status_codes[0]);
+	if (exit_status_codes[1] != 1)
+		return (FAILURE);
+	if (exit_status_codes[2] != SUCCESS)
+		return (exit_status_codes[2]);
+
+	return (result);
+}
+
+int	test9(void)
+{
+	int result;
+	t_pipeline *pipeline;
+
+	/*
+		cd /home/akovtune | ls | cd - | ls
+	*/
+
+	char *exe1 = "cd";
+	char *args1[] = {exe1, "/home/akovtune", NULL};
+	char *exe2 = "cd";
+	char *args2[] = {exe2, "/home/akovtune/codam/core/projects/minishell", NULL};
+	// char *exe2 = "cd";
+	// char *args2[] = {exe2, "-", NULL};
+	char *exe3 = "ls";
+	char *args3[] = {exe3, NULL};
+	// char *exe4 = "grep";
+	// char *args4[] = {exe4, "Ma", NULL};
+
+	build_pipeline(&pipeline);
+
+	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
+	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
+	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
+	// add_to_list(pipeline->commands, create_command(exe4, args4, NULL, NULL));
+
+	result = run_with_output_manipulations(run_a_pipeline, pipeline);
+
+	char* cwd = getcwd(NULL, 0);
+	printf("cwd: %s\n", cwd);
+	free(cwd);
+
+	t_command*		command;
+	t_list_node*	node;
+	int exit_status_codes[3];
+	int pipeline_length;
+
+	pipeline_length = pipeline->commands->count;
+	node = pipeline->commands->head;
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		command = (t_command *)node->value;
+		exit_status_codes[i] = command->exit_status_code;
+		node = node->next;
+	}
+
+	destroy_pipeline(&pipeline);
+
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		if (exit_status_codes[i] != SUCCESS)
+			return (exit_status_codes[i]);
+	}
+
+	return (result);
+}
+
+int	test10(void)
+{
+	int result;
+	t_pipeline *pipeline;
+
+	/*
+		cd /home/akovtune
+	*/
+
+	char *exe1 = "cd";
+	char *args1[] = {exe1, "/home/akovtune", NULL};
+
+	build_pipeline(&pipeline);
+
+	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
+
+	result = run_with_output_manipulations(run_a_pipeline, pipeline);
+
+	char* cwd = getcwd(NULL, 0);
+	printf("cwd: %s\n", cwd);
+	free(cwd);
+
+	t_command*		command;
+	t_list_node*	node;
+	int exit_status_codes[1];
+	int pipeline_length;
+
+	pipeline_length = pipeline->commands->count;
+	node = pipeline->commands->head;
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		command = (t_command *)node->value;
+		exit_status_codes[i] = command->exit_status_code;
+		node = node->next;
+	}
+
+	destroy_pipeline(&pipeline);
+
+	for(int i = 0; i < pipeline_length; i++)
+	{
+		if (exit_status_codes[i] != SUCCESS)
+			return (exit_status_codes[i]);
+	}
+
 	return (result);
 }

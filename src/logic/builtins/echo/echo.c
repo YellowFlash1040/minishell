@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:57:24 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/12 17:39:23 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/16 17:48:33 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 bool	check_for_n_flag(t_string first_arg);
 
-int	echo(t_string_array args)
+int	echo(t_command *command)
 {
-	bool	n_flag_active;
-	int		i;
+	t_string_array	args;
+	bool			n_flag_active;
+	int				i;
 
-	if (!args)
+	if (!command || !command->arguments)
 		return (FAILURE);
+	args = command->arguments;
 	n_flag_active = check_for_n_flag(args[1]);
 	if (!n_flag_active)
 		i = 1;
@@ -28,13 +30,13 @@ int	echo(t_string_array args)
 		i = 2;
 	while (args[i])
 	{
-		printf("%s", args[i]);
+		write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
 		if (args[i + 1])
-			printf(" ");
+			write(STDOUT_FILENO, " ", 1);
 		i++;
 	}
 	if (!n_flag_active)
-		printf("\n");
+		write(STDOUT_FILENO, "\n", 1);
 	return (SUCCESS);
 }
 

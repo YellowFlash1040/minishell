@@ -13,51 +13,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "error_printer.h"
-// #include "parser.h"
-
-// int	main(int argsc, char **args)
-// {
-// 	int			result;
-// 	t_prompt	*prompt;
-
-// 	if (argsc < 1)
-// 		return (FAILURE);
-// 	result = parse(args[1], &prompt);
-// 	if (result != SUCCESS)
-// 		return (result);
-// 	destroy_prompt(&prompt);
-// 	return (SUCCESS);
-// }
-
-// #include "pipeline_builder.h"
-// #include "pipeline_runner.h"
-#include <stdio.h>
-#include "echo.h"
-
-
 int	main(int argc, char *argv[], char *envp[])
 {
-	(void)argc;
+	(void) argc;
 	(void)argv;
 	(void)envp;
-
-	// int i;
-
-	// i=-1;
-	// while (envp[++i])
-	// 	printf("%s\n", envp[i]);
-
-	t_string_array args;
-
-	args = init_string_array(2);
-	if (!args)
-		printf("Malloc failed\n");
-	args[0] = ft_strdup("hello");
-	args[1] = ft_strdup("world");
-
-	echo(args);
-
 	return (0);
 }
 
@@ -76,6 +36,7 @@ int	main(int argc, char *argv[], char *envp[])
 // echo $?
 
 // Example 4
-// ARG=hello; OK="how are you?"; FILE=input.txt; echo $OK; cat $FILE; ls | grep $OK > $FILE
+// ARG=hello; OK="how are you?"; FILE=input.txt; echo $OK; cat $FILE;
+// ; ls | grep $OK > $FILE
 // export OK="how are you?"
 // unset

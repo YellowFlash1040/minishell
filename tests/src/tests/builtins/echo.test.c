@@ -16,6 +16,7 @@ int test12(void);
 int test13(void);
 int test14(void);
 int test15(void);
+int test16(void);
 
 int main(void)
 {
@@ -35,11 +36,12 @@ int main(void)
 			test12,
 			test13,
 			test14,
-			test15
+			test15,
+			test16
 		};
 
 	for (int i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++)
-		run_a_test(tests[i], i + 1, false);
+		run_a_test(tests[i], i + 1, true);
 }
 
 int test1(void)
@@ -334,7 +336,7 @@ int test14(void)
 	t_command *command;
 
 	/*
-		echo -n > output.txt
+		echo -n ok > output.txt
 	*/
 
 	char *exe_path = "echo";
@@ -362,6 +364,28 @@ int test15(void)
 	char *exe_path = "echo";
 	char *args[] = {exe_path, NULL};
 	command = create_command(exe_path, args, "assets/builtins/test15/input.txt", NULL);
+
+	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
+	destroy_command(&command);
+	return (result);
+}
+
+int test16(void)
+{
+	int result;
+	t_command *command;
+
+	/*
+		echo standard fd's test
+	*/
+
+	char *exe_path = "echo";
+	char *args[] = {exe_path, "standard", "fd's", "test", NULL};
+	command = create_command(exe_path, args, NULL, NULL);
 
 	result = run_a_command(command);
 

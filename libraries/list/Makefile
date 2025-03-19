@@ -14,7 +14,9 @@ INCLUDES	:= -I$(SRC_DIR)
 
 # Files
 FILES		:= list.c \
-				list_2.c
+				adding_nodes.c \
+				removing_nodes.c \
+				nodes_search.c
 
 # Sources, Objects
 SRC			:= $(addprefix $(SRC_DIR)/, $(FILES:.c=.o))

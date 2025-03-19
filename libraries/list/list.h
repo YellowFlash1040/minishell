@@ -22,10 +22,11 @@ typedef struct list_node
 	struct list_node	*next;
 }						t_list_node;
 
-typedef struct cirular_list
+typedef struct list
 {
 	int					count;
 	t_list_node			*head;
+	t_list_node			*tail;
 }						t_list;
 
 /**
@@ -38,6 +39,8 @@ typedef struct cirular_list
  * or NULL if memory allocation fails.
  */
 t_list		*init_list(void);
+
+void		destroy_list(t_list **list_ref, void (*free_value)(void *));
 
 /**
  * @brief Clears all elements of the list and frees associated memory.
@@ -114,5 +117,11 @@ bool		add_to_list(t_list *list, void *value);
  * or NULL if the index is out of bounds.
  */
 t_list_node	*get_node(int index, t_list *list);
+
+t_list_node	*find_node(void *value, t_list *list,
+				bool (*compare)(void*, void*));
+
+bool		remove_from_list(void *value, t_list *list,
+				bool (*compare)(void *, void *), void (*free_value)(void *));
 
 #endif

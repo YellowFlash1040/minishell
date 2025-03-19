@@ -11,7 +11,7 @@ int main(void)
 		};
 
 	for (int i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++)
-		run_a_test(tests[i], i + 1, false);
+		run_a_test(tests[i], i + 1, true);
 }
 
 int test1(void)

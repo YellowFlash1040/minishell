@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   variable.h                                         :+:      :+:    :+:   */
+/*   nodes_search.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 18:29:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/15 16:54:36 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/16 13:52:11 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/16 14:09:59 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VARIABLE_H
-# define VARIABLE_H
+#include "list.h"
 
-# include "ft_string.h"
-
-typedef struct variable
+t_list_node	*find_node(void *value, t_list *list, bool (*compare)(void*, void*))
 {
-	t_string	name;
-	t_string	value;
-	bool		is_exported;
-}	t_variable;
+	t_list_node	*node;
 
-t_variable	*init_variable(t_string name, t_string value);
-void		destroy_variable(t_variable **variable);
-
-#endif
+	if (!value || !list || !compare)
+		return (NULL);
+	node = list->head;
+	while (node)
+	{
+		if (compare(node->value, value))
+			return (node);
+		node = node->next;
+	}
+	return (NULL);
+}

@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   variable.h                                         :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 18:29:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/15 16:54:36 by akovtune         ###   ########.fr       */
+/*   Created: 2024/10/11 14:32:17 by akovtune          #+#    #+#             */
+/*   Updated: 2025/01/16 15:24:44 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VARIABLE_H
-# define VARIABLE_H
-
-# include "ft_string.h"
-
-typedef struct variable
+int	ft_atoi(const char *str)
 {
-	t_string	name;
-	t_string	value;
-	bool		is_exported;
-}	t_variable;
+	int	m;
+	int	res;
 
-t_variable	*init_variable(t_string name, t_string value);
-void		destroy_variable(t_variable **variable);
-
-#endif
+	res = 0;
+	m = 0;
+	while (*str != '\0' && ((*str >= 9 && *str <= 13) || *str == 32))
+		str++;
+	if (*str == '-' || *str == '+')
+		if (*str++ == '-')
+			m = -1;
+	while (*str >= '0' && *str <= '9')
+		res = res * 10 + (*str++ - '0');
+	if (m)
+		res = -res;
+	return (res);
+}

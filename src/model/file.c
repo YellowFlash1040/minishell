@@ -48,7 +48,7 @@ int	redirect(int old_fd, int new_fd)
 	redirected_fd = old_fd;
 	result = dup2(duplicated_fd, redirected_fd);
 	if (result == -1)
-		return (FD_DUP_ERR);
+		return (perror("dup2 error"), FD_DUP_ERR);
 	close(duplicated_fd);
 	return (SUCCESS);
 }

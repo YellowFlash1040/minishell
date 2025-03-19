@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "list.h"
-#include <stdio.h>
 
 t_list	*init_list(void)
 {
@@ -21,69 +20,33 @@ t_list	*init_list(void)
 	if (!list)
 		return (NULL);
 	list->head = NULL;
+	list->tail = NULL;
 	list->count = 0;
 	return (list);
 }
 
-void	clear_list(t_list *list, void (*free_value)(void *))
+void	destroy_list(t_list **list_ref, void (*free_value)(void *))
 {
-	t_list_node	*temp;
+	t_list	*list;
 
-	if (!list || !list->head)
+	if (!list_ref)
 		return ;
-	while (list->count--)
-	{
-		temp = list->head->next;
-		if (list->head->value && free_value)
-			free_value(list->head->value);
-		free(list->head);
-		list->head = temp;
-	}
+	list = *list_ref;
+	clear_list(list, free_value);
 	free(list);
+	*list_ref = NULL;
 }
 
-t_list_node	*create_node(void *value)
+t_list_node	*get_node(int index, t_list *list)
 {
-	t_list_node	*node;
-
-	node = (t_list_node *)malloc(sizeof(t_list_node));
-	if (!node)
-		return (NULL);
-	node->value = value;
-	node->next = NULL;
-	return (node);
-}
-
-void	push(t_list_node *new_node, t_list *list)
-{
-	t_list_node	*node;
-	t_list_node	*prev_node;
-
-	if (!list || !new_node)
-		return ;
-	node = list->head;
-	prev_node = NULL;
-	while (node)
-	{
-		prev_node = node;
-		node = node->next;
-	}
-	if (!list->head)
-		list->head = new_node;
-	else
-		prev_node->next = new_node;
-	list->count++;
-}
-
-t_list_node	*pop(t_list *list)
-{
+	int			i;
 	t_list_node	*node;
 
 	if (!list || !list->head)
 		return (NULL);
+	i = -1;
 	node = list->head;
-	list->head = list->head->next;
-	node->next = NULL;
-	list->count--;
+	while (++i < index)
+		node = node->next;
 	return (node);
 }

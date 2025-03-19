@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   variable.h                                         :+:      :+:    :+:   */
+/*   set.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 18:29:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/15 16:54:36 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/16 17:34:39 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/16 17:47:23 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VARIABLE_H
-# define VARIABLE_H
+#ifndef SET_H
+# define SET_H
 
-# include "ft_string.h"
+# include "environment.h"
+# include "command.h"
 
-typedef struct variable
-{
-	t_string	name;
-	t_string	value;
-	bool		is_exported;
-}	t_variable;
-
-t_variable	*init_variable(t_string name, t_string value);
-void		destroy_variable(t_variable **variable);
+int	set(t_command *command);
 
 #endif

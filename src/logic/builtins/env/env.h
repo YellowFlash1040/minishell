@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_runner_2.c                                 :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 14:21:03 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/12 17:23:51 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/16 17:51:46 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/16 17:52:14 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "command_runner.h"
+#ifndef ENV_H
+# define ENV_H
 
-int	print_not_found_err(t_string binary_path)
-{
-	t_string	message;
-	int			result;
+# include "environment.h"
+# include "command.h"
 
-	message = ft_strjoin(binary_path, ": command not found\n");
-	if (!message)
-		return (perror("Error"), MALLOC_FAIL_ERR);
-	result = print_error_message(message);
-	if (result != SUCCESS)
-		return (result);
-	return (SUCCESS);
-}
+int	env(t_command *command);
+
+#endif

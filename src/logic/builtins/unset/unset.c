@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   variable.h                                         :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 18:29:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/15 16:54:36 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/16 17:45:53 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/16 17:50:22 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VARIABLE_H
-# define VARIABLE_H
+#include "unset.h"
 
-# include "ft_string.h"
-
-typedef struct variable
+int	unset(t_command *command)
 {
-	t_string	name;
-	t_string	value;
-	bool		is_exported;
-}	t_variable;
+	t_list			*env;
+	t_string_array	args;
+	int				result;
+	int				i;
 
-t_variable	*init_variable(t_string name, t_string value);
-void		destroy_variable(t_variable **variable);
-
-#endif
+	if (!command || !command->arguments || !command->environment)
+		return (FAILURE);
+	args = command->arguments;
+	env = command->environment;
+	i = 1;
+	while (args[i])
+	{
+		result = unset_env_variable(env, args[i]);
+		if (result != SUCCESS)
+			return (result);
+		i++;
+	}
+	return (SUCCESS);
+}

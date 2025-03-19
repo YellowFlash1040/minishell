@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   variable.h                                         :+:      :+:    :+:   */
+/*   echo.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 18:29:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/15 16:54:36 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/08 12:57:04 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/16 16:28:33 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VARIABLE_H
-# define VARIABLE_H
+#ifndef ECHO_H
+# define ECHO_H
 
-# include "ft_string.h"
+# include "string_array.h"
+# include "global_status_codes.h"
+# include "command.h"
+# include <unistd.h>
 
-typedef struct variable
-{
-	t_string	name;
-	t_string	value;
-	bool		is_exported;
-}	t_variable;
-
-t_variable	*init_variable(t_string name, t_string value);
-void		destroy_variable(t_variable **variable);
+int	echo(t_command *command);
 
 #endif

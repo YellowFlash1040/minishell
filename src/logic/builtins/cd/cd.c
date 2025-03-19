@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:01:31 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/12 18:17:57 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/16 16:29:24 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 int	count_arguments(t_string_array args);
 
-int	cd(t_string_array args)
-{
-	int	args_count;
-	int	result;
+//TODO: handle `cd -` command
 
-	if (!args)
+int	cd(t_command *command)
+{
+	t_string_array	args;
+	int				args_count;
+	int				result;
+
+	if (!command || !command->arguments)
 		return (FAILURE);
+	args = command->arguments;
 	args_count = count_arguments(args);
 	if (args_count < 2)
 		return (SUCCESS);
@@ -35,7 +39,7 @@ int	cd(t_string_array args)
 
 int	count_arguments(t_string_array args)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (args[i])

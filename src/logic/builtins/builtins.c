@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 13:04:08 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/12 17:40:23 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:13:17 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,17 @@ bool	is_builtin(t_string binary_name)
 	return (false);
 }
 
-int	run_builtin(t_string name, t_string_array args)
+int	launch_builtin(t_command *command)
 {
 	const t_string	names[] = {"echo", "cd",
-		"pwd", "export", "unset", "env", "exit", NULL};
-	const t_builtin	builtins[] = {echo, cd};
+		"pwd", "export", "unset", "env", "exit", "set", NULL};
+	const t_builtin	builtins[] = {echo, cd,
+		pwd, export, unset, env, exit_builtin, set};
 	int				i;
 
 	i = -1;
 	while (names[++i])
-		if (ft_strcmp(name, names[i]))
-			return (builtins[i](args));
+		if (ft_strcmp(command->executable, names[i]))
+			return (builtins[i](command));
 	return (FAILURE);
 }

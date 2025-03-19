@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_binary.h                                      :+:      :+:    :+:   */
+/*   unset.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 13:41:13 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/09 17:13:18 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/16 17:45:36 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/16 17:46:21 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FIND_BINARY_H
-# define FIND_BINARY_H
+#ifndef UNSET_H
+# define UNSET_H
 
-# include "string_array.h"
-# include "global_status_codes.h"
-# include <stdlib.h>
-# include <unistd.h>
+# include "environment.h"
+# include "command.h"
 
-# define EMPTY_PATH_ERR 160
-# define MALLOC_FAIL_ERR 161
-
-int	find_binary(t_string path, t_string *result);
+int	unset(t_command *command);
 
 #endif
