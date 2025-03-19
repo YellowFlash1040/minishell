@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 18:38:44 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/16 17:47:16 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:26:13 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void			destroy_environment(t_list **environment);
 int				set_env_variable(t_list *env, t_string name, t_string value,
 					bool is_exported);
 int				unset_env_variable(t_list *env, t_string name);
+t_string		get_env_variable(t_list *env, t_string name);
 t_string_array	construct_environment_for_export(t_list *env);
 
 #endif

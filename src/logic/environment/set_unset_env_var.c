@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 13:50:25 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/16 17:47:06 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:25:58 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,18 @@ bool	compare_variables_by_name(void *value1, void *value2)
 	variable = (t_variable *)value1;
 	name = (t_string)value2;
 	return (ft_strcmp(variable->name, name));
+}
+
+t_string	get_env_variable(t_list *env, t_string name)
+{
+	t_list_node	*node;
+	t_variable	*variable;
+
+	node = find_node(name, env, compare_variables_by_name);
+	if (!node)
+		return (NULL);
+	variable = (t_variable *)node->value;
+	if (!variable)
+		return (NULL);
+	return (variable->value);
 }
