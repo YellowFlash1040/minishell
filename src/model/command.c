@@ -52,3 +52,9 @@ void	destroy_command(t_command **command_ref)
 	free(command);
 	*command_ref = NULL;
 }
+
+void (int signum)
+{
+	getpgrp();
+	kill(
+}

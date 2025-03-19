@@ -22,6 +22,12 @@ int	handle_child_process(t_command *command);
 
 int	run_a_command(t_command *command)
 {
+	while(command->arguments)
+	{
+		command->environment
+		get_env_variable(command.envi, "")
+		grep "ok $VAR1 how ae you?" "another argument" < input.txt
+	}
 	pid_t	pid;
 
 	if (command->needs_a_subshell)

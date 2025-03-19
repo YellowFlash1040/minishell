@@ -26,7 +26,6 @@ SHARED_DIR				:= $(SRC_DIR)/shared
 EXECUTOR_DIR			:= $(LOGIC_DIR)/executor
 BUILTINS_DIR			:= $(LOGIC_DIR)/builtins
 ENVIRONMENT_DIR			:= $(LOGIC_DIR)/environment
-
 PARSER_DIR				:= $(LOGIC_DIR)/parser
 
 # Executor directories (src/logic/executor/)
@@ -62,7 +61,8 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(ENV_DIR) \
 							$(PWD_DIR) \
 							$(EXIT_DIR) \
-							$(ENVIRONMENT_DIR)
+							$(ENVIRONMENT_DIR) \
+							$(PARSER_DIR)
 
 # Library directories (libraries/)
 LIST_LIB_DIR			:= $(LIB_DIR)/list
@@ -109,7 +109,7 @@ all: $(NAME)
 
 # Build the Executable
 $(NAME): $(OBJ) $(LIBRARIES)
-	@$(CC) $(CFLAGS) $^ -o $@
+	@$(CC) $(CFLAGS) -lreadline $^ -o $@
 	@echo "$(GREEN)Compiled $@ successfully!$(RESET)"
 
 # Compile Object Files

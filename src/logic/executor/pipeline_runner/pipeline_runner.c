@@ -70,6 +70,7 @@ int	run_commands(t_list *commands, int prev_pipe[2], int current_pipe[2],
 		node = node->next;
 	}
 	*pipeline_status_code = command->exit_status_code;
+	get_env_variable(env, "?");
 	return (SUCCESS);
 }
 
@@ -115,3 +116,10 @@ int	move_to_the_next_pipe(int prev_pipe[2], int current_pipe[2])
 	prev_pipe[1] = current_pipe[1];
 	return (SUCCESS);
 }
+
+
+t_string read_from_stdin(t_string delimiter)
+{
+
+}
+
