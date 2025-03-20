@@ -470,7 +470,14 @@ int	test8(void)
 int	test9(void)
 {
 	int result;
-	t_pipeline *pipeline;
+	t_pipeline* pipeline;
+	t_list* env;
+	t_command* command;
+
+	t_string pwd = getcwd(NULL, 0);
+	t_string envp[] = {ft_strjoin("PWD=", pwd), NULL};
+	free(pwd);
+	env = init_environment(envp);
 
 	/*
 		cd /home/akovtune | ls | cd - | ls
@@ -489,18 +496,28 @@ int	test9(void)
 
 	build_pipeline(&pipeline);
 
-	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
+	command = create_command(exe1, args1, NULL, NULL);
+	command->environment = env;
+	add_to_list(pipeline->commands, command);
+	command = create_command(exe2, args2, NULL, NULL);
+	command->environment = env;
+	add_to_list(pipeline->commands, command);
+	command = create_command(exe3, args3, NULL, NULL);;
+	command->environment = env;
+	add_to_list(pipeline->commands, command);
 	// add_to_list(pipeline->commands, create_command(exe4, args4, NULL, NULL));
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
+
+	printf("result: %d\n", result);
+
+	if (result != SUCCESS)
+		return (result);
 
 	char* cwd = getcwd(NULL, 0);
 	printf("cwd: %s\n", cwd);
 	free(cwd);
 
-	t_command*		command;
 	t_list_node*	node;
 	int exit_status_codes[3];
 	int pipeline_length;
@@ -522,6 +539,8 @@ int	test9(void)
 			return (exit_status_codes[i]);
 	}
 
+	destroy_environment(&env);
+
 	return (result);
 }
 
@@ -529,6 +548,13 @@ int	test10(void)
 {
 	int result;
 	t_pipeline *pipeline;
+	t_list* env;
+	t_command* command;
+
+	t_string pwd = getcwd(NULL, 0);
+	t_string envp[] = {ft_strjoin("PWD=", pwd), ft_strjoin("OLDPWD=", pwd), NULL};
+	free(pwd);
+	env = init_environment(envp);
 
 	/*
 		cd /home/akovtune
@@ -539,15 +565,19 @@ int	test10(void)
 
 	build_pipeline(&pipeline);
 
-	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
+	command = create_command(exe1, args1, NULL, NULL);
+	command->environment = env;
+	add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
+
+	if (result != SUCCESS)
+		return (result);
 
 	char* cwd = getcwd(NULL, 0);
 	printf("cwd: %s\n", cwd);
 	free(cwd);
 
-	t_command*		command;
 	t_list_node*	node;
 	int exit_status_codes[1];
 	int pipeline_length;
@@ -568,6 +598,8 @@ int	test10(void)
 		if (exit_status_codes[i] != SUCCESS)
 			return (exit_status_codes[i]);
 	}
+
+	destroy_environment(&env);
 
 	return (result);
 }

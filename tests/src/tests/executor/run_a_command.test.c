@@ -61,7 +61,7 @@ int	test2(void)
 
 	char *exe_path = "/bin/cat";
 	char *args[] = {exe_path, NULL};
-	command = create_command(exe_path, args, "assets/executor/test2/input.txt", NULL);
+	command = create_command(exe_path, args, "assets/executor/test2/input2.txt", NULL);
 
 	result = run_a_command(command);
 
