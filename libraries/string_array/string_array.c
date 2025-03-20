@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 14:19:52 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/09 17:20:39 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:08:37 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,16 @@ void	destroy_string_array(t_string_array *string_array_ref)
 		free(string_array[i]);
 	free(string_array);
 	*string_array_ref = NULL;
+}
+
+int	get_str_arr_length(t_string_array arr)
+{
+	int	i;
+
+	if (!arr)
+		return (-1);
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
 }

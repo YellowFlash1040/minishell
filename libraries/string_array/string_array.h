@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 14:19:50 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/09 17:21:58 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/20 13:53:37 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ typedef t_string*	t_string_array;
 
 t_string_array	init_string_array(int size);
 void			destroy_string_array(t_string_array *string_array);
+int				get_str_arr_length(t_string_array arr);
 
 #endif
