@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:01:31 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/19 12:22:56 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:08:29 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ t_string	get_current_directory(t_list *env)
 
 int	update_env_variables(t_list *env, t_string new_oldpwd)
 {
-	int	result;
-	t_string oldpwd;
+	int			result;
+	t_string	oldpwd;
 
 	oldpwd = ft_strdup(new_oldpwd);
 	if (!oldpwd)
