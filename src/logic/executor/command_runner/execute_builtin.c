@@ -6,17 +6,41 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:21:03 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/16 16:24:43 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:25:54 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command_runner.h"
 
+int	execute_in_a_subshell(t_command *command);
+int	execute_without_a_subshell(t_command *command);
 int	setup_command_io(t_command *command);
 int	remember_standard_fds(int standard_fds[3]);
 int	restore_standard_fds(int standard_fds[3]);
 
 int	execute_builtin(t_command *command)
+{
+	if (ft_strcmp(command->executable, "exit"))
+		return (launch_builtin(command));
+	if (command->needs_a_subshell)
+		return (execute_in_a_subshell(command));
+	return (execute_without_a_subshell(command));
+}
+
+int	execute_in_a_subshell(t_command *command)
+{
+	int	result;
+
+	result = setup_command_io(command);
+	if (result != SUCCESS)
+		return (result);
+	result = launch_builtin(command);
+	if (result != SUCCESS)
+		return (result);
+	exit (SUCCESS);
+}
+
+int	execute_without_a_subshell(t_command *command)
 {
 	int	result;
 	int	standard_fds[3];
@@ -33,8 +57,6 @@ int	execute_builtin(t_command *command)
 	result = restore_standard_fds(standard_fds);
 	if (result != SUCCESS)
 		return (result);
-	if (command->needs_a_subshell)
-		exit (SUCCESS);
 	return (SUCCESS);
 }
 
