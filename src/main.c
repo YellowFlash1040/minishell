@@ -48,6 +48,7 @@ t_list	*create_token_list(char **prompt)
 		clear_list(tokens, free);
 		return (NULL);
 	}
+	add_to_list(tokens, token);
 	return (tokens);
 }
 
@@ -84,17 +85,19 @@ int	main(int argc, char *argv[], char *envp[])
 				break;
 			}
 			parse_tokens(tokens, pipeline, env);
+			clear_list(tokens, free_token);
+			tokens = NULL;
 			if (*pipeline)
 			{	if (run_a_pipeline(*pipeline) == FAILURE)
 					printf("Error running pipeline\n");
 			}
 			add_history(line);
-			clear_list(tokens, free);
 		}
 		free(line);
 		line = readline("$> ");
 	}
 	free(prompt);
+	destroy_pipeline(pipeline);
 	free(pipeline);
 	destroy_environment(&env);
 	return (0);

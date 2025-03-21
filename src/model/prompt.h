@@ -29,3 +29,39 @@ t_prompt	*init_prompt(void);
 void		destroy_prompt(t_prompt **prompt);
 
 #endif
+
+
+/*
+
+ARG=data && ls $ARG && ARG="hello world" || echo $ARG
+
+create ARG with value data
+execute ls with argument "$ARG" (it has en expandable value)
+
+*/
+
+/*
+ARG=data && ls $ARG
+
+executable = ls
+arguments = "ls", "'hello '$ARG' ARG"
+is_expandable = 0, 1
+
+execva(name, arg, env)
+
+
+env:
+PATH=some staff
+ARG=data
+HOME=/home/user
+VAR1=ok
+
+
+void expand(t_command *comamnd)
+{
+
+}
+
+
+ARG=data && ls "hello '$ARG'"
+*/

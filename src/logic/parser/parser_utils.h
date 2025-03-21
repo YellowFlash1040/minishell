@@ -4,4 +4,5 @@
 int		is_redir(t_token *token);
 t_token *read_token(t_list *tokens, int index);
 int		n_word_tokens(t_list *tokens, int index);
+char	*escape_env(char *str);
 #endif

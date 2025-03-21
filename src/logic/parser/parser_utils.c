@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parser_utils.c                                     :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ismo <ismo@student.codam.nl>                 +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/12 16:07:18 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/13 14:16:53 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 16:07:18 by ismo              #+#    #+#             */
+/*   Updated: 2025/03/21 18:08:31 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,31 @@ int	n_word_tokens(t_list *tokens, int index)
 		n++;
 	}
 	return (n);
+}
+
+char	*escape_env(char *str)
+{
+	int		i;
+	int		len;
+	char 	*escaped_str;
+
+	i = 0;
+	len = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			len += 2;
+		else
+			len++;
+		i++;
+	}
+	escaped_str = (char *)malloc(len + 1);
+	if (!escaped_str)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		i++;
+	}
+	return (escaped_str);
 }
