@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:37:36 by akovtune          #+#    #+#             */
-/*   Updated: 2025/01/09 14:07:09 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:55:57 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ bool	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
 
+	if (!s1 && !s2)
+		return (true);
+	if (!s1 || !s2)
+		return (false);
 	i = -1;
 	while (s1[++i] && s2[i])
 		if (s1[i] != s2[i])
