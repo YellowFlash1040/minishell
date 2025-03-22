@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 14:19:52 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/21 14:02:38 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/22 18:28:49 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	get_str_arr_length(t_string_array arr)
 	return (i);
 }
 
-t_string_array	copy_str_array(t_string_array arr, int start_index, int end_index)
+t_string_array	copy_str_array(t_string_array arr, int start_index,
+	int end_index)
 {
 	t_string_array	copy_arr;
 	t_string		temp;
@@ -63,7 +64,7 @@ t_string_array	copy_str_array(t_string_array arr, int start_index, int end_index
 	if (arr && end_index == -1)
 		end_index = get_str_arr_length(arr);
 	if (!arr || start_index < 0 || end_index < 0 || end_index < start_index)
-	 	return (NULL);
+		return (NULL);
 	copy_arr = init_string_array(end_index - start_index + 1);
 	if (!copy_arr)
 		return (NULL);
