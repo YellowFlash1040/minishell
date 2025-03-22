@@ -28,14 +28,15 @@ typedef struct command
 	pid_t			id;
 	t_string		executable;
 	t_string_array	arguments;
-	t_list			*environment;
 	t_file			*input_file;
 	t_file			*output_file;
 	t_file			*error_file;
 	int				exit_status_code;
 	int				unused_pipe_end;
 	bool			needs_a_subshell;
+	t_list			*environment;
 }					t_command;
+	// bool			needs_to_read_from_stdin;
 
 t_command			*init_command(void);
 void				destroy_command(t_command **command);
