@@ -34,6 +34,8 @@ int test1(void* var)
 		pwd; cd /tmp; pwd
 	*/
 
+	printf("Expected: /home/akovtune/codam/core/projects/minishell/tests\n");
+
 	char *exe_path = "pwd";
 	char *pwd1_args[] = {exe_path, NULL};
 	command = create_command(exe_path, pwd1_args, NULL, NULL);
@@ -52,6 +54,7 @@ int test1(void* var)
 	result = run_a_command(command);
 	destroy_command(&command);
 
+	printf("Expected: /tmp\n");
 
 	exe_path = "pwd";
 	char *pwd2_args[] = {exe_path, NULL};

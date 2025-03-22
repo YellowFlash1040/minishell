@@ -1,6 +1,8 @@
 #include "helpers.h"
 #include "pipeline_runner.h"
 
+t_list* environment;
+
 int	test1(void);
 int	test2(void);
 int	test3(void);
@@ -12,17 +14,22 @@ int	test8(void);
 int	test9(void);
 int	test10(void);
 
-int	main(void)
+int	main(int argc, char** args, char* envp[])
 {
-	int (*tests[])(void) = 
+	(void)argc;
+	(void)args;
+
+	environment = init_environment(envp);
+
+	int (*tests[])(void) =
 	{
-		test1, 
-		test2, 
-		test3, 
-		test4, 
+		test1,
+		test2,
+		test3,
+		test4,
 		test5,
-		test6, 
-		test7, 
+		test6,
+		test7,
 		test8,
 		test9,
 		test10
@@ -30,13 +37,15 @@ int	main(void)
 
 	for (int i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++)
 		run_a_test(tests[i], i + 1, true);
+
+	destroy_environment(&environment);
 }
 
 int run_with_output_manipulations(int (*run_a_pipeline)(t_pipeline *p), t_pipeline *pipeline)
 {
 	int result;
-	// bool need_output = true;
-	bool need_output = false;
+	bool need_output = true;
+	// bool need_output = false;
 	// bool need_status_codes = true;
 	bool need_status_codes = false;
 
@@ -119,7 +128,7 @@ int	test1(void)
 		if (exit_status_codes[i] != SUCCESS)
 			return (exit_status_codes[i]);
 	}
-	
+
 	return (result);
 }
 
@@ -165,7 +174,7 @@ int	test2(void)
 		if (exit_status_codes[i] != SUCCESS)
 			return (exit_status_codes[i]);
 	}
-	
+
 	return (result);
 }
 
@@ -214,7 +223,7 @@ int	test3(void)
 		if (exit_status_codes[i] != SUCCESS)
 			return (exit_status_codes[i]);
 	}
-	
+
 	return (result);
 }
 
@@ -263,7 +272,7 @@ int	test4(void)
 		return (FAILURE);
 	if (exit_status_codes[2] != SUCCESS)
 		return (exit_status_codes[2]);
-	
+
 	return (result);
 }
 
@@ -312,7 +321,7 @@ int	test5(void)
 		if (exit_status_codes[i] != SUCCESS)
 			return (exit_status_codes[i]);
 	}
-	
+
 	return (result);
 }
 
@@ -471,13 +480,6 @@ int	test9(void)
 {
 	int result;
 	t_pipeline* pipeline;
-	t_list* env;
-	t_command* command;
-
-	t_string pwd = getcwd(NULL, 0);
-	t_string envp[] = {ft_strjoin("PWD=", pwd), NULL};
-	free(pwd);
-	env = init_environment(envp);
 
 	/*
 		cd /home/akovtune | ls | cd - | ls
@@ -496,14 +498,14 @@ int	test9(void)
 
 	build_pipeline(&pipeline);
 
-	command = create_command(exe1, args1, NULL, NULL);
-	command->environment = env;
+	t_command* command = create_command(exe1, args1, NULL, NULL);
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
 	command = create_command(exe2, args2, NULL, NULL);
-	command->environment = env;
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
 	command = create_command(exe3, args3, NULL, NULL);;
-	command->environment = env;
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
 	// add_to_list(pipeline->commands, create_command(exe4, args4, NULL, NULL));
 
@@ -539,8 +541,6 @@ int	test9(void)
 			return (exit_status_codes[i]);
 	}
 
-	destroy_environment(&env);
-
 	return (result);
 }
 
@@ -566,7 +566,7 @@ int	test10(void)
 	build_pipeline(&pipeline);
 
 	command = create_command(exe1, args1, NULL, NULL);
-	command->environment = env;
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
@@ -598,8 +598,6 @@ int	test10(void)
 		if (exit_status_codes[i] != SUCCESS)
 			return (exit_status_codes[i]);
 	}
-
-	destroy_environment(&env);
 
 	return (result);
 }

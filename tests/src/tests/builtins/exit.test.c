@@ -84,6 +84,7 @@ int test3(void)
 	command = create_command(exe_path, args, NULL, NULL);
 	command->needs_a_subshell = false;
 
+	printf("Expected: 3\n");
 	result = run_a_command(command);
 
 	printf("result: %d\n", result);
@@ -109,6 +110,7 @@ int test4(void)
 	command = create_command(exe_path, args, NULL, NULL);
 	command->needs_a_subshell = false;
 
+	printf("Expected: 2\n");
 	result = run_a_command(command);
 
 	if (command->exit_status_code != 2)
@@ -132,6 +134,7 @@ int test5(void)
 	command = create_command(exe_path, args, NULL, NULL);
 	command->needs_a_subshell = false;
 
+	printf("Expected: 2\n");
 	result = run_a_command(command);
 
 	if (command->exit_status_code != 2)
