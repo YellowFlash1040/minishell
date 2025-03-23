@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:21:03 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/23 14:12:16 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:53:11 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void	close_std_fd_copies(int fd_copies[3]);
 
 int	execute_builtin(t_command *command)
 {
-	if (ft_strcmp(command->executable, "exit"))
-		return (launch_builtin(command));
-	if (command->needs_a_subshell)
+	if (command->needs_a_subshell || ft_strcmp(command->executable, "exit"))
 		return (execute_with_subshell_flow(command));
 	return (execute_with_std_flow(command));
 }
