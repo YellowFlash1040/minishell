@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:34:37 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/23 14:04:36 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:17:13 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,20 +100,25 @@ int setup_redirection(t_redirection *redirection, t_command *command)
 
 bool	check_file(t_file *file)
 {
-	if (access(file->path, F_OK) != 0)
-	{
-		print_error_message(file->path);
-		print_error_message(": No such file or directory\n");
-		return (false);
-	}
 	if (file->mode == READ && access(file->path, R_OK) != 0)
 	{
-		print_error_message(file->path);
-		print_error_message(": Permission denied\n");
-		return (false);
+		if (access(file->path, F_OK) != 0)
+		{
+			print_error_message(file->path);
+			print_error_message(": No such file or directory\n");
+			return (false);
+		}
+		else
+		{
+			print_error_message(file->path);
+			print_error_message(": Permission denied\n");
+			return (false);
+		}
 	}
 	else if (access(file->path, W_OK) != 0)
 	{
+		if (access(file->path, F_OK) != 0)
+			return (true);
 		print_error_message(file->path);
 		print_error_message(": Permission denied\n");
 		return (false);
