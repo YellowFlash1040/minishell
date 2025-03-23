@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:25:09 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/23 15:20:05 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:07:56 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	execute_external(t_command *command)
 	int	result;
 
 	result = setup_command_io(command);
-	if (result != SUCCESS)
+	if (result != SUCCESS || command->exit_status_code != SUCCESS)
 		return (result);
 	result = launch_binary(command->executable, command->arguments,
 			command->environment);
