@@ -31,18 +31,19 @@ int main(int argc, char **args, char* envp[])
 
 	int (*tests[])(void) =
 		{
-			// test1,
-			// test2,
-			// test3,
-			// test4,
-			// test5,
-			// test6,
-			// test7,
-			// test8,
-			// test9, 
-			// test10,
-			// test11,
-			// test12,
+			test1,
+			test2,
+			test3,
+			test4,
+			test5,
+			test6,
+			test7,
+			test8,
+			test9, 
+			test10,
+			test11,
+			test12,
+
 			test13,
 			test14,
 			test15,
@@ -83,7 +84,7 @@ int	test2(void)
 
 	char *exe_path = "/bin/cat";
 	char *args[] = {exe_path, NULL};
-	command = create_command(exe_path, args, "assets/executor/command_runner/test2/input2.txt", NULL);
+	command = create_command(exe_path, args, "assets/executor/command_runner/test2/input.txt", NULL);
 	command->environment = environment;
 
 	result = run_a_command(command);
@@ -166,7 +167,7 @@ int	test6(void)
 	t_command *command;
 
 	char *exe_path = "/bin/grep";
-	char *args[] = {exe_path, "r", NULL};
+	char *args[] = {exe_path, "is", NULL};
 	command = create_command(exe_path, args, "assets/executor/command_runner/test8/input.txt", NULL);
 	command->environment = environment;
 
@@ -483,6 +484,8 @@ int	test17(void)
 	return (result);
 }
 
+int	save_result_to_env(t_list *env, int pipeline_status_code);
+
 int	test18(void)
 {
 	int result;
@@ -495,7 +498,15 @@ int	test18(void)
 
 	result = run_a_command(command);
 
+	save_result_to_env(environment, command->exit_status_code);
+
+	if (command->exit_status_code != 2)
+		result = FAILURE;
+
 	destroy_command(&command);
+
+	if (result != SUCCESS)
+		return (result);
 
 	exe_path = "echo";
 	char *args2[] = {exe_path, get_env_variable(environment, "?"), NULL};
@@ -505,7 +516,15 @@ int	test18(void)
 
 	result = run_a_command(command);
 
+	save_result_to_env(environment, command->exit_status_code);
+
+	if (command->exit_status_code != SUCCESS)
+		result = FAILURE;
+
 	destroy_command(&command);
+
+	if (result != SUCCESS)
+		return (result);
 
 	exe_path = "unset";
 	char *args3[] = {exe_path, "?", NULL};
@@ -515,7 +534,15 @@ int	test18(void)
 
 	result = run_a_command(command);
 
+	save_result_to_env(environment, command->exit_status_code);
+
+	if (command->exit_status_code != SUCCESS)
+		result = FAILURE;
+
 	destroy_command(&command);
+
+	if (result != SUCCESS)
+		return (result);
 
 	exe_path = "echo";
 	char *args4[] = {exe_path, get_env_variable(environment, "?"), NULL};
@@ -525,7 +552,15 @@ int	test18(void)
 
 	result = run_a_command(command);
 
+	save_result_to_env(environment, command->exit_status_code);
+
+	if (command->exit_status_code != SUCCESS)
+		result = FAILURE;
+
 	destroy_command(&command);
+
+	if (result != SUCCESS)
+		return (result);
 
 	return (result);
 }

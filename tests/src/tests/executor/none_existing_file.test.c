@@ -1,0 +1,154 @@
+#include "command_runner.h"
+#include "helpers.h"
+
+t_list* environment;
+
+int	test1(void);
+int	test2(void);
+int	test3(void);
+int	test4(void);
+int	test5(void);
+int	test6(void);
+
+int main(int argc, char **args, char* envp[])
+{
+	(void)argc;
+	(void)args;
+
+	environment = init_environment(envp);
+
+	int (*tests[])(void) =
+		{
+			test1,
+			test2,
+			test3,
+			test4,
+			test5,
+			test6
+		};
+
+	for (int i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++)
+		run_a_test(tests[i], i + 1, false);
+
+	// test1();
+	// test3();
+
+	destroy_environment(&environment);
+}
+
+int	test1(void)
+{
+	int result;
+	t_command *command;
+
+	char *exe_path = "echo";
+	char *args[] = {exe_path, NULL};
+	command = create_command(exe_path, args, "none_existing_file.txt", NULL);
+	command->environment = environment;
+	command->needs_a_subshell = false;
+
+	result = run_a_command(command);
+
+	if (command->exit_status_code != FAILURE)
+		result = FAILURE;
+
+	destroy_command(&command);
+	return (result);
+}
+
+int	test2(void)
+{
+	int result;
+	t_command *command;
+
+	char *exe_path = "echo";
+	char *args[] = {exe_path, NULL};
+	command = create_command(exe_path, args, NULL, "none_existing_file.txt");
+	command->environment = environment;
+	command->needs_a_subshell = false;
+
+	result = run_a_command(command);
+
+	if (command->exit_status_code != FAILURE)
+		result = FAILURE;
+
+	destroy_command(&command);
+	return (result);
+}
+
+int	test3(void)
+{
+	int result;
+	t_command *command;
+
+	char *exe_path = "echo";
+	char *args[] = {exe_path, NULL};
+	command = create_command(exe_path, args, "none_existing_file.txt", "none_existing_file.txt");
+	command->environment = environment;
+	command->needs_a_subshell = false;
+
+	result = run_a_command(command);
+
+	if (command->exit_status_code != FAILURE)
+		result = FAILURE;
+
+	destroy_command(&command);
+	return (result);
+}
+
+int	test4(void)
+{
+	int result;
+	t_command *command;
+
+	char *exe_path = "echo";
+	char *args[] = {exe_path, NULL};
+	command = create_command(exe_path, args, "none_existing_file.txt", NULL);
+	command->environment = environment;
+
+	result = run_a_command(command);
+
+	if (command->exit_status_code != FAILURE)
+		result = FAILURE;
+
+	destroy_command(&command);
+	return (result);
+}
+
+int	test5(void)
+{
+	int result;
+	t_command *command;
+
+	char *exe_path = "echo";
+	char *args[] = {exe_path, NULL};
+	command = create_command(exe_path, args, NULL, "none_existing_file.txt");
+	command->environment = environment;
+
+	result = run_a_command(command);
+
+	if (command->exit_status_code != FAILURE)
+		result = FAILURE;
+
+	destroy_command(&command);
+	return (result);
+}
+
+int	test6(void)
+{
+	int result;
+	t_command *command;
+
+	char *exe_path = "echo";
+	char *args[] = {exe_path, NULL};
+	command = create_command(exe_path, args, "none_existing_file.txt", "none_existing_file.txt");
+	command->environment = environment;
+
+	result = run_a_command(command);
+
+	if (command->exit_status_code != FAILURE)
+		result = FAILURE;
+
+	destroy_command(&command);
+	return (result);
+}

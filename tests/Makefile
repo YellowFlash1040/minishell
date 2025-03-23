@@ -18,7 +18,8 @@ TEST_BINS		 = $(addprefix $(BIN_DIR)/,$(notdir $(TEST_FILES:.c=)))
 # TEST_BINS		 = $(BIN_DIR)/cd.test
 # TEST_BINS		 = $(BIN_DIR)/pwd.test
 # TEST_BINS		 = $(BIN_DIR)/exit.test
-TEST_BINS		 = $(BIN_DIR)/run_a_pipeline_2.test
+# TEST_BINS		 = $(BIN_DIR)/run_a_pipeline_2.test
+# TEST_BINS		 = $(BIN_DIR)/none_existing_file.test
 MINISHELL		 = $(MINISHELL_DIR)/libminishell.a
 
 #-----------------------FOLDERS----------------------------------------------------------

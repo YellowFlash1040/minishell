@@ -17,6 +17,7 @@ int test13(void);
 int test14(void);
 int test15(void);
 int test16(void);
+int test17(void);
 
 int main(void)
 {
@@ -37,7 +38,8 @@ int main(void)
 			test13,
 			test14,
 			test15,
-			test16
+			test16,
+			test17
 		};
 
 	for (int i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++)
@@ -385,6 +387,28 @@ int test16(void)
 
 	char *exe_path = "echo";
 	char *args[] = {exe_path, "standard", "fd's", "test", NULL};
+	command = create_command(exe_path, args, NULL, NULL);
+
+	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = command->exit_status_code;
+
+	destroy_command(&command);
+	return (result);
+}
+
+int test17(void)
+{
+	int result;
+	t_command *command;
+
+	/*
+		echo -n "" "" ""
+	*/
+
+	char *exe_path = "echo";
+	char *args[] = {exe_path, "-n", "", "", "", NULL};
 	command = create_command(exe_path, args, NULL, NULL);
 
 	result = run_a_command(command);
