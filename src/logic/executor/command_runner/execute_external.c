@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:25:09 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/22 18:30:00 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/23 15:20:05 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,17 @@ int	execute_external(t_command *command)
 
 int	launch_binary(t_string name, t_string_array args, t_list *env)
 {
-	int	result;
+	int				result;
+	t_string_array	environment;
 
 	setup_binary_path(&name, env);
-	result = execve(name, args, construct_environment_for_export(env));
+	environment = construct_environment_for_export(env);
+	if (!environment)
+		return (FAILURE);
+	result = execve(name, args, environment);
 	if (result == -1)
 	{
+		destroy_string_array(&environment);
 		if (errno == ENOENT)
 		{
 			result = print_not_found_err(name);
