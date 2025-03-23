@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:01:31 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/22 18:41:48 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/23 14:21:52 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	cd(t_command *command)
 		return (FAILURE);
 	new_dir = get_new_directory(command->environment, command->arguments);
 	if (!new_dir)
-		return (FAILURE);
+		return (free(new_oldpwd), FAILURE);
 	if (chdir(new_dir) == -1)
 		return (perror("cd"), FAILURE);
 	result = update_env_variables(command->environment, new_oldpwd);
