@@ -6,33 +6,34 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:21:03 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/20 14:25:54 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/23 14:12:16 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command_runner.h"
 
-int	execute_in_a_subshell(t_command *command);
-int	execute_without_a_subshell(t_command *command);
-int	setup_command_io(t_command *command);
-int	remember_standard_fds(int standard_fds[3]);
-int	restore_standard_fds(int standard_fds[3]);
+int		execute_with_subshell_flow(t_command *command);
+int		execute_with_std_flow(t_command *command);
+int		setup_command_io(t_command *command);
+int		remember_standard_fds(int standard_fds[3]);
+int		restore_standard_fds(int standard_fds[3]);
+void	close_std_fd_copies(int fd_copies[3]);
 
 int	execute_builtin(t_command *command)
 {
 	if (ft_strcmp(command->executable, "exit"))
 		return (launch_builtin(command));
 	if (command->needs_a_subshell)
-		return (execute_in_a_subshell(command));
-	return (execute_without_a_subshell(command));
+		return (execute_with_subshell_flow(command));
+	return (execute_with_std_flow(command));
 }
 
-int	execute_in_a_subshell(t_command *command)
+int	execute_with_subshell_flow(t_command *command)
 {
 	int	result;
 
 	result = setup_command_io(command);
-	if (result != SUCCESS)
+	if (result != SUCCESS || command->exit_status_code != SUCCESS)
 		return (result);
 	result = launch_builtin(command);
 	if (result != SUCCESS)
@@ -40,7 +41,7 @@ int	execute_in_a_subshell(t_command *command)
 	exit (SUCCESS);
 }
 
-int	execute_without_a_subshell(t_command *command)
+int	execute_with_std_flow(t_command *command)
 {
 	int	result;
 	int	standard_fds[3];
@@ -49,11 +50,17 @@ int	execute_without_a_subshell(t_command *command)
 	if (result != SUCCESS)
 		return (result);
 	result = setup_command_io(command);
-	if (result != SUCCESS)
+	if (result != SUCCESS || command->exit_status_code != SUCCESS)
+	{
+		close_std_fd_copies(standard_fds);
 		return (result);
+	}
 	result = launch_builtin(command);
 	if (result != SUCCESS)
+	{
+		restore_standard_fds(standard_fds);
 		return (result);
+	}
 	result = restore_standard_fds(standard_fds);
 	if (result != SUCCESS)
 		return (result);
@@ -93,4 +100,11 @@ int	restore_standard_fds(int standard_fds[3])
 	if (result == -1)
 		return (FAILURE);
 	return (SUCCESS);
+}
+
+void	close_std_fd_copies(int fd_copies[3])
+{
+	close(fd_copies[0]);
+	close(fd_copies[1]);
+	close(fd_copies[2]);
 }
