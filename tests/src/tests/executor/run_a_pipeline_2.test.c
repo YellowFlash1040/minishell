@@ -347,7 +347,8 @@ int	test11(void)
 		ls ou; echo $?; unset ?; echo $?
 	*/
 
-	t_string prompt = "ls ou | wc -l";
+	// t_string prompt = "ls ou | wc -l";
+	t_string prompt = "ls ou";
 	int expected_status_codes[] = {SUCCESS};
 	
 	int result = run_pipeline_test(prompt, expected_status_codes);

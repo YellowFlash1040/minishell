@@ -21,6 +21,7 @@ int test15(void);
 int	test16(void);
 int	test17(void);
 int	test18(void);
+int	test19(void);
 
 int main(int argc, char **args, char* envp[])
 {
@@ -49,7 +50,9 @@ int main(int argc, char **args, char* envp[])
 			test15,
 			test16,
 			test17,
-			test18
+			test18,
+
+			test19
 		};
 
 	for (int i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++)
@@ -565,4 +568,22 @@ int	test18(void)
 	return (result);
 }
 
-//ls ou; echo $?; unset ?; echo $?
+int	test19(void)
+{
+	int result;
+	t_command *command;
+
+	char *exe_path = "exit";
+	char *args[] = {exe_path, NULL};
+	command = create_command(exe_path, args, NULL, "assets/executor/command_runner/test19/test_EXIT.txt");
+	command->environment = environment;
+	command->needs_a_subshell = false;
+
+	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = FAILURE;
+
+	destroy_command(&command);
+	return (result);
+}
