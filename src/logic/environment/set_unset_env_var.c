@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 13:50:25 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/18 18:25:58 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/23 14:54:37 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	set_env_variable(t_list *env, t_string name, t_string value,
 {
 	t_list_node	*node;
 	t_variable	*variable;
+	t_string	name_copy;
 
 	node = find_node(name, env, compare_variables_by_name);
 	if (node)
@@ -36,7 +37,12 @@ int	set_env_variable(t_list *env, t_string name, t_string value,
 		return (SUCCESS);
 	}
 	else
-		return (add_env_variable(env, name, value, is_exported));
+	{
+		name_copy = ft_strdup(name);
+		if (!name_copy)
+			return (FAILURE);
+		return (add_env_variable(env, name_copy, value, is_exported));
+	}
 }
 
 int	add_env_variable(t_list *env, t_string name, t_string value,
