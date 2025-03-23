@@ -6,13 +6,15 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:34:37 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/14 14:12:34 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/23 14:04:36 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command_runner.h"
 
-int	setup_redirections(t_command *command);
+int		setup_redirections(t_command *command);
+int		setup_redirection(t_redirection *redirection, t_command *command);
+bool	check_file(t_file *file);
 
 int	setup_command_io(t_command *command)
 {
@@ -56,19 +58,65 @@ int	setup_redirections(t_command *command)
 	i = -1;
 	while (++i < 3)
 	{
-		if (redirections[i].file->path != NULL)
+		result = setup_redirection(&redirections[i], command);
+		if (result != SUCCESS || command->exit_status_code != SUCCESS)
 		{
-			result = open_file(redirections[i].file);
-			if (result != SUCCESS)
-				return (result);
-		}
-		if (redirections[i].file->fd != redirections[i].standard_fd)
-		{
-			result = redirect(redirections[i].standard_fd,
-					redirections[i].file->fd);
-			if (result != SUCCESS)
-				return (result);
+			if (command->input_file->fd != STDIN_FILENO)
+				close(command->input_file->fd);
+			if (command->output_file->fd != STDOUT_FILENO)
+				close(command->output_file->fd);
+			if (command->error_file->fd != STDERR_FILENO)
+				close(command->error_file->fd);
+			return (result);
 		}
 	}
 	return (SUCCESS);
+}
+
+int setup_redirection(t_redirection *redirection, t_command *command)
+{
+	int	result;
+	
+	if (redirection->file->path != NULL)
+	{
+		if (!check_file(redirection->file))
+		{
+			command->exit_status_code = FAILURE;
+			return (SUCCESS);
+		}
+		result = open_file(redirection->file);
+		if (result != SUCCESS)
+			return (result);
+	}
+	if (redirection->file->fd != redirection->standard_fd)
+	{
+		result = redirect(redirection->standard_fd,
+				redirection->file->fd);
+		if (result != SUCCESS)
+			return (result);
+	}
+	return (SUCCESS);
+}
+
+bool	check_file(t_file *file)
+{
+	if (access(file->path, F_OK) != 0)
+	{
+		print_error_message(file->path);
+		print_error_message(": No such file or directory\n");
+		return (false);
+	}
+	if (file->mode == READ && access(file->path, R_OK) != 0)
+	{
+		print_error_message(file->path);
+		print_error_message(": Permission denied\n");
+		return (false);
+	}
+	else if (access(file->path, W_OK) != 0)
+	{
+		print_error_message(file->path);
+		print_error_message(": Permission denied\n");
+		return (false);
+	}
+	return (true);
 }
