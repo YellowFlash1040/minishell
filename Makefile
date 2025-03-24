@@ -109,7 +109,7 @@ all: $(NAME)
 
 # Build the Executable
 $(NAME): $(OBJ) $(LIBRARIES)
-	@$(CC) $(CFLAGS) -lreadline $^ -o $@
+	@$(CC) $(CFLAGS) $^ -o $@ -lreadline
 	@echo "$(GREEN)Compiled $@ successfully!$(RESET)"
 
 # Compile Object Files
