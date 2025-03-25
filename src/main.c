@@ -22,6 +22,7 @@
 #include "pipeline_runner.h"
 #include "parser.h"
 #include "environment.h"
+#include "expander.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <readline/readline.h>
@@ -52,6 +53,21 @@ t_list	*create_token_list(char **prompt)
 	return (tokens);
 }
 
+void	expand_commands(t_list **commands)
+{
+	int	i;
+	t_list_node	*node;
+
+	i = 0;
+	node = get_node(i, *commands);
+	while (node)
+	{
+		expand_command((t_command *)node->value);
+		node = get_node(i, *commands);
+		i++;
+	}
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*line;
@@ -61,18 +77,18 @@ int	main(int argc, char *argv[], char *envp[])
 	t_list		*env;
 
 	(void) argc;
-	(void)argv;
+	(void) argv;
 	line = readline("$> ");
 	prompt = (char **)malloc(sizeof(char *));
 	if (!prompt)
 		return (0);
 	pipeline = (t_pipeline **)malloc(sizeof(t_pipeline *));
+	*pipeline = NULL;
 	if (!pipeline)
 		return (free(prompt), 0);
 	env = init_environment(envp);
 	if (!env)
 		return (free(prompt), free(pipeline), 0);
-	*pipeline = NULL;
 	while (line)
 	{
 		if (*line)
@@ -89,9 +105,9 @@ int	main(int argc, char *argv[], char *envp[])
 			tokens = NULL;
 			if (*pipeline)
 			{
+				expand_commands(&(*pipeline)->commands);
 				run_a_pipeline(*pipeline);
 				destroy_pipeline(pipeline);
-				*pipeline = NULL;
 			}
 			add_history(line);
 		}

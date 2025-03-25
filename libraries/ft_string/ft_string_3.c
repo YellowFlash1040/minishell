@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_string_3.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 17:22:07 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/09 17:23:29 by akovtune         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_string_3.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: akovtune <akovtune@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/03/09 17:22:07 by akovtune      #+#    #+#                 */
+/*   Updated: 2025/03/25 13:33:59 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ char	*extract_word(char *s, int *i, char c)
 		(*i)++;
 	start = *i;
 	while (s[*i] != c && s[*i] != '\0')
+		(*i)++;
+	end = *i;
+	return (ft_substr(s, start, end - start));
+}
+
+char	*extract_word2(char *s, int *i, char *c)
+{
+	int	start;
+	int	end;
+
+	start = *i;
+	while (index_of(s[*i], c) == -1 && s[*i] != '\0')
 		(*i)++;
 	end = *i;
 	return (ft_substr(s, start, end - start));

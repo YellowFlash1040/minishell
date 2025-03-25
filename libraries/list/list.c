@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "list.h"
+#include "string.h"
 
 t_list	*init_list(void)
 {
@@ -49,4 +50,31 @@ t_list_node	*get_node(int index, t_list *list)
 	while (++i < index)
 		node = node->next;
 	return (node);
+}
+
+char	*unwrap_list(t_list *list)
+{
+	int			n;
+	int			i;
+	int			j;
+	t_list_node	*node;
+	char		*res;
+
+	n = 0;
+	j = 0;
+	while ((node = get_node(n++, list)))
+		j += strlen((char *) node->value);
+	res = (char *)malloc(j + 1);
+	if (!res)
+		return (NULL);
+	n = 0;
+	i = 0;
+	while ((node = get_node(n++, list)))
+	{
+		j = 0;
+		while (((char *)node->value)[j])
+			res[i++] = ((char *)node->value)[j++];
+	}
+	res[i] = '\0';
+	return (res);
 }

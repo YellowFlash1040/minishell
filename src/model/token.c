@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 15:12:56 by ismo              #+#    #+#             */
-/*   Updated: 2025/03/21 17:50:01 by ibenne           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   token.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/03/10 15:12:56 by ismo          #+#    #+#                 */
+/*   Updated: 2025/03/26 00:11:14 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 t_token	*init_token()
 {
 	t_token *token;
-	token = (t_token *)malloc(sizeof(token));
+	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
 	token->value = NULL;

@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/08 17:35:18 by akovtune      #+#    #+#                 */
-/*   Updated: 2025/03/10 14:43:25 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/25 12:55:17 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ char	**ft_split(char *s, char c);
  * @return A newly allocated string containing the extracted word.
  */
 char	*extract_word(char *s, int *i, char c);
+char	*extract_word2(char *s, int *i, char *c);
 
 /**
  * @brief Counts the number of words in a string separated by a delimiter.

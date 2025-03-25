@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 14:25:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/24 17:23:11 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/25 14:34:23 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,12 @@ int	tokenize_env(t_token *token, char **prompt)
 	return (SUCCESS);
 }
 
+void tokenize_eq(t_token *token, char **prompt)
+{
+	token->type = EqualSign;
+	(*prompt)++;
+}
+
 int	tokenize_word(t_token *token, char **prompt)
 {
 	token->type = Word;
@@ -162,6 +168,8 @@ t_token	*get_next_token(char **prompt)
 		if (tokenize_env(token, prompt) == FAILURE)
 			return (free(token), NULL);
 	}
+	else if (**prompt && **prompt == '=')
+		tokenize_eq(token, prompt);
 	else if (**prompt && !is_whitespace(**prompt))
 	{
 		if (tokenize_word(token, prompt) == FAILURE)

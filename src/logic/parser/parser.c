@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 15:11:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/24 16:37:29 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/26 00:14:03 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,8 @@ int	nt_command(t_list *tokens, int *depth, t_command **command)
 		}
 		else if (is_file(token))
 		{
-			if (nt_file(tokens, &index, arguments + arg, (*command)->parsable + arg) == FAILURE)
+			if (nt_file(tokens, &index, &arguments[arg], (*command)->parsable + arg) == FAILURE)
 				return (destroy_command(command), FAILURE);
-			if (arg == 0)
-				(*command)->executable = ft_strdup(arguments[0]);
 			arg++;
 		}
 		else

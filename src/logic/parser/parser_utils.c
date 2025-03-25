@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 16:07:18 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/24 16:26:08 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/25 17:31:15 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,15 @@ int	n_args(t_list *tokens, int index)
 	t_token *token;
 	int		n;
 
-	token = read_token(tokens, index);
+	token = read_token(tokens, index++);
 	n = 0;
-	while (token && is_file(token) && is_redir(token))
+	while (token && (is_file(token) || is_redir(token)))
 	{
 		if (is_redir(token))
 			index += 2;
+		else
+			n++;
 		token = read_token(tokens, index++);
-		n++;
 	}
 	return (n);
 }
