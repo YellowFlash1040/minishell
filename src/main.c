@@ -88,8 +88,10 @@ int	main(int argc, char *argv[], char *envp[])
 			clear_list(tokens, free_token);
 			tokens = NULL;
 			if (*pipeline)
-			{	if (run_a_pipeline(*pipeline) == FAILURE)
-					printf("Error running pipeline\n");
+			{
+				run_a_pipeline(*pipeline);
+				destroy_pipeline(pipeline);
+				*pipeline = NULL;
 			}
 			add_history(line);
 		}
@@ -97,7 +99,6 @@ int	main(int argc, char *argv[], char *envp[])
 		line = readline("$> ");
 	}
 	free(prompt);
-	destroy_pipeline(pipeline);
 	free(pipeline);
 	destroy_environment(&env);
 	return (0);

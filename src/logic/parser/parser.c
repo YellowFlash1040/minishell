@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 15:11:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/24 16:33:57 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/24 16:37:29 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,9 @@ int	nt_command(t_list *tokens, int *depth, t_command **command)
 	has_redir = 0;
 	if (build_command(command) == FAILURE)
 		return (FAILURE);
-	// if (!nt_file(tokens, depth, (*command)->executable, NULL))
-	// 	return (destroy_command(command), FAILURE);
 	index = *depth;
 	args = n_args(tokens, index);
 	arguments = init_string_array(args + 1);
-	// make array for parsable arguments
 	if (!arguments)
 		return (destroy_command(command), FAILURE);
 	(*command)->parsable = (char *)malloc(args);

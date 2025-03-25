@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 14:25:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/17 15:31:50 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/24 17:23:11 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char	*read_quote(char quote, char **prompt)
 		value[i++] = **prompt;
 		(*prompt)++;
 	}
+	value[i] = '\0';
 	return (value);
 }
 
