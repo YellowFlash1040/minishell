@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 15:11:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/26 13:26:45 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/26 14:39:31 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	nt_command(t_list *tokens, int *depth, t_command **command)
 		return (destroy_command(command), FAILURE);
 	arg = 0;
 	token = read_token(tokens, index);
-	while (arg < args && token)
+	while (token)
 	{
 		if (!has_redir && is_redir(token))
 		{
