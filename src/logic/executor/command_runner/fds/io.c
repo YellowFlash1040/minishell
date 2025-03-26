@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:34:37 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/26 14:14:33 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:16:03 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		setup_redirection(t_redirection *redirection, t_command *command);
 int		process_file(t_file *file);
 bool	check_file(t_file *file);
 int		process_intermediate_files(t_list *intermediate_files);
+int		get_a_heredoc(t_redirection *redirection, t_command *command);
 
 int	setup_command_io(t_command *command)
 {
@@ -94,6 +95,13 @@ int	setup_redirection(t_redirection *redirection, t_command *command)
 		result = process_file(redirection->file);
 		if (result == FILE_ACCESS_ERR)
 			command->exit_status_code = FAILURE;
+		if (result != SUCCESS)
+			return (result);
+	}
+	if (redirection->standard_fd == STDIN_FILENO
+		&& command->needs_a_here_doc)
+	{
+		result = get_a_heredoc(redirection, command);
 		if (result != SUCCESS)
 			return (result);
 	}

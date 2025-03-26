@@ -32,6 +32,8 @@ t_command	*init_command(void)
 	command->unused_pipe_end = -1;
 	command->needs_a_subshell = true;
 	command->intermediate_files = NULL;
+	command->needs_a_here_doc = false;
+	command->here_doc_delimiter = NULL;
 	return (command);
 }
 
@@ -54,6 +56,8 @@ void	destroy_command(t_command **command_ref)
 		destroy_file(&command->error_file);
 	if (command->intermediate_files)
 		destroy_list(&command->intermediate_files, free_file);
+	if (command->here_doc_delimiter)
+		free(command->here_doc_delimiter);
 	free(command);
 	*command_ref = NULL;
 }

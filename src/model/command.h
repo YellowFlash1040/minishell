@@ -36,8 +36,9 @@ typedef struct command
 	bool			needs_a_subshell;
 	t_list			*environment;
 	t_list			*intermediate_files;
+	bool			needs_a_here_doc;
+	t_string		here_doc_delimiter;
 }					t_command;
-	// bool			needs_to_read_from_stdin;
 
 t_command			*init_command(void);
 void				destroy_command(t_command **command);
