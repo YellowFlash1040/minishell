@@ -12,6 +12,8 @@
 
 #include "command.h"
 
+void	free_file(void *value);
+
 t_command	*init_command(void)
 {
 	t_command	*command;
@@ -29,6 +31,7 @@ t_command	*init_command(void)
 	command->exit_status_code = 0;
 	command->unused_pipe_end = -1;
 	command->needs_a_subshell = true;
+	command->intermediate_files = NULL;
 	return (command);
 }
 
@@ -49,6 +52,16 @@ void	destroy_command(t_command **command_ref)
 		destroy_file(&command->output_file);
 	if (command->error_file)
 		destroy_file(&command->error_file);
+	if (command->intermediate_files)
+		destroy_list(&command->intermediate_files, free_file);
 	free(command);
 	*command_ref = NULL;
+}
+
+void	free_file(void *value)
+{
+	t_file	*file;
+
+	file = (t_file *)value;
+	destroy_file(&file);
 }

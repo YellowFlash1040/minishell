@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:34:37 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/23 17:17:13 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/26 14:14:33 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int		setup_redirections(t_command *command);
 int		setup_redirection(t_redirection *redirection, t_command *command);
+int		process_file(t_file *file);
 bool	check_file(t_file *file);
+int		process_intermediate_files(t_list *intermediate_files);
 
 int	setup_command_io(t_command *command)
 {
@@ -25,7 +27,17 @@ int	setup_command_io(t_command *command)
 		if (command->unused_pipe_end != -1)
 			close(command->unused_pipe_end);
 	}
+	result = process_intermediate_files(command->intermediate_files);
+	if (result == FILE_ACCESS_ERR)
+	{
+		command->exit_status_code = FAILURE;
+		return (SUCCESS);
+	}
+	if (result != SUCCESS)
+		return (result);
 	result = setup_redirections(command);
+	if (result == FILE_ACCESS_ERR)
+		return (SUCCESS);
 	if (result != SUCCESS)
 		return (result);
 	return (SUCCESS);
@@ -73,18 +85,15 @@ int	setup_redirections(t_command *command)
 	return (SUCCESS);
 }
 
-int setup_redirection(t_redirection *redirection, t_command *command)
+int	setup_redirection(t_redirection *redirection, t_command *command)
 {
 	int	result;
-	
+
 	if (redirection->file->path != NULL)
 	{
-		if (!check_file(redirection->file))
-		{
+		result = process_file(redirection->file);
+		if (result == FILE_ACCESS_ERR)
 			command->exit_status_code = FAILURE;
-			return (SUCCESS);
-		}
-		result = open_file(redirection->file);
 		if (result != SUCCESS)
 			return (result);
 	}
@@ -96,32 +105,4 @@ int setup_redirection(t_redirection *redirection, t_command *command)
 			return (result);
 	}
 	return (SUCCESS);
-}
-
-bool	check_file(t_file *file)
-{
-	if (file->mode == READ && access(file->path, R_OK) != 0)
-	{
-		if (access(file->path, F_OK) != 0)
-		{
-			print_error_message(file->path);
-			print_error_message(": No such file or directory\n");
-			return (false);
-		}
-		else
-		{
-			print_error_message(file->path);
-			print_error_message(": Permission denied\n");
-			return (false);
-		}
-	}
-	else if (access(file->path, W_OK) != 0)
-	{
-		if (access(file->path, F_OK) != 0)
-			return (true);
-		print_error_message(file->path);
-		print_error_message(": Permission denied\n");
-		return (false);
-	}
-	return (true);
 }

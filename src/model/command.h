@@ -35,6 +35,7 @@ typedef struct command
 	int				unused_pipe_end;
 	bool			needs_a_subshell;
 	t_list			*environment;
+	t_list			*intermediate_files;
 }					t_command;
 	// bool			needs_to_read_from_stdin;
 

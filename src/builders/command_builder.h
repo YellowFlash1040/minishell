@@ -21,6 +21,7 @@
 # define INPUT_FILE_INIT_ERR 123
 # define OUTPUT_FILE_INIT_ERR 124
 # define ERROR_FILE_INIT_ERR 125
+# define LIST_INIT_ERR 126
 
 int	build_command(t_command **command);
 
