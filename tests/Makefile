@@ -2,7 +2,7 @@
 # Compiler and Flags
 CC				:= cc
 CFLAGS			 = -Wall -Wextra -Werror $(INCLUDES) -g
-LDFLAGS			:= -L.. -lminishell
+LDFLAGS			:= -L.. -lminishell -lreadline
 INCLUDES		 = -I$(HELPERS_DIR) \
 					$(addprefix -I, $(shell find ../src -type d)) \
 					$(addprefix -I, $(shell find ../libraries -type d))
@@ -34,7 +34,7 @@ HELPERS_DIR		:= $(SRC_DIR)/helpers
 TESTS_DIR		:= $(SRC_DIR)/tests
 EXECUTOR_DIR	:= $(TESTS_DIR)/executor
 BUILTINS_DIR	:= $(TESTS_DIR)/builtins
-INTERMEDIATE_FILES_DIR	:= $(TESTS_DIR)/intermediate_files
+# INTERMEDIATE_FILES_DIR	:= $(TESTS_DIR)/intermediate_files
 
 TESTS_DIRS		:= $(EXECUTOR_DIR) \
 					$(BUILTINS_DIR) \

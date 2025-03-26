@@ -43,7 +43,6 @@ int test1(void)
 	char *exe_path = "grep";
 	char *args[] = {exe_path, "r", NULL};
 	command = create_command(exe_path, args, "assets/intermediate_files/input_files/test1/input_file_2.txt", NULL);
-	command->needs_a_subshell = false;
 	command->environment = environment;
 
 	t_file* file = init_file();
@@ -72,7 +71,6 @@ int test2(void)
 	char *exe_path = "grep";
 	char *args[] = {exe_path, "r", NULL};
 	command = create_command(exe_path, args, "assets/intermediate_files/input_files/test2/input_file_2.txt", NULL);
-	command->needs_a_subshell = false;
 	command->environment = environment;
 
 	t_file* file = init_file();
@@ -105,7 +103,6 @@ int test3(void)
 	char *args[] = {exe_path, "r", NULL};
 	command = create_command(exe_path, args, input_file_path, NULL);
 	free(input_file_path);
-	command->needs_a_subshell = false;
 	command->environment = environment;
 
 	t_file* file = init_file();
@@ -142,7 +139,6 @@ int test4(void)
 	char *args[] = {exe_path, "r", NULL};
 	command = create_command(exe_path, args, input_file_path, NULL);
 	free(input_file_path);
-	command->needs_a_subshell = false;
 	command->environment = environment;
 
 	t_file* file = init_file();
@@ -179,7 +175,6 @@ int test5(void)
 	char *args[] = {exe_path, "r", NULL};
 	command = create_command(exe_path, args, input_file_path, NULL);
 	free(input_file_path);
-	command->needs_a_subshell = false;
 	command->environment = environment;
 
 	t_file* file = init_file();

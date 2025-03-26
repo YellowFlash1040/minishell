@@ -47,7 +47,6 @@ int test1(void)
 	char *args[] = {exe_path, "r", NULL};
 	command = create_command(exe_path, args, NULL, output_file_path);
 	free(output_file_path);
-	command->needs_a_subshell = false;
 	command->environment = environment;
 
 	t_file* file = init_file();
@@ -80,7 +79,6 @@ int test2(void)
 	char *args[] = {exe_path, "r", NULL};
 	command = create_command(exe_path, args, NULL, output_file_path);
 	free(output_file_path);
-	command->needs_a_subshell = false;
 	command->environment = environment;
 
 	t_file* file = init_file();
@@ -100,8 +98,6 @@ int test2(void)
 
 int test3(void)
 {
-	printf("Test 3 is running\n");
-
 	int			result;
 	t_command	*command;
 
@@ -116,7 +112,6 @@ int test3(void)
 	char *args[] = {exe_path, "r", NULL};
 	command = create_command(exe_path, args, NULL, output_file_path);
 	free(output_file_path);
-	command->needs_a_subshell = false;
 	command->environment = environment;
 
 	t_file* file = init_file();
@@ -154,7 +149,6 @@ int test4(void)
 	char *args[] = {exe_path, "r", NULL};
 	command = create_command(exe_path, args, NULL, output_file_path);
 	free(output_file_path);
-	command->needs_a_subshell = false;
 	command->environment = environment;
 
 	t_file* file = init_file();
