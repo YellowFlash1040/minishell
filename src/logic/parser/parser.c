@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 15:11:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/26 00:14:03 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/26 13:26:45 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int nt_file(t_list *tokens, int *depth, char **blob, char *parsable)
 	token = read_token(tokens, index++);
 	if (!token)
 		return (FAILURE);
-	if (parsable && (token->type == DoubleQuote || token->type == Word || token->type == EnvVariable))
+	if (parsable && (token->type == DoubleQuote || token->type == EnvVariable))
 		*parsable = 1;
 	else if (parsable)
 		*parsable = 0;
@@ -97,7 +97,7 @@ int	nt_command(t_list *tokens, int *depth, t_command **command)
 		return (destroy_command(command), FAILURE);
 	arg = 0;
 	token = read_token(tokens, index);
-	while (token && token->type != EndOfInput)
+	while (arg < args && token)
 	{
 		if (!has_redir && is_redir(token))
 		{
@@ -107,7 +107,7 @@ int	nt_command(t_list *tokens, int *depth, t_command **command)
 		}
 		else if (is_file(token))
 		{
-			if (nt_file(tokens, &index, &arguments[arg], (*command)->parsable + arg) == FAILURE)
+			if (nt_file(tokens, &index, &arguments[arg], &(*command)->parsable[arg]) == FAILURE)
 				return (destroy_command(command), FAILURE);
 			arg++;
 		}

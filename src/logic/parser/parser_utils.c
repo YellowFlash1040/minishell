@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 16:07:18 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/25 17:31:15 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/26 13:20:47 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	n_args(t_list *tokens, int index)
 	while (token && (is_file(token) || is_redir(token)))
 	{
 		if (is_redir(token))
-			index += 2;
+			index++;
 		else
 			n++;
 		token = read_token(tokens, index++);

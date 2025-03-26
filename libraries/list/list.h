@@ -124,6 +124,4 @@ t_list_node	*find_node(void *value, t_list *list,
 bool		remove_from_list(void *value, t_list *list,
 				bool (*compare)(void *, void *), void (*free_value)(void *));
 
-char	*unwrap_list(t_list *list);
-
 #endif

@@ -46,7 +46,7 @@ t_list	*create_token_list(char **prompt)
 	}
 	if (!token)
 	{
-		clear_list(tokens, free);
+		destroy_list(&tokens, free_token);
 		return (NULL);
 	}
 	add_to_list(tokens, token);
@@ -101,7 +101,7 @@ int	main(int argc, char *argv[], char *envp[])
 				break;
 			}
 			parse_tokens(tokens, pipeline, env);
-			clear_list(tokens, free_token);
+			destroy_list(&tokens, free_token);
 			tokens = NULL;
 			if (*pipeline)
 			{
