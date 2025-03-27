@@ -25,17 +25,17 @@ t_file	*init_file(void)
 	return (file);
 }
 
-void	destroy_file(t_file **file)
+void	destroy_file(t_file **file_ref)
 {
-	t_file	*file_v;
+	t_file	*file;
 
-	if (!file || !*file)
+	if (!file_ref || !*file_ref)
 		return ;
-	file_v = *file;
-	if (file_v->path)
-		free(file_v->path);
-	free(file_v);
-	*file = NULL;
+	file = *file_ref;
+	if (file->path)
+		free(file->path);
+	free(file);
+	*file_ref = NULL;
 }
 
 int	redirect(int old_fd, int new_fd)

@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   intermediate_files.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 18:04:41 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/22 18:29:28 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/26 12:40:49 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/26 13:02:54 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pwd.h"
+#include "command_runner.h"
 
-int	pwd(t_command *command)
+int	process_file(t_file *file);
+
+int	process_intermediate_files(t_list *intermediate_files)
 {
-	t_string	wd;
+	int			result;
+	t_file		*file;
+	t_list_node	*node;
+	int			i;
 
-	if (!command || !command->environment)
-		return (FAILURE);
-	wd = getcwd(NULL, 0);
-	if (!wd)
-		return (FAILURE);
-	write(STDOUT_FILENO, wd, ft_strlen(wd));
-	write(STDOUT_FILENO, "\n", 1);
-	free(wd);
+	node = intermediate_files->head;
+	i = -1;
+	while (++i < intermediate_files->count)
+	{
+		file = (t_file *)node->value;
+		result = process_file(file);
+		if (result != SUCCESS)
+			return (result);
+		close(file->fd);
+		node = node->next;
+	}
 	return (SUCCESS);
 }

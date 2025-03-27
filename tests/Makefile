@@ -2,7 +2,7 @@
 # Compiler and Flags
 CC				:= cc
 CFLAGS			 = -Wall -Wextra -Werror $(INCLUDES) -g
-LDFLAGS			:= -L.. -lminishell
+LDFLAGS			:= -L.. -lminishell -lreadline
 INCLUDES		 = -I$(HELPERS_DIR) \
 					$(addprefix -I, $(shell find ../src -type d)) \
 					$(addprefix -I, $(shell find ../libraries -type d))
@@ -11,8 +11,15 @@ INCLUDES		 = -I$(HELPERS_DIR) \
 # Output Files
 TEST_BINS		 = $(addprefix $(BIN_DIR)/,$(notdir $(TEST_FILES:.c=)))
 # TEST_BINS		 = $(BIN_DIR)/run_a_pipeline.test
+# TEST_BINS		 = $(BIN_DIR)/run_a_command.test
 # TEST_BINS		 = $(BIN_DIR)/echo.test
 # TEST_BINS		 = $(BIN_DIR)/export.test
+# TEST_BINS		 = $(BIN_DIR)/cd.test $(BIN_DIR)/run_a_pipeline.test
+# TEST_BINS		 = $(BIN_DIR)/cd.test
+# TEST_BINS		 = $(BIN_DIR)/pwd.test
+# TEST_BINS		 = $(BIN_DIR)/exit.test
+# TEST_BINS		 = $(BIN_DIR)/run_a_pipeline_2.test
+# TEST_BINS		 = $(BIN_DIR)/none_existing_file.test
 MINISHELL		 = $(MINISHELL_DIR)/libminishell.a
 
 #-----------------------FOLDERS----------------------------------------------------------
@@ -27,9 +34,11 @@ HELPERS_DIR		:= $(SRC_DIR)/helpers
 TESTS_DIR		:= $(SRC_DIR)/tests
 EXECUTOR_DIR	:= $(TESTS_DIR)/executor
 BUILTINS_DIR	:= $(TESTS_DIR)/builtins
+# INTERMEDIATE_FILES_DIR	:= $(TESTS_DIR)/intermediate_files
 
 TESTS_DIRS		:= $(EXECUTOR_DIR) \
-					$(BUILTINS_DIR)
+					$(BUILTINS_DIR) \
+					$(INTERMEDIATE_FILES_DIR)
 
 # All source folders
 SRC_DIRS		:= $(TESTS_DIRS) \

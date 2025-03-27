@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:35:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/09 17:27:37 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:42:42 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,5 +227,8 @@ char	*extract_word(char *s, int *i, char c);
  * @return The number of words in the string.
  */
 int		count_words(char *s, char delimiter);
+
+char	*ft_strtrim(char *str);
+int		is_whitespace(char c);
 
 #endif

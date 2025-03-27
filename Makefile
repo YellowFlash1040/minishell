@@ -30,6 +30,7 @@ ENVIRONMENT_DIR			:= $(LOGIC_DIR)/environment
 # Executor directories (src/logic/executor/)
 COMMAND_RUNNER_DIR		:= $(EXECUTOR_DIR)/command_runner
 PIPELINE_RUNNER_DIR		:= $(EXECUTOR_DIR)/pipeline_runner
+FDS_DIR					:= $(COMMAND_RUNNER_DIR)/fds
 
 # Builtin directories (src/logic/builtins/)
 CD_DIR					:= $(BUILTINS_DIR)/cd
@@ -51,6 +52,7 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(EXECUTOR_DIR) \
 							$(BUILTINS_DIR) \
 							$(COMMAND_RUNNER_DIR) \
+							$(FDS_DIR) \
 							$(PIPELINE_RUNNER_DIR) \
 							$(CD_DIR) \
 							$(ECHO_DIR) \

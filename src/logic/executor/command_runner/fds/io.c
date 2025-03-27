@@ -6,13 +6,18 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:34:37 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/14 14:12:34 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:16:03 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command_runner.h"
 
-int	setup_redirections(t_command *command);
+int		setup_redirections(t_command *command);
+int		setup_redirection(t_redirection *redirection, t_command *command);
+int		process_file(t_file *file);
+bool	check_file(t_file *file);
+int		process_intermediate_files(t_list *intermediate_files);
+int		get_a_heredoc(t_redirection *redirection, t_command *command);
 
 int	setup_command_io(t_command *command)
 {
@@ -23,7 +28,17 @@ int	setup_command_io(t_command *command)
 		if (command->unused_pipe_end != -1)
 			close(command->unused_pipe_end);
 	}
+	result = process_intermediate_files(command->intermediate_files);
+	if (result == FILE_ACCESS_ERR)
+	{
+		command->exit_status_code = FAILURE;
+		return (SUCCESS);
+	}
+	if (result != SUCCESS)
+		return (result);
 	result = setup_redirections(command);
+	if (result == FILE_ACCESS_ERR)
+		return (SUCCESS);
 	if (result != SUCCESS)
 		return (result);
 	return (SUCCESS);
@@ -56,19 +71,46 @@ int	setup_redirections(t_command *command)
 	i = -1;
 	while (++i < 3)
 	{
-		if (redirections[i].file->path != NULL)
+		result = setup_redirection(&redirections[i], command);
+		if (result != SUCCESS || command->exit_status_code != SUCCESS)
 		{
-			result = open_file(redirections[i].file);
-			if (result != SUCCESS)
-				return (result);
+			if (command->input_file->fd != STDIN_FILENO)
+				close(command->input_file->fd);
+			if (command->output_file->fd != STDOUT_FILENO)
+				close(command->output_file->fd);
+			if (command->error_file->fd != STDERR_FILENO)
+				close(command->error_file->fd);
+			return (result);
 		}
-		if (redirections[i].file->fd != redirections[i].standard_fd)
-		{
-			result = redirect(redirections[i].standard_fd,
-					redirections[i].file->fd);
-			if (result != SUCCESS)
-				return (result);
-		}
+	}
+	return (SUCCESS);
+}
+
+int	setup_redirection(t_redirection *redirection, t_command *command)
+{
+	int	result;
+
+	if (redirection->file->path != NULL)
+	{
+		result = process_file(redirection->file);
+		if (result == FILE_ACCESS_ERR)
+			command->exit_status_code = FAILURE;
+		if (result != SUCCESS)
+			return (result);
+	}
+	if (redirection->standard_fd == STDIN_FILENO
+		&& command->needs_a_here_doc)
+	{
+		result = get_a_heredoc(redirection, command);
+		if (result != SUCCESS)
+			return (result);
+	}
+	if (redirection->file->fd != redirection->standard_fd)
+	{
+		result = redirect(redirection->standard_fd,
+				redirection->file->fd);
+		if (result != SUCCESS)
+			return (result);
 	}
 	return (SUCCESS);
 }
