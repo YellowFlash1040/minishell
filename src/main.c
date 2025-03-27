@@ -23,10 +23,16 @@
 #include "parser.h"
 #include "environment.h"
 #include "expander.h"
+#include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
+void	signal_handler(int signum)
+{
+	printf("signal received: %d", signum);
+}
 
 t_list	*create_token_list(char **prompt)
 {
@@ -51,21 +57,6 @@ t_list	*create_token_list(char **prompt)
 	}
 	add_to_list(tokens, token);
 	return (tokens);
-}
-
-void	expand_commands(t_list **commands)
-{
-	int	i;
-	t_list_node	*node;
-
-	i = 0;
-	node = get_node(i, *commands);
-	while (node)
-	{
-		expand_command((t_command *)node->value);
-		node = get_node(i, *commands);
-		i++;
-	}
 }
 
 int	main(int argc, char *argv[], char *envp[])
