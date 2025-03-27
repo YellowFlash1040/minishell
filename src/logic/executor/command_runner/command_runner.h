@@ -29,6 +29,7 @@
 # define CLOSE_FUNC_ERR 194
 # define UNKNOWN_PROC_EXIT_STATUS_ERR 195
 # define WRITE_FUNC_ERR 196
+# define FILE_ACCESS_ERR 197
 
 int	run_a_command(t_command *command);
 

@@ -34,9 +34,7 @@ void	destroy_pipeline(t_pipeline **pipeline)
 		return ;
 	pipeline_v = *pipeline;
 	if (pipeline_v->commands)
-	{
-		clear_list(pipeline_v->commands, free_command);
-	}
+		destroy_list(&pipeline_v->commands, free_command);
 	free(pipeline_v);
 	*pipeline = NULL;
 }

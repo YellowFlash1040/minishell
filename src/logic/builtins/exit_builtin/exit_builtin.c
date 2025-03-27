@@ -6,12 +6,17 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 18:08:18 by akovtune          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/03/19 15:14:57 by ibenne           ###   ########.fr       */
+=======
+/*   Updated: 2025/03/20 14:31:03 by akovtune         ###   ########.fr       */
+>>>>>>> dev
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exit_builtin.h"
 
+<<<<<<< HEAD
 int	count_arguments(t_string_array args)
 {
 	int	i;
@@ -21,16 +26,50 @@ int	count_arguments(t_string_array args)
 		i++;
 	return (i);
 }
+=======
+bool	check_and_atoi(t_string str, int *res);
+>>>>>>> dev
 
 int	exit_builtin(t_command *command)
 {
 	int	exit_status;
 
-	if (count_arguments(command->arguments) > 2)
-		return (print_error_message("exit: too many arguments\n"),
-			FAILURE);
+	if (get_str_arr_length(command->arguments) > 2)
+	{
+		command->exit_status_code = FAILURE;
+		print_error_message("exit: too many arguments\n");
+		return (SUCCESS);
+	}
 	exit_status = SUCCESS;
 	if (command->arguments[1])
-		exit_status = ft_atoi(command->arguments[1]);
+	{
+		if (!check_and_atoi(command->arguments[1], &exit_status))
+			exit(2);
+	}
 	exit(exit_status);
+}
+
+bool	check_and_atoi(t_string str, int *res)
+{
+	bool	m;
+	int		digit;
+
+	if (!str || !*str)
+		return (false);
+	*res = 0;
+	m = false;
+	if (*str == '-' || *str == '+')
+		if (*str++ == '-')
+			m = true;
+	while (*str >= '0' && *str <= '9')
+	{
+		*res *= 10;
+		digit = *str++ - '0';
+		*res += digit;
+	}
+	if (*str != '\0')
+		return (false);
+	if (m)
+		*res = -*res;
+	return (true);
 }

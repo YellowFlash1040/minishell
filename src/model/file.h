@@ -33,7 +33,7 @@ typedef enum e_write_mode
 	/// @brief `>>` Append mode
 	APPEND = O_WRONLY | O_CREAT | O_APPEND,
 	/// @brief `<` Reading mode
-	READ = O_RDONLY | O_CREAT
+	READ = O_RDONLY
 }					t_write_mode;
 
 typedef struct file

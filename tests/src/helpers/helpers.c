@@ -32,6 +32,20 @@ void	run_a_test(int (*test)(void), int index, bool suppress_child_output)
 		printf("\t✅\n");
 	else
 		printf("\t❌. Error %d\n", result);
+	printf("\n");
+}
+
+void	run_a_test_with_variable(int (*test)(void* var), void* var, int index)
+{
+	int result;
+
+	result = test(var);
+	
+	printf("Test %d", index);
+	if (result == SUCCESS)
+		printf("\t✅\n");
+	else
+		printf("\t❌. Error %d\n", result);
 }
 
 t_command	*create_command(char *exe_path, char **args, char *input_file,

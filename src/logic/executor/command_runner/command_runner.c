@@ -24,6 +24,7 @@ int	handle_child_process(t_command *command);
 int	run_a_command(t_command *command)
 {
 	pid_t	pid;
+	int		result;
 
 	if (command->needs_a_subshell)
 	{
@@ -33,7 +34,10 @@ int	run_a_command(t_command *command)
 		command->id = pid;
 		if (pid == 0)
 		{
-			return (execute_command(command));
+			result = execute_command(command);
+			if (command->exit_status_code != SUCCESS)
+				result = command->exit_status_code;
+			exit (result);
 		}
 		return (handle_child_process(command));
 	}

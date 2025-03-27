@@ -6,16 +6,16 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:25:09 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/16 15:37:16 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:07:56 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command_runner.h"
 
 int	setup_command_io(t_command *command);
-int	launch_binary(t_string name, t_string_array args);
-int	setup_binary_path(t_string *name_ref);
-int	find_binary(t_string path, t_string *result);
+int	launch_binary(t_string name, t_string_array args, t_list *env);
+int	setup_binary_path(t_string *name_ref, t_list *env);
+int	find_binary(t_string path, t_list *env, t_string *result);
 int	print_not_found_err(t_string binary_path);
 
 int	execute_external(t_command *command)
@@ -23,19 +23,31 @@ int	execute_external(t_command *command)
 	int	result;
 
 	result = setup_command_io(command);
-	if (result != SUCCESS)
+	if (result != SUCCESS || command->exit_status_code != SUCCESS)
 		return (result);
-	return (launch_binary(command->executable, command->arguments));
+	result = launch_binary(command->executable, command->arguments,
+			command->environment);
+	if (result != SUCCESS)
+	{
+		command->exit_status_code = FAILURE;
+		return (result);
+	}
+	return (SUCCESS);
 }
 
-int	launch_binary(t_string name, t_string_array args)
+int	launch_binary(t_string name, t_string_array args, t_list *env)
 {
-	int	result;
+	int				result;
+	t_string_array	environment;
 
-	setup_binary_path(&name);
-	result = execve(name, args, NULL);
+	setup_binary_path(&name, env);
+	environment = construct_environment_for_export(env);
+	if (!environment)
+		return (FAILURE);
+	result = execve(name, args, environment);
 	if (result == -1)
 	{
+		destroy_string_array(&environment);
 		if (errno == ENOENT)
 		{
 			result = print_not_found_err(name);
@@ -48,14 +60,14 @@ int	launch_binary(t_string name, t_string_array args)
 	return (SUCCESS);
 }
 
-int	setup_binary_path(t_string *name_ref)
+int	setup_binary_path(t_string *name_ref, t_list *env)
 {
 	t_string	name;
 	t_string	binary_path;
 	int			result;
 
 	name = *name_ref;
-	result = find_binary(name, &binary_path);
+	result = find_binary(name, env, &binary_path);
 	if (result != SUCCESS)
 		return (result);
 	if (binary_path != NULL)

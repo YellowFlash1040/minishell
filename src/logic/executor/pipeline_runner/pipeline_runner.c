@@ -21,6 +21,7 @@ int		setup_current_pipe(int current_pipe[2], int i, int commands_count);
 int		setup_and_run_command(t_command *command, int prev_pipe[2],
 			int current_pipe[2]);
 int		move_to_the_next_pipe(int prev_pipe[2], int current_pipe[2]);
+int		save_result_to_env(t_list *env, int pipeline_status_code);
 
 int	run_a_pipeline(t_pipeline *pipeline)
 {
@@ -38,6 +39,10 @@ int	run_a_pipeline(t_pipeline *pipeline)
 		first_command->needs_a_subshell = false;
 	result = run_commands(pipeline->commands, prev_pipe, current_pipe,
 			&pipeline->status_code);
+	if (result != SUCCESS)
+		return (result);
+	result = save_result_to_env(first_command->environment,
+			pipeline->status_code);
 	if (result != SUCCESS)
 		return (result);
 	return (SUCCESS);
@@ -83,7 +88,10 @@ int	setup_and_run_command(t_command *command, int prev_pipe[2],
 	command->unused_pipe_end = current_pipe[READ_END];
 	result = run_a_command(command);
 	if (result != SUCCESS)
-		return (result);
+	{
+		if (command->needs_a_subshell || command->exit_status_code == SUCCESS)
+			return (result);
+	}
 	return (SUCCESS);
 }
 

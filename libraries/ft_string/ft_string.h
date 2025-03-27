@@ -1,5 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
+<<<<<<< HEAD
 /*                                                        ::::::::            */
 /*   ft_string.h                                        :+:    :+:            */
 /*                                                     +:+                    */
@@ -7,6 +8,15 @@
 /*                                                   +#+                      */
 /*   Created: 2025/01/08 17:35:18 by akovtune      #+#    #+#                 */
 /*   Updated: 2025/03/25 12:55:17 by ismo          ########   odam.nl         */
+=======
+/*                                                        :::      ::::::::   */
+/*   ft_string.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/08 17:35:18 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/21 12:42:42 by akovtune         ###   ########.fr       */
+>>>>>>> dev
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,8 +239,8 @@ char	*extract_word2(char *s, int *i, char *c);
  */
 int		count_words(char *s, char delimiter);
 
+char	*ft_strtrim(char *str);
 int		is_whitespace(char c);
-
 char	*ft_strchr(char *str, char c);
 
 #endif

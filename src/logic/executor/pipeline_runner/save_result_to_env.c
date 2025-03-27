@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   save_result_to_env.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 17:52:16 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/23 17:59:59 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/22 18:46:54 by akovtune          #+#    #+#             */
+/*   Updated: 2025/03/23 15:27:56 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "pipeline_runner.h"
 
-int	env(t_command *command)
+int	save_result_to_env(t_list *env, int pipeline_status_code)
 {
-	t_list			*env;
-	t_string_array	exported_env;
-	int				i;
+	int			result;
+	t_string	string_status_code;
 
-	if (!command || !command->environment)
+	string_status_code = ft_itoa(pipeline_status_code);
+	if (!string_status_code)
 		return (FAILURE);
-	env = command->environment;
-	exported_env = construct_environment_for_export(env);
-	if (!exported_env)
-		return (FAILURE);
-	i = -1;
-	while (exported_env[++i])
-	{
-		write(STDOUT_FILENO, exported_env[i], ft_strlen(exported_env[i]));
-		write(STDOUT_FILENO, "\n", 1);
-	}
-	destroy_string_array(&exported_env);
+	result = set_env_variable(env, "?", string_status_code, false);
+	if (result != SUCCESS)
+		return (free(string_status_code), result);
 	return (SUCCESS);
 }

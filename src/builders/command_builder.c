@@ -14,20 +14,23 @@
 
 int	build_std_files(t_command *command);
 
-int	build_command(t_command **command)
+int	build_command(t_command **command_ref)
 {
-	t_command	*command_v;
+	t_command	*command;
 	int			result;
 
-	if (!command)
+	if (!command_ref)
 		return (EMPTY_COMMAND_REF_ERR);
-	*command = init_command();
-	if (!*command)
+	*command_ref = init_command();
+	if (!*command_ref)
 		return (COMMAND_INIT_ERR);
-	command_v = *command;
-	result = build_std_files(command_v);
+	command = *command_ref;
+	result = build_std_files(command);
 	if (result != SUCCESS)
 		return (result);
+	command->intermediate_files = init_list();
+	if (!command->intermediate_files)
+		return (LIST_INIT_ERR);
 	return (SUCCESS);
 }
 

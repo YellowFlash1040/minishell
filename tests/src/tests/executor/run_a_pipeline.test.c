@@ -1,6 +1,8 @@
 #include "helpers.h"
 #include "pipeline_runner.h"
 
+t_list* environment;
+
 int	test1(void);
 int	test2(void);
 int	test3(void);
@@ -11,9 +13,20 @@ int	test7(void);
 int	test8(void);
 int	test9(void);
 int	test10(void);
+int	test11(void);
+int	test12(void);
+int	test13(void);
 
-int	main(void)
+int	main(int argc, char** args, char* envp[])
 {
+<<<<<<< HEAD
+=======
+	(void)argc;
+	(void)args;
+
+	environment = init_environment(envp);
+
+>>>>>>> dev
 	int (*tests[])(void) =
 	{
 		test1,
@@ -29,16 +42,18 @@ int	main(void)
 	};
 
 	for (int i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++)
-		run_a_test(tests[i], i + 1, true);
+		run_a_test(tests[i], i + 1, false);
+
+	destroy_environment(&environment);
 }
 
 int run_with_output_manipulations(int (*run_a_pipeline)(t_pipeline *p), t_pipeline *pipeline)
 {
 	int result;
-	// bool need_output = true;
-	bool need_output = false;
-	// bool need_status_codes = true;
-	bool need_status_codes = false;
+	bool need_output = true;
+	// bool need_output = false;
+	bool need_status_codes = true;
+	// bool need_status_codes = false;
 
 	if (!need_output)
 	{
@@ -77,7 +92,8 @@ int run_with_output_manipulations(int (*run_a_pipeline)(t_pipeline *p), t_pipeli
 int	test1(void)
 {
 	int result;
-	t_pipeline *pipeline;
+	t_pipeline* pipeline;
+	t_command* command;
 
 	/*
 		ls | grep r | wc -l
@@ -92,13 +108,18 @@ int	test1(void)
 
 	build_pipeline(&pipeline);
 
-	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
+	command = create_command(exe1, args1, NULL, NULL);
+	command->environment = environment;	
+	add_to_list(pipeline->commands, command);
+	command = create_command(exe2, args2, NULL, NULL);
+	command->environment = environment;
+	add_to_list(pipeline->commands, command);
+	command = create_command(exe3, args3, NULL, NULL);
+	command->environment = environment;
+	add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
-	t_command*		command;
 	t_list_node*	node;
 	int exit_status_codes[3];
 	int pipeline_length;
@@ -126,7 +147,8 @@ int	test1(void)
 int	test2(void)
 {
 	int result;
-	t_pipeline *pipeline;
+	t_pipeline* pipeline;
+	t_command* command;
 
 	/*
 		/bin/echo Hello | cat
@@ -139,12 +161,14 @@ int	test2(void)
 
 	build_pipeline(&pipeline);
 
-	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
+	command = create_command(exe1, args1, NULL, NULL);
+	command->environment = environment;	
+	add_to_list(pipeline->commands, command);
+		command = create_command(exe2, args2, NULL, NULL);
+	command->environment = environment;add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
-	t_command*		command;
 	t_list_node*	node;
 	int exit_status_codes[3];
 	int pipeline_length;
@@ -172,7 +196,8 @@ int	test2(void)
 int	test3(void)
 {
 	int result;
-	t_pipeline *pipeline;
+	t_pipeline* pipeline;
+	t_command* command;
 
 	/*
 		/bin/echo "apple banana" | tr ' ' '\n' | wc -l
@@ -187,13 +212,17 @@ int	test3(void)
 
 	build_pipeline(&pipeline);
 
-	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
+	command = create_command(exe1, args1, NULL, NULL);
+	command->environment = environment;	
+	add_to_list(pipeline->commands, command);
+		command = create_command(exe2, args2, NULL, NULL);
+		command->environment = environment;
+	add_to_list(pipeline->commands, command);
+		command = create_command(exe3, args3, NULL, NULL);
+	command->environment = environment;add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
-	t_command*		command;
 	t_list_node*	node;
 	int exit_status_codes[3];
 	int pipeline_length;
@@ -221,7 +250,8 @@ int	test3(void)
 int	test4(void)
 {
 	int result;
-	t_pipeline *pipeline;
+	t_pipeline* pipeline;
+	t_command* command;
 
 	/*
 		ls | /bin/invalid_cmd | wc -l
@@ -236,13 +266,17 @@ int	test4(void)
 
 	build_pipeline(&pipeline);
 
-	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
+	command = create_command(exe1, args1, NULL, NULL);
+	command->environment = environment;	
+	add_to_list(pipeline->commands, command);
+		command = create_command(exe2, args2, NULL, NULL);
+		command->environment = environment;
+	add_to_list(pipeline->commands, command);
+		command = create_command(exe3, args3, NULL, NULL);
+	command->environment = environment;add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
-	t_command*		command;
 	t_list_node*	node;
 	int exit_status_codes[3];
 	int pipeline_length;
@@ -270,7 +304,8 @@ int	test4(void)
 int	test5(void)
 {
 	int result;
-	t_pipeline *pipeline;
+	t_pipeline* pipeline;
+	t_command* command;
 
 	/*
 		printf "" | cat | wc -c
@@ -285,13 +320,17 @@ int	test5(void)
 
 	build_pipeline(&pipeline);
 
-	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
+	command = create_command(exe1, args1, NULL, NULL);
+	command->environment = environment;	
+	add_to_list(pipeline->commands, command);
+		command = create_command(exe2, args2, NULL, NULL);
+		command->environment = environment;
+	add_to_list(pipeline->commands, command);
+		command = create_command(exe3, args3, NULL, NULL);
+	command->environment = environment;add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
-	t_command*		command;
 	t_list_node*	node;
 	int exit_status_codes[3];
 	int pipeline_length;
@@ -319,7 +358,8 @@ int	test5(void)
 int	test6(void)
 {
 	int result;
-	t_pipeline *pipeline;
+	t_pipeline* pipeline;
+	t_command* command;
 
 	/*
 		cat /etc/passwd | grep root | wc -l
@@ -334,13 +374,17 @@ int	test6(void)
 
 	build_pipeline(&pipeline);
 
-	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
+	command = create_command(exe1, args1, NULL, NULL);
+	command->environment = environment;	
+	add_to_list(pipeline->commands, command);
+		command = create_command(exe2, args2, NULL, NULL);
+		command->environment = environment;
+	add_to_list(pipeline->commands, command);
+		command = create_command(exe3, args3, NULL, NULL);
+	command->environment = environment;add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
-	t_command*		command;
 	t_list_node*	node;
 	int exit_status_codes[3];
 	int pipeline_length;
@@ -368,7 +412,8 @@ int	test6(void)
 int	test7(void)
 {
 	int result;
-	t_pipeline *pipeline;
+	t_pipeline* pipeline;
+	t_command* command;
 
 	/*
 		/bin/echo "123 456" | sed 's/ /,/' | tr '1' '9' | cut -d',' -f2
@@ -385,14 +430,20 @@ int	test7(void)
 
 	build_pipeline(&pipeline);
 
-	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe4, args4, NULL, NULL));
+	command = create_command(exe1, args1, NULL, NULL);
+	command->environment = environment;	
+	add_to_list(pipeline->commands, command);
+	command = create_command(exe2, args2, NULL, NULL);
+	command->environment = environment;
+	add_to_list(pipeline->commands, command);
+	command = create_command(exe3, args3, NULL, NULL);
+	command->environment = environment;
+	add_to_list(pipeline->commands, command);
+	command = create_command(exe4, args4, NULL, NULL);
+	command->environment = environment;add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
-	t_command*		command;
 	t_list_node*	node;
 	int exit_status_codes[4];
 	int pipeline_length;
@@ -421,6 +472,7 @@ int	test8(void)
 {
 	int result;
 	t_pipeline *pipeline;
+	t_command* command;
 
 	/*
 		/bin/echo "data" | /bin/false | cat
@@ -435,13 +487,18 @@ int	test8(void)
 
 	build_pipeline(&pipeline);
 
-	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
+	command = create_command(exe1, args1, NULL, NULL);
+	command->environment = environment;
+	add_to_list(pipeline->commands, command);
+	command = create_command(exe2, args2, NULL, NULL);
+	command->environment = environment;
+	add_to_list(pipeline->commands, command);
+	command = create_command(exe3, args3, NULL, NULL);
+	command->environment = environment;
+	add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
-	t_command*		command;
 	t_list_node*	node;
 	int exit_status_codes[3];
 	int pipeline_length;
@@ -470,7 +527,7 @@ int	test8(void)
 int	test9(void)
 {
 	int result;
-	t_pipeline *pipeline;
+	t_pipeline* pipeline;
 
 	/*
 		cd /home/akovtune | ls | cd - | ls
@@ -489,18 +546,28 @@ int	test9(void)
 
 	build_pipeline(&pipeline);
 
-	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe2, args2, NULL, NULL));
-	add_to_list(pipeline->commands, create_command(exe3, args3, NULL, NULL));
+	t_command* command = create_command(exe1, args1, NULL, NULL);
+	command->environment = environment;
+	add_to_list(pipeline->commands, command);
+	command = create_command(exe2, args2, NULL, NULL);
+	command->environment = environment;
+	add_to_list(pipeline->commands, command);
+	command = create_command(exe3, args3, NULL, NULL);;
+	command->environment = environment;
+	add_to_list(pipeline->commands, command);
 	// add_to_list(pipeline->commands, create_command(exe4, args4, NULL, NULL));
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
+
+	printf("result: %d\n", result);
+
+	if (result != SUCCESS)
+		return (result);
 
 	char* cwd = getcwd(NULL, 0);
 	printf("cwd: %s\n", cwd);
 	free(cwd);
 
-	t_command*		command;
 	t_list_node*	node;
 	int exit_status_codes[3];
 	int pipeline_length;
@@ -529,6 +596,7 @@ int	test10(void)
 {
 	int result;
 	t_pipeline *pipeline;
+	t_command* command;
 
 	/*
 		cd /home/akovtune
@@ -539,15 +607,19 @@ int	test10(void)
 
 	build_pipeline(&pipeline);
 
-	add_to_list(pipeline->commands, create_command(exe1, args1, NULL, NULL));
+	command = create_command(exe1, args1, NULL, NULL);
+	command->environment = environment;
+	add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
+
+	if (result != SUCCESS)
+		return (result);
 
 	char* cwd = getcwd(NULL, 0);
 	printf("cwd: %s\n", cwd);
 	free(cwd);
 
-	t_command*		command;
 	t_list_node*	node;
 	int exit_status_codes[1];
 	int pipeline_length;

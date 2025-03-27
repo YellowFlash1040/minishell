@@ -6,18 +6,18 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 13:41:12 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/16 15:36:59 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/22 18:30:08 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command_runner.h"
 
 int	check_using_abs_rel_path(t_string path, t_string *result);
-int	check_using_env_path(t_string path, t_string *result);
+int	check_using_env_path(t_string path, t_list *env, t_string *result);
 int	search_binary_in_folders(t_string binary, t_string_array folders,
 		t_string *result);
 
-int	find_binary(t_string path, t_string *result)
+int	find_binary(t_string path, t_list *env, t_string *result)
 {
 	*result = NULL;
 	if (!path)
@@ -26,7 +26,7 @@ int	find_binary(t_string path, t_string *result)
 		return (SUCCESS);
 	if (index_of('/', path) != -1)
 		return (check_using_abs_rel_path(path, result));
-	return (check_using_env_path(path, result));
+	return (check_using_env_path(path, env, result));
 }
 
 int	check_using_abs_rel_path(t_string path, t_string *result)
@@ -44,14 +44,14 @@ int	check_using_abs_rel_path(t_string path, t_string *result)
 	return (SUCCESS);
 }
 
-int	check_using_env_path(t_string path, t_string *result)
+int	check_using_env_path(t_string path, t_list *env, t_string *result)
 {
 	t_string		env_path;
 	t_string_array	folders;
 	int				status_code;
 
 	*result = NULL;
-	env_path = getenv("PATH");
+	env_path = get_env_variable(env, "PATH");
 	if (!env_path)
 		return (0);
 	folders = ft_split(env_path, ':');

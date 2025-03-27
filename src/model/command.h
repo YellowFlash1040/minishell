@@ -29,7 +29,6 @@ typedef struct command
 	t_string		executable;
 	t_string_array	arguments;
 	char			*parsable;
-	t_list			*environment;
 	t_file			*input_file;
 	t_file			*output_file;
 	t_file			*error_file;
@@ -37,8 +36,10 @@ typedef struct command
 	int				exit_status_code;
 	int				unused_pipe_end;
 	bool			needs_a_subshell;
-	bool			needs_to_read_from_stdin;
-	t_string		delimiter;
+	t_list			*environment;
+	t_list			*intermediate_files;
+	bool			needs_a_here_doc;
+	t_string		here_doc_delimiter;
 }					t_command;
 
 t_command			*init_command(void);
