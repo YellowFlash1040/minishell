@@ -1,22 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-<<<<<<< HEAD
-/*                                                        ::::::::            */
-/*   ft_string.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: akovtune <akovtune@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/01/08 17:35:18 by akovtune      #+#    #+#                 */
-/*   Updated: 2025/03/25 12:55:17 by ismo          ########   odam.nl         */
-=======
 /*                                                        :::      ::::::::   */
 /*   ft_string.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:35:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/21 12:42:42 by akovtune         ###   ########.fr       */
->>>>>>> dev
+/*   Updated: 2025/03/27 17:35:36 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +21,7 @@ typedef char*	t_string;
 /**
  * @brief Computes the length of a string.
  *
- * This function calculates the number of characters in the string `str`,
+ * This function calculates the number of characters in the string `str`,s
  * excluding the null-terminator.
  *
  * @param str The string whose length is to be calculated.

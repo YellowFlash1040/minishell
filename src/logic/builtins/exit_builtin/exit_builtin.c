@@ -6,29 +6,13 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 18:08:18 by akovtune          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/19 15:14:57 by ibenne           ###   ########.fr       */
-=======
-/*   Updated: 2025/03/20 14:31:03 by akovtune         ###   ########.fr       */
->>>>>>> dev
+/*   Updated: 2025/03/27 17:36:23 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exit_builtin.h"
 
-<<<<<<< HEAD
-int	count_arguments(t_string_array args)
-{
-	int	i;
-
-	i = 0;
-	while (args && args[i])
-		i++;
-	return (i);
-}
-=======
 bool	check_and_atoi(t_string str, int *res);
->>>>>>> dev
 
 int	exit_builtin(t_command *command)
 {
