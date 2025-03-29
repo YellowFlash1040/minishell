@@ -77,6 +77,10 @@ int	run_commands(t_list *commands, int prev_pipe[2], int current_pipe[2],
 	*pipeline_status_code = command->exit_status_code;
 	return (SUCCESS);
 }
+/*
+if (g_received_signal != -1)
+			break;
+*/
 
 int	setup_and_run_command(t_command *command, int prev_pipe[2],
 		int current_pipe[2])
