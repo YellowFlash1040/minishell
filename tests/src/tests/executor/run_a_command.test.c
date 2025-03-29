@@ -22,6 +22,8 @@ int	test16(void);
 int	test17(void);
 int	test18(void);
 int	test19(void);
+int	test20(void);
+int	test21(void);
 
 int main(int argc, char **args, char* envp[])
 {
@@ -52,7 +54,10 @@ int main(int argc, char **args, char* envp[])
 			test17,
 			test18,
 
-			test19
+			test19,
+
+			test20,
+			test21
 		};
 
 	for (int i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++)
@@ -586,4 +591,31 @@ int	test19(void)
 
 	destroy_command(&command);
 	return (result);
+}
+
+int	test20(void)
+{
+	int result;
+	t_command *command;
+
+	char *exe_path = "grep";
+	char *args[] = {exe_path, "h", NULL};
+	command = create_command(exe_path, args, "../input.txt", "../result.txt");
+	command->environment = environment;
+	command->needs_a_subshell = false;
+
+	result = run_a_command(command);
+
+	if (command->exit_status_code != SUCCESS)
+		result = FAILURE;
+
+	destroy_command(&command);
+	return (result);
+}
+
+int	test21(void)
+{
+	t_string result_str = get_env_variable(environment, "not_existing_variable");
+	printf("$$%s$$\n", result_str);
+	return (SUCCESS);
 }
