@@ -2,6 +2,7 @@
 # Compiler and Flags
 CC						:= cc
 CFLAGS				 	 = -Wall -Wextra -Werror $(INCLUDES) -g
+LDFLAGS					:= -lreadline
 INCLUDES				 = $(addprefix -I,$(SRC_DIRS)) $(addprefix -I,$(LIB_DIRS))
 
 #-----------------------BINARIES---------------------------------------------------------
@@ -109,7 +110,7 @@ all: $(NAME)
 
 # Build the Executable
 $(NAME): $(OBJ) $(LIBRARIES)
-	@$(CC) $(CFLAGS) $^ -o $@
+	@$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
 	@echo "$(GREEN)Compiled $@ successfully!$(RESET)"
 
 # Compile Object Files
