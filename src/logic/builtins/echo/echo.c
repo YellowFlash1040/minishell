@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:57:24 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/16 17:48:33 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/29 17:58:19 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ int	echo(t_command *command)
 		return (FAILURE);
 	args = command->arguments;
 	n_flag_active = check_for_n_flag(args[1]);
+	i = 2;
+	while (check_for_n_flag(args[i]))
+		i++;
 	if (!n_flag_active)
 		i = 1;
-	else
-		i = 2;
 	while (args[i])
 	{
 		write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
