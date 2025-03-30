@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:21:03 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/29 17:59:22 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/30 15:01:24 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	execute_with_subshell_flow(t_command *command)
 	result = launch_builtin(command);
 	if (result != SUCCESS)
 		return (result);
-	exit (command->exit_status_code);
+	return (SUCCESS);
 }
 
 int	execute_with_std_flow(t_command *command)
