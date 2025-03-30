@@ -121,7 +121,7 @@ int	test3(void)
 
 	destroy_command(&command);
 
-	if (exit_status_code != FAILURE)
+	if (exit_status_code != 127)
 		return (FAILURE);
 
 	return (result);
@@ -144,7 +144,7 @@ int	test4(void)
 
 	destroy_command(&command);
 
-	if (exit_status_code != FAILURE)
+	if (exit_status_code != 127)
 		return (FAILURE);
 
 	return (result);
@@ -243,7 +243,7 @@ int test9(void)
 
 	destroy_command(&command);
 
-	if (exit_status_code != FAILURE)
+	if (exit_status_code != 127)
 		return (FAILURE);
 		
 	return (result);
