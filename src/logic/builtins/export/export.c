@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 14:02:49 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/16 17:48:03 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/30 15:27:49 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int	export(t_command *command)
 		if (result != SUCCESS)
 			return (result);
 		result = set_env_variable(env, parts[0], parts[1], true);
+		free(parts[0]);
 		if (result != SUCCESS)
-			return (free(parts[0]), free(parts[1]), result);
+			return (free(parts[1]), result);
 		i++;
 	}
 	return (SUCCESS);
