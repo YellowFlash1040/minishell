@@ -85,7 +85,6 @@ int test2(void)
 	file->path = ft_strjoin(asset_files_path, "output_file_1.txt");
 	file->mode = TRUNCATE;
 	add_to_list(command->intermediate_files, file);
-	file = init_file();
 
 	result = run_a_command(command);
 	
