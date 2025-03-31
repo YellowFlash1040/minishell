@@ -1,17 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   expander.h                                         :+:    :+:            */
+/*   parse_redirs.h                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/03/27 00:45:36 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/29 04:07:04 by ismo          ########   odam.nl         */
+/*   Created: 2025/03/31 00:49:10 by ismo          #+#    #+#                 */
+/*   Updated: 2025/03/31 01:46:37 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPANDER_H
-	void	expand_variable(t_list *env, t_variable *variable);
-	void	expand_command(t_command *command);
-	void	expand_commands(t_list **commands);
+#ifndef PARSE_REDIRS_H
+	int	add_file_redir(t_command **command, char **filename, t_token_type redir_type);
 #endif

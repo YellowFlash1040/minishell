@@ -6,40 +6,19 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/26 12:38:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/27 00:45:10 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/31 02:06:49 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "list.h"
 #include "ft_string.h"
+#include "variable.h"
 #include "environment.h"
 #include "command.h"
-
-char	*lst_to_str(t_list *list)
-{
-	int			n;
-	int			i;
-	int			j;
-	t_list_node	*node;
-	char		*res;
-
-	n = 0;
-	j = 0;
-	while ((node = get_node(n++, list)))
-		j += ft_strlen((char *) node->value);
-	res = (char *)malloc(j + 1);
-	if (!res)
-		return (NULL);
-	n = 0;
-	i = 0;
-	while ((node = get_node(n++, list)))
-	{
-		j = 0;
-		while (((char *)node->value)[j])
-			res[i++] = ((char *)node->value)[j++];
-	}
-	res[i] = '\0';
-	return (res);
-}
+#include "lst_to_str.h"
+#include "token.h"
+#include "tokenizer.h"
+#include "parser_utils.h"
 
 char	*expand_str(t_list *env, char	*str)
 {
@@ -83,36 +62,100 @@ char	*expand_str(t_list *env, char	*str)
 			add_to_list(result, tmp_str);
 		}
 	}
-	tmp_str = lst_to_str(result);
+	tmp_str = lst_to_str(&result);
 	destroy_list(&result, free);
 	return (tmp_str);
 }
 
-void	expand_command(t_command *command)
+void	expand_variable(t_list *env, t_variable *variable)
 {
-	int		arg;
 	char	*tmp_str;
 
-	arg = 0;
-	while (command->arguments[arg])
+	// check if parsable
+	if (true)
 	{
-		if (command->parsable[arg])
-		{
-			tmp_str = expand_str(command->environment, command->arguments[arg]);
-			if (!tmp_str)
-				continue ;
-			free(command->arguments[arg]);
-			command->arguments[arg] = tmp_str;
-		}
-		if (arg == 0)
-			command->executable = ft_strdup(command->arguments[arg]);
-		arg++;
+		tmp_str = expand_str(env, variable->value);
+		free(variable->value);
+		variable->value = tmp_str;
 	}
-	if (command->is_redir_parsable)
-	{
-		// expand redir
-	}
+}
 
+char	*dup_env_var(t_list *env, char *name)
+{
+	char	*value;
+
+	value = get_env_variable(env, name);
+	if (!value)
+		return (ft_strdup(""));
+	return (ft_strdup(value));
+}
+
+char	*expand_comb(t_list *env, char *arg)
+{
+	char	*expanded_arg;
+	t_list 	*result;
+	t_list	*tokens;
+	int		t;
+	t_token	*token;
+
+	if (!arg || !env)
+		return (NULL);
+	tokens = create_token_list(arg);
+	if (!tokens)
+		return (NULL);
+	result = init_list();
+	if (!result)
+		return (NULL);
+	t = 0;
+	token = read_token(tokens, t++);
+	while (token && token->type != EndOfInput)
+	{
+		if (token->type == SingleQuote || token->type == Word)
+			add_to_list(result, ft_strdup(token->value));
+		else if (token->type == DoubleQuote)
+			add_to_list(result, expand_str(env, token->value));
+		else if (token->type == EnvVariable)
+			add_to_list(result, dup_env_var(env, token->value));
+		token = read_token(tokens, t++);
+	}
+	destroy_list(&tokens, free_token);
+	expanded_arg = lst_to_str(&result);
+	destroy_list(&result, free);
+	return (expanded_arg);
+}
+
+int	expand_command(t_command *command)
+{
+	int			i;
+	char		*tmp_str;
+	// t_list_node	*int_file;
+
+	i = 0;
+	while (command->arguments[i])
+	{
+		tmp_str = expand_comb(command->environment, command->arguments[i]);
+		if (tmp_str)
+		{
+			free(command->arguments[i]);
+			command->arguments[i] = tmp_str;
+		}
+		if (i == 0)
+			command->executable = ft_strdup(command->arguments[i]);
+		i++;
+	}
+	i = 0;
+	// int_file = get_node(i++, command->intermediate_files);
+	// while (int_file)
+	// {
+	// 	tmp_str = expand_comb(command->environment, int_file->value);
+	// 	if (tmp_str)
+	// 	{
+	// 		free(int_file->value);
+	// 		int_file->value = tmp_str;
+	// 	}
+	// 	int_file = get_node(i++, command->intermediate_files);
+	// }
+	return (SUCCESS);
 }
 
 void	expand_commands(t_list **commands)

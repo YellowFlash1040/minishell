@@ -6,10 +6,11 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 16:07:18 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/26 13:20:47 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/29 19:28:15 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_string.h"
 #include "token.h"
 #include "list.h"
 
@@ -40,13 +41,44 @@ int	n_args(t_list *tokens, int index)
 
 	token = read_token(tokens, index++);
 	n = 0;
-	while (token && (is_file(token) || is_redir(token)))
+	while (token && token->type != EndOfInput && (is_file(token) || is_redir(token)))
 	{
 		if (is_redir(token))
+		{
 			index++;
+			token = read_token(tokens, index++);
+		}
 		else
+		{
 			n++;
-		token = read_token(tokens, index++);
+			while (token && token->type != EndOfInput && is_file(token) && !is_whitespace(token->seperator))
+				token = read_token(tokens, index++);
+			token = read_token(tokens, index++);
+		}
 	}
 	return (n);
+}
+char	*quote_str(t_token *token)
+{
+	char	*quoted_str;
+	char	quote;
+	int		i;
+
+	quoted_str = (char *)malloc(ft_strlen(token->value) + 3);
+	if (!quoted_str)
+		return (NULL);
+	if (token->type == SingleQuote)
+		quote = '\'';
+	else if (token->type == DoubleQuote)
+		quote = '"';
+	quoted_str[0] = quote;
+	i = 0;
+	while (token->value[i])
+	{
+		quoted_str[i + 1] = token->value[i];
+		i++;
+	}
+	quoted_str[i + 1] = quote;
+	quoted_str[i + 2] = '\0';
+	return (quoted_str);
 }

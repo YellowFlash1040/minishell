@@ -6,20 +6,24 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 15:11:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/26 14:39:31 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/31 01:46:54 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "string.h"
+#include "list.h"
+#include "ft_string.h"
 #include "token.h"
 #include "pipeline.h"
 #include "command_builder.h"
 #include "pipeline_builder.h"
 #include "parser_utils.h"
+#include "variable.h"
 #include "parser.h"
+#include "parse_redirs.h"
 #include "global_status_codes.h"
+#include "lst_to_str.h"
 
-int nt_file(t_list *tokens, int *depth, char **blob, char *parsable)
+int nt_file(t_list *tokens, int *depth, char **blob)
 {
 	int			index;
 	t_token		*token;
@@ -30,17 +34,45 @@ int nt_file(t_list *tokens, int *depth, char **blob, char *parsable)
 	token = read_token(tokens, index++);
 	if (!token)
 		return (FAILURE);
-	if (parsable && (token->type == DoubleQuote || token->type == EnvVariable))
-		*parsable = 1;
-	else if (parsable)
-		*parsable = 0;
 	if (token->type == EnvVariable)
 		*blob = ft_strjoin("$", token->value);
+	else if (token->type == DoubleQuote || token->type == SingleQuote)
+		*blob = quote_str(token);
 	else
 		*blob = ft_strdup(token->value);
 	*depth = index;
 	if (!*blob)
 		return (FAILURE);
+	return (SUCCESS);
+}
+
+int	nt_comb(t_list *tokens, int *depth, char **comb)
+{
+	int		index;
+	t_token *token;
+	char	*tmpstr;
+	t_list	*strlist;
+
+	index = *depth;
+	token = read_token(tokens, index);
+	strlist = init_list();
+	if (!strlist)
+		return (FAILURE);
+	while (token && is_file(token))
+	{
+		if (nt_file(tokens, &index, &tmpstr) == FAILURE)
+			return (destroy_list(&strlist, free), FAILURE);
+		if (!tmpstr)
+			return (destroy_list(&strlist, free), FAILURE);
+		add_to_list(strlist, tmpstr);
+		if (is_whitespace(token->seperator))
+			break ;
+		token = read_token(tokens, index);
+	}
+	tmpstr = lst_to_str(&strlist);
+	destroy_list(&strlist, free);
+	*comb = tmpstr;
+	*depth = index;
 	return (SUCCESS);
 }
 
@@ -54,23 +86,9 @@ int nt_redir(t_list *tokens, int *depth, t_command **command)
 	index = *depth;
 	token = read_token(tokens, index++);
 	redir = token->type;
-	if (!token || nt_file(tokens, &index, &value, &(*command)->is_redir_parsable) == FAILURE)
+	if (!token || nt_file(tokens, &index, &value) == FAILURE)
 		return (FAILURE);
-	if (redir == RedirInput)
-	{
-		(*command)->input_file->path = value;
-		(*command)->input_file->mode = READ;
-	}
-	else if (redir == RedirOutput)
-	{
-		(*command)->output_file->path = value;
-		(*command)->output_file->mode = TRUNCATE;
-	}
-	else if (redir == RedirAppend)
-	{
-		(*command)->output_file->path = value;
-		(*command)->output_file->mode = APPEND;
-	}
+	add_file_redir(command, &value, redir);
 	*depth = index;
 	return (SUCCESS);
 }
@@ -82,9 +100,7 @@ int	nt_command(t_list *tokens, int *depth, t_command **command)
 	int				arg;
 	t_string_array	arguments;
 	int				args;
-	int				has_redir;
 
-	has_redir = 0;
 	if (build_command(command) == FAILURE)
 		return (FAILURE);
 	index = *depth;
@@ -92,22 +108,18 @@ int	nt_command(t_list *tokens, int *depth, t_command **command)
 	arguments = init_string_array(args + 1);
 	if (!arguments)
 		return (destroy_command(command), FAILURE);
-	(*command)->parsable = (char *)malloc(args);
-	if (!(*command)->parsable)
-		return (destroy_command(command), FAILURE);
 	arg = 0;
 	token = read_token(tokens, index);
 	while (token)
 	{
-		if (!has_redir && is_redir(token))
+		if (is_redir(token))
 		{
 			if (nt_redir(tokens, &index, command) == FAILURE)
 				return (destroy_command(command), FAILURE);
-			has_redir = 1;
 		}
 		else if (is_file(token))
 		{
-			if (nt_file(tokens, &index, &arguments[arg], &(*command)->parsable[arg]) == FAILURE)
+			if (nt_comb(tokens, &index, &arguments[arg]) == FAILURE)
 				return (destroy_command(command), FAILURE);
 			arg++;
 		}
@@ -142,6 +154,28 @@ int	nt_pipeline(t_list *tokens, int *depth, t_pipeline **pipeline, t_list *env)
 		else if (token->type == EndOfInput)
 			break ;
 	}
+	return (SUCCESS);
+}
+
+int	parse_variable(t_list *tokens, t_variable **var)
+{
+	int		index;
+	char	*name;
+	char	*value;
+	t_token	*token;
+
+	if (!var)
+		return (FAILURE);
+	index = 0;
+	token = read_token(tokens, index++);
+	if (!token || token->type != Word)
+		return (FAILURE);
+	name = ft_strdup(token->value);
+	token = read_token(tokens, index++);
+	token = read_token(tokens, index++);
+	if (!token || !nt_file(tokens, &index, &value))
+		return (FAILURE);
+	*var = init_variable(name, value);
 	return (SUCCESS);
 }
 

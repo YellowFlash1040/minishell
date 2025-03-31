@@ -25,7 +25,6 @@ t_command	*init_command(void)
 	command->executable = NULL;
 	command->environment = NULL;
 	command->arguments = NULL;
-	command->parsable = NULL;
 	command->input_file = NULL;
 	command->output_file = NULL;
 	command->error_file = NULL;
@@ -50,8 +49,6 @@ void	destroy_command(t_command **command_ref)
 		free(command->executable);
 	if (command->arguments)
 		destroy_string_array(&command->arguments);
-	if (command->parsable)
-		free(command->parsable);
 	if (command->input_file)
 		destroy_file(&command->input_file);
 	if (command->output_file)

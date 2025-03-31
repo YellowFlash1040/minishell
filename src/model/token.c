@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 15:12:56 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/26 00:11:14 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/29 15:42:03 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_token	*init_token()
 	if (!token)
 		return (NULL);
 	token->value = NULL;
+	token->seperator = '\0';
 	return (token);
 }
 

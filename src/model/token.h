@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 14:22:40 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/25 02:04:33 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/29 15:41:47 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ typedef enum token_type {
 	Pipe,
 	EnvVariable,
 	Word,
-	EqualSign,
 	EndOfInput
 } t_token_type;
 
 typedef struct token {
-	t_token_type type;
-	char		*value;
+	t_token_type 	type;
+	char			*value;
+	char			seperator;
 } t_token;
 
 t_token	*init_token();

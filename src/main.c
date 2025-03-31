@@ -34,35 +34,9 @@ void	signal_handler(int signum)
 	printf("signal received: %d", signum);
 }
 
-t_list	*create_token_list(char **prompt)
-{
-	t_list *tokens;
-	t_token *token;
-
-	token = get_next_token(prompt);
-	if (!token)
-		return (NULL);
-	tokens = init_list();
-	if (!tokens)
-		return (NULL);
-	while (token && token->type != EndOfInput)
-	{
-		add_to_list(tokens, token);
-		token = get_next_token(prompt);
-	}
-	if (!token)
-	{
-		destroy_list(&tokens, free_token);
-		return (NULL);
-	}
-	add_to_list(tokens, token);
-	return (tokens);
-}
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*line;
-	char	**prompt;
 	t_list	*tokens;
 	t_pipeline **pipeline;
 	t_list		*env;
@@ -70,22 +44,18 @@ int	main(int argc, char *argv[], char *envp[])
 	(void) argc;
 	(void) argv;
 	line = readline("$> ");
-	prompt = (char **)malloc(sizeof(char *));
-	if (!prompt)
-		return (0);
 	pipeline = (t_pipeline **)malloc(sizeof(t_pipeline *));
 	*pipeline = NULL;
 	if (!pipeline)
-		return (free(prompt), 0);
+		return (0);
 	env = init_environment(envp);
 	if (!env)
-		return (free(prompt), free(pipeline), 0);
+		return (free(pipeline), 0);
 	while (line)
 	{
 		if (*line)
 		{
-			*prompt = line;
-			tokens = create_token_list(prompt);
+			tokens = create_token_list(line);
 			if (!tokens)
 			{
 				free(line);
@@ -105,7 +75,6 @@ int	main(int argc, char *argv[], char *envp[])
 		free(line);
 		line = readline("$> ");
 	}
-	free(prompt);
 	free(pipeline);
 	destroy_environment(&env);
 	return (0);

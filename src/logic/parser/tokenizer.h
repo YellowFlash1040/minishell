@@ -1,4 +1,4 @@
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
-	t_token	*get_next_token(char **prompt);
+	t_list	*create_token_list(char *prompt);
 #endif
