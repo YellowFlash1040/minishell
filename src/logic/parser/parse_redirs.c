@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/31 00:48:56 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/31 01:56:56 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/31 02:19:34 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,13 @@ int	add_file_redir(t_command **command, char **filename, t_token_type redir_type
 	}
 	if (redir_type == RedirInput)
 	{
-		if ((*command)->input_file && (*command)->input_file->fd != STDIN_FILENO)
-			add_to_list((*command)->intermediate_files, file);
+		if ((*command)->input_file)
+		{
+			if ((*command)->input_file->fd == STDIN_FILENO)
+				free((*command)->input_file);
+			else
+				add_to_list((*command)->intermediate_files, (*command)->input_file);
+		}
 		(*command)->input_file = file;
 	}
 	return (1);

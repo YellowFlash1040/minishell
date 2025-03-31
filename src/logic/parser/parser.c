@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 15:11:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/31 01:46:54 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/31 02:25:44 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,13 @@ int nt_redir(t_list *tokens, int *depth, t_command **command)
 	redir = token->type;
 	if (!token || nt_file(tokens, &index, &value) == FAILURE)
 		return (FAILURE);
-	add_file_redir(command, &value, redir);
+	if (redir == RedirDelim)
+	{
+		(*command)->needs_a_here_doc = 1;
+		(*command)->here_doc_delimiter = value;
+	}
+	else
+		add_file_redir(command, &value, redir);
 	*depth = index;
 	return (SUCCESS);
 }
