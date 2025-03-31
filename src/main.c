@@ -29,9 +29,18 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+int		g_received_signal = -1;
+
 void	signal_handler(int signum)
 {
-	printf("signal received: %d", signum);
+	if (RL_ISSTATE(RL_STATE_READCMD) && signum == SIGINT)
+	{
+		write(1, "^C\n", 3);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	g_received_signal = signum;
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -41,9 +50,12 @@ int	main(int argc, char *argv[], char *envp[])
 	t_pipeline **pipeline;
 	t_list		*env;
 
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 	(void) argc;
 	(void) argv;
-	line = readline("$> ");
+	rl_catch_signals = 0;
+	rl_event_hook = NULL;
 	pipeline = (t_pipeline **)malloc(sizeof(t_pipeline *));
 	*pipeline = NULL;
 	if (!pipeline)
@@ -51,6 +63,7 @@ int	main(int argc, char *argv[], char *envp[])
 	env = init_environment(envp);
 	if (!env)
 		return (free(pipeline), 0);
+	line = readline("$> ");
 	while (line)
 	{
 		if (*line)
@@ -67,7 +80,13 @@ int	main(int argc, char *argv[], char *envp[])
 			if (*pipeline)
 			{
 				expand_commands(&(*pipeline)->commands);
+				g_received_signal = -1;
 				run_a_pipeline(*pipeline);
+				if (g_received_signal != -1)
+				{
+					printf("\n");
+					rl_on_new_line();
+				}
 				destroy_pipeline(pipeline);
 			}
 			add_history(line);
@@ -79,3 +98,4 @@ int	main(int argc, char *argv[], char *envp[])
 	destroy_environment(&env);
 	return (0);
 }
+
