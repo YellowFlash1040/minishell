@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/26 12:38:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 00:20:14 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/01 00:42:53 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,6 @@ char	*expand_str(t_list *env, char	*str)
 	tmp_str = lst_to_str(&result);
 	destroy_list(&result, free);
 	return (tmp_str);
-}
-
-void	expand_variable(t_list *env, t_variable *variable)
-{
-	char	*tmp_str;
-
-	// check if parsable
-	if (true)
-	{
-		tmp_str = expand_str(env, variable->value);
-		free(variable->value);
-		variable->value = tmp_str;
-	}
 }
 
 char	*dup_env_var(t_list *env, char *name)
