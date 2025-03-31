@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/26 12:38:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/31 02:06:49 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/31 13:32:31 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,23 @@ char	*expand_comb(t_list *env, char *arg)
 	return (expanded_arg);
 }
 
+void	expand_file(t_list *env, t_file *file)
+{
+	char *expanded_path;
+
+	expanded_path = expand_comb(env, file->path);
+	if (expanded_path)
+	{
+		free(file->path);
+		file->path = expanded_path;
+	}
+}
+
 int	expand_command(t_command *command)
 {
 	int			i;
 	char		*tmp_str;
-	// t_list_node	*int_file;
+	t_list_node	*int_node;
 
 	i = 0;
 	while (command->arguments[i])
@@ -144,17 +156,16 @@ int	expand_command(t_command *command)
 		i++;
 	}
 	i = 0;
-	// int_file = get_node(i++, command->intermediate_files);
-	// while (int_file)
-	// {
-	// 	tmp_str = expand_comb(command->environment, int_file->value);
-	// 	if (tmp_str)
-	// 	{
-	// 		free(int_file->value);
-	// 		int_file->value = tmp_str;
-	// 	}
-	// 	int_file = get_node(i++, command->intermediate_files);
-	// }
+	int_node = get_node(i++, command->intermediate_files);
+	while (int_node && int_node->value)
+	{
+		expand_file(command->environment, int_node->value);
+		int_node = get_node(i++, command->intermediate_files);
+	}
+	if (command->input_file && command->input_file->fd != STDIN_FILENO)
+		expand_file(command->environment, command->input_file);
+	if (command->output_file && command->output_file->fd != STDOUT_FILENO)
+		expand_file(command->environment, command->output_file);
 	return (SUCCESS);
 }
 

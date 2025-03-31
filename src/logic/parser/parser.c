@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 15:11:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/31 02:25:44 by ismo          ########   odam.nl         */
+/*   Updated: 2025/03/31 13:19:42 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int nt_redir(t_list *tokens, int *depth, t_command **command)
 	index = *depth;
 	token = read_token(tokens, index++);
 	redir = token->type;
-	if (!token || nt_file(tokens, &index, &value) == FAILURE)
+	if (!token || nt_comb(tokens, &index, &value) == FAILURE)
 		return (FAILURE);
 	if (redir == RedirDelim)
 	{
