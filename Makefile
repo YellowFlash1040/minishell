@@ -2,6 +2,7 @@
 # Compiler and Flags
 CC						:= cc
 CFLAGS				 	 = -Wall -Wextra -Werror $(INCLUDES) -g
+LDFLAGS					:= -lreadline
 INCLUDES				 = $(addprefix -I,$(SRC_DIRS)) $(addprefix -I,$(LIB_DIRS))
 
 #-----------------------BINARIES---------------------------------------------------------
@@ -109,7 +110,7 @@ all: $(NAME)
 
 # Build the Executable
 $(NAME): $(OBJ) $(LIBRARIES)
-	@$(CC) $(CFLAGS) $^ -o $@
+	@$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
 	@echo "$(GREEN)Compiled $@ successfully!$(RESET)"
 
 # Compile Object Files
@@ -124,7 +125,7 @@ $(OBJ_DIR)/%.o: %.c $(HEADERS)
 $(EXECUTOR): $(OBJ) $(LIBRARIES)
 	@for lib in $(LIBRARIES); do \
 		ar x $$lib ; \
-		ar src $(EXECUTOR) *.o ; \
+		ar src $@ *.o ; \
 		rm *.o ; \
 	done
 	@ar src $@ $(OBJ)
@@ -134,7 +135,7 @@ $(EXECUTOR): $(OBJ) $(LIBRARIES)
 clean:
 	@rm -rf $(OBJ_DIR)
 	@echo "$(RED)Removed object files$(RESET)"
-	@for lib in $(LIB_DIR)/*/; do \
+	@for lib in $(LIB_DIR)/*; do \
 		$(MAKE) -C $$lib clean > /dev/null; \
 	done
 
@@ -142,7 +143,7 @@ clean:
 fclean: clean
 	@rm -rf $(NAME)
 	@echo "$(RED)Removed $(NAME)$(RESET)"
-	@for lib in $(LIB_DIR)/*/; do \
+	@for lib in $(LIB_DIR)/*; do \
 		$(MAKE) -C $$lib fclean > /dev/null; \
 	done
 

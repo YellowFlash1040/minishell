@@ -34,9 +34,9 @@ int	run_a_command(t_command *command)
 		if (pid == 0)
 		{
 			result = execute_command(command);
-			if (command->exit_status_code != SUCCESS)
-				result = command->exit_status_code;
-			exit (result);
+			if (result != SUCCESS)
+				exit(result);
+			exit(command->exit_status_code);
 		}
 		return (handle_child_process(command));
 	}
