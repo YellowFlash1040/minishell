@@ -6,46 +6,22 @@
 /*   By: akovtune <akovtune@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/16 14:02:49 by akovtune      #+#    #+#                 */
-/*   Updated: 2025/03/31 13:22:24 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/01 00:39:35 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "pipeline.h"
 #include "export.h"
-
-int	split_argument_into_parts(t_string argument, t_string parts[2])
-{
-	int	i;
-
-	parts[0] = NULL;
-	parts[1] = NULL;
-	if (index_of('=', argument) != -1)
-	{
-		i = 0;
-		parts[0] = extract_word(argument, &i, '=');
-		if (!parts[0])
-			return (FAILURE);
-		i++;
-		parts[1] = extract_word(argument, &i, '\0');
-		if (!parts[1])
-		{
-			free(parts[0]);
-			parts[0] = NULL;
-			return (FAILURE);
-		}
-		return (SUCCESS);
-	}
-	parts[0] = ft_strdup(argument);
-	if (!parts[0])
-		return (FAILURE);
-	return (SUCCESS);
-}
+#include "token.h"
+#include "tokenizer.h"
+#include "parser.h"
 
 int	export(t_command *command)
 {
 	t_list			*env;
+	t_list			*tokens;
+	t_variable		*var;
 	t_string_array	args;
-	t_string		parts[2];
-	int				result;
 	int				i;
 
 	if (!command || !command->arguments || !command->environment)
@@ -55,13 +31,12 @@ int	export(t_command *command)
 	i = 1;
 	while (args[i])
 	{
-		result = split_argument_into_parts(args[i], parts);
-		if (result != SUCCESS)
-			return (result);
-		result = set_env_variable(env, parts[0], parts[1], true);
-		free(parts[0]);
-		if (result != SUCCESS)
-			return (free(parts[1]), result);
+		tokens = create_token_list(args[i], 1);
+		if (parse_variable(tokens, &var) != SUCCESS)
+			return (destroy_list(&tokens, free_token), FAILURE);
+		if (set_env_variable(env, var->name, var->value, var->is_exported) != SUCCESS)
+			return (destroy_list(&tokens, free_token), destroy_variable(&var), FAILURE);
+		destroy_list(&tokens, free_token);
 		i++;
 	}
 	return (SUCCESS);

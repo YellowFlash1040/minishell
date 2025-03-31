@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 15:11:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/31 13:19:42 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/01 00:38:57 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,9 +177,12 @@ int	parse_variable(t_list *tokens, t_variable **var)
 	if (!token || token->type != Word)
 		return (FAILURE);
 	name = ft_strdup(token->value);
-	token = read_token(tokens, index++);
-	token = read_token(tokens, index++);
-	if (!token || !nt_file(tokens, &index, &value))
+	token = read_token(tokens, index);
+	if (!token || token->type != EqualSign)
+		return (FAILURE);
+	while (token->type == EqualSign)
+		token = read_token(tokens, ++index);
+	if (!token || nt_comb(tokens, &index, &value) != SUCCESS)
 		return (FAILURE);
 	*var = init_variable(name, value);
 	return (SUCCESS);

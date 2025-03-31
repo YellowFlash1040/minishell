@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/26 12:38:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/31 13:32:31 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/01 00:20:14 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*expand_comb(t_list *env, char *arg)
 
 	if (!arg || !env)
 		return (NULL);
-	tokens = create_token_list(arg);
+	tokens = create_token_list(arg, 0);
 	if (!tokens)
 		return (NULL);
 	result = init_list();

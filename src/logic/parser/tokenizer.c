@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 14:25:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/30 15:50:35 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/01 00:17:02 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,28 @@
 #include "global_status_codes.h"
 #include <stdlib.h>
 
-int	get_wlen(char *prompt, int *i)
+int	get_wlen(char *prompt, int *i, int is_variable)
 {
 	int wlen = 0;
+	char *operators;
 
-	while (prompt[*i + wlen] && !ft_strchr(OPERATORS, prompt[*i + wlen]) && !is_whitespace(prompt[*i + wlen]))
+	if (!is_variable)
+		operators = OPERATORS;
+	else
+		operators = OPERATORS_VAR;
+	while (prompt[*i + wlen] && !ft_strchr(operators, prompt[*i + wlen]) && !is_whitespace(prompt[*i + wlen]))
 		wlen++;
 	return (wlen);
 }
 
-char	*scan_word(char *prompt, int *i)
+char	*scan_word(char *prompt, int *i, int is_variable)
 {
 	int		j;
 	int		wlen;
 	char	*word;
 
 	j = 0;
-	wlen = get_wlen(prompt, i);
+	wlen = get_wlen(prompt, i, is_variable);
 	word = (char *)malloc(wlen + 1);
 	if (!word)
 		return (NULL);
@@ -119,26 +124,32 @@ void	tokenize_pipe(t_token *token, int *i)
 	(*i)++;
 }
 
-int	tokenize_env(t_token *token, char *prompt, int *i)
+void	tokenize_eq(t_token *token, int *i)
+{
+	token->type = EqualSign;
+	(*i)++;
+}
+
+int	tokenize_env(t_token *token, char *prompt, int *i, int is_variable)
 {
 	token->type = EnvVariable;
 	(*i)++;
-	token->value = scan_word(prompt, i);
+	token->value = scan_word(prompt, i, is_variable);
 	if (!token->value)
 		return (FAILURE);
 	return (SUCCESS);
 }
 
-int	tokenize_word(t_token *token, char *prompt, int *i)
+int	tokenize_word(t_token *token, char *prompt, int *i, int is_variable)
 {
 	token->type = Word;
-	token->value = scan_word(prompt, i);
+	token->value = scan_word(prompt, i, is_variable);
 	if (!token->value)
 		return (FAILURE);
 	return (SUCCESS);
 }
 
-t_token	*get_next_token(char *prompt, int *i)
+t_token	*get_next_token(char *prompt, int *i, int is_variable)
 {
 	t_token	*token;
 
@@ -156,33 +167,33 @@ t_token	*get_next_token(char *prompt, int *i)
 		tokenize_redir(token, prompt, i);
 	else if (prompt[*i] == '|')
 		tokenize_pipe(token, i);
+	else if (is_variable && prompt[*i] == '=')
+		tokenize_eq(token, i);
 	else if (prompt[*i] == '$')
 	{
-		if (tokenize_env(token, prompt, i) == FAILURE)
+		if (tokenize_env(token, prompt, i, is_variable) == FAILURE)
 			return (free(token), NULL);
 	}
 	else if (prompt[*i] && !is_whitespace(prompt[*i]))
 	{
-		if (tokenize_word(token, prompt, i) == FAILURE)
+		if (tokenize_word(token, prompt, i, is_variable) == FAILURE)
 			return (free(token), NULL);
 	}
 	else
-	{
 		token->type = EndOfInput;
-	}
 	if (token->type != EndOfInput)
 		token->seperator = prompt[*i];
 	return (token);
 }
 
-t_list	*create_token_list(char *prompt)
+t_list	*create_token_list(char *prompt, int is_variable)
 {
 	t_list *tokens;
 	t_token *token;
 	int		i;
 
 	i = 0;
-	token = get_next_token(prompt, &i);
+	token = get_next_token(prompt, &i, is_variable);
 	if (!token)
 		return (NULL);
 	tokens = init_list();
@@ -191,7 +202,7 @@ t_list	*create_token_list(char *prompt)
 	while (token && token->type != EndOfInput)
 	{
 		add_to_list(tokens, token);
-		token = get_next_token(prompt, &i);
+		token = get_next_token(prompt, &i, is_variable);
 	}
 	if (!token)
 	{

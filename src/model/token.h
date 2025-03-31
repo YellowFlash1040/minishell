@@ -6,13 +6,14 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 14:22:40 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/29 15:41:47 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/01 00:13:24 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
 # define OPERATORS "<|>$\'\""
+# define OPERATORS_VAR "<|>$\'\"="
 
 typedef enum token_type {
 	SingleQuote,
@@ -24,6 +25,7 @@ typedef enum token_type {
 	Pipe,
 	EnvVariable,
 	Word,
+	EqualSign,
 	EndOfInput
 } t_token_type;
 

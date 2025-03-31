@@ -68,7 +68,7 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		if (*line)
 		{
-			tokens = create_token_list(line);
+			tokens = create_token_list(line, 0);
 			if (!tokens)
 			{
 				free(line);
