@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exit_builtin.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 18:08:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/27 17:36:23 by ibenne           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   exit_builtin.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/03/16 18:08:18 by akovtune      #+#    #+#                 */
+/*   Updated: 2025/03/31 13:10:55 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,23 @@ int	exit_builtin(t_command *command)
 {
 	int	exit_status;
 
+	printf("exit\n");
+	exit_status = SUCCESS;
+	if (command->arguments[1])
+	{
+		if (!check_and_atoi(command->arguments[1], &exit_status))
+		{
+			print_error_message("exit: ");
+			print_error_message(command->arguments[1]);
+			print_error_message(": numeric argument required\n");
+			exit(2);
+		}
+	}
 	if (get_str_arr_length(command->arguments) > 2)
 	{
 		command->exit_status_code = FAILURE;
 		print_error_message("exit: too many arguments\n");
 		return (SUCCESS);
-	}
-	exit_status = SUCCESS;
-	if (command->arguments[1])
-	{
-		if (!check_and_atoi(command->arguments[1], &exit_status))
-			exit(2);
 	}
 	exit(exit_status);
 }

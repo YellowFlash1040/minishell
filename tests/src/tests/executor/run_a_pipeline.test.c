@@ -290,7 +290,7 @@ int	test4(void)
 	destroy_pipeline(&pipeline);
 	if (exit_status_codes[0] != SUCCESS)
 		return (exit_status_codes[0]);
-	if (exit_status_codes[1] != FAILURE)
+	if (exit_status_codes[1] != 127)
 		return (FAILURE);
 	if (exit_status_codes[2] != SUCCESS)
 		return (exit_status_codes[2]);

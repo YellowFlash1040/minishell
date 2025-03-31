@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:25:09 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/23 17:07:56 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/30 15:06:17 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ int	execute_external(t_command *command)
 			command->environment);
 	if (result != SUCCESS)
 	{
-		command->exit_status_code = FAILURE;
+		if (result == 127)
+		{
+			command->exit_status_code = 127;
+			result = SUCCESS;
+		}
 		return (result);
 	}
 	return (SUCCESS);
@@ -53,7 +57,7 @@ int	launch_binary(t_string name, t_string_array args, t_list *env)
 			result = print_not_found_err(name);
 			if (result != SUCCESS)
 				return (result);
-			return (FAILURE);
+			return (127);
 		}
 		return (perror("Error"), BINARY_LAUNCH_ERR);
 	}

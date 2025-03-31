@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:01:31 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/23 14:21:52 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/03/29 17:58:41 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_string	get_new_directory(t_list *env, t_string_array args)
 			print_error_message("cd: OLDPWD not set\n");
 			return (NULL);
 		}
+		printf("%s\n", new_directory);
 		return (new_directory);
 	}
 	return (args[1]);
