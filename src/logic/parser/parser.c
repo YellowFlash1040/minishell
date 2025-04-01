@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 15:11:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 00:38:57 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/01 13:57:11 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,28 +163,25 @@ int	nt_pipeline(t_list *tokens, int *depth, t_pipeline **pipeline, t_list *env)
 	return (SUCCESS);
 }
 
-int	parse_variable(t_list *tokens, t_variable **var)
+int	parse_variable(t_list *tokens, char **name, char **value)
 {
 	int		index;
-	char	*name;
-	char	*value;
 	t_token	*token;
 
-	if (!var)
+	if (!(*name) || !(*value))
 		return (FAILURE);
 	index = 0;
 	token = read_token(tokens, index++);
 	if (!token || token->type != Word)
 		return (FAILURE);
-	name = ft_strdup(token->value);
+	*name = ft_strdup(token->value);
 	token = read_token(tokens, index);
 	if (!token || token->type != EqualSign)
 		return (FAILURE);
 	while (token->type == EqualSign)
 		token = read_token(tokens, ++index);
-	if (!token || nt_comb(tokens, &index, &value) != SUCCESS)
+	if (!token || nt_comb(tokens, &index, value) != SUCCESS)
 		return (FAILURE);
-	*var = init_variable(name, value);
 	return (SUCCESS);
 }
 

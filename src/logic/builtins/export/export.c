@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/16 14:02:49 by akovtune      #+#    #+#                 */
-/*   Updated: 2025/04/01 00:39:35 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/01 13:59:06 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	export(t_command *command)
 {
 	t_list			*env;
 	t_list			*tokens;
-	t_variable		*var;
+	char			*name;
+	char			*value;
 	t_string_array	args;
 	int				i;
 
@@ -32,10 +33,10 @@ int	export(t_command *command)
 	while (args[i])
 	{
 		tokens = create_token_list(args[i], 1);
-		if (parse_variable(tokens, &var) != SUCCESS)
+		if (parse_variable(tokens, &name, &value) != SUCCESS)
 			return (destroy_list(&tokens, free_token), FAILURE);
-		if (set_env_variable(env, var->name, var->value, var->is_exported) != SUCCESS)
-			return (destroy_list(&tokens, free_token), destroy_variable(&var), FAILURE);
+		if (set_env_variable(env, name, value, 1) != SUCCESS)
+			return (destroy_list(&tokens, free_token), free(name), free(value), FAILURE);
 		destroy_list(&tokens, free_token);
 		i++;
 	}

@@ -1,7 +1,7 @@
 #-----------------------COMPILATION------------------------------------------------------
 # Compiler and Flags
 CC						:= cc
-CFLAGS				 	 = -Wall -Wextra -Werror $(INCLUDES) -g
+CFLAGS				 	 = -Wall -Wextra -Werror $(INCLUDES) -g -fsanitize=leak
 LDFLAGS					:= -lreadline
 INCLUDES				 = $(addprefix -I,$(SRC_DIRS)) $(addprefix -I,$(LIB_DIRS))
 
