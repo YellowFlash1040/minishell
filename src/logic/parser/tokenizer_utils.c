@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/01 15:15:24 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 15:16:55 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/02 01:07:11 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	get_wlen(char *prompt, int *i, int is_variable)
 	else
 		operators = OPERATORS_VAR;
 	while (prompt[*i + wlen]
-		&& !ft_strchr(operators, prompt[*i + wlen])
+		&& index_of(prompt[*i + wlen], operators) == -1
 		&& !is_whitespace(prompt[*i + wlen]))
 		wlen++;
 	return (wlen);

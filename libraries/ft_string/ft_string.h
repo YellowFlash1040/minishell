@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_string.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/08 17:35:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/27 17:35:36 by ibenne           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_string.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/01/08 17:35:18 by akovtune      #+#    #+#                 */
+/*   Updated: 2025/04/02 01:12:48 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef char*	t_string;
 /**
  * @brief Computes the length of a string.
  *
- * This function calculates the number of characters in the string `str`,s
+ * This function calculates the number of characters in the string `str`,
  * excluding the null-terminator.
  *
  * @param str The string whose length is to be calculated.
@@ -231,6 +231,5 @@ int		count_words(char *s, char delimiter);
 
 char	*ft_strtrim(char *str);
 int		is_whitespace(char c);
-char	*ft_strchr(char *str, char c);
 
 #endif

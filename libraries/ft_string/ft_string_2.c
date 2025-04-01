@@ -45,19 +45,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	res[index] = '\0';
 	return (res);
 }
-
-char	*ft_strchr(char *str, char c)
-{
-	while (*str)
-	{
-		if (*str == (unsigned char)c)
-			return ((char *)str);
-		str++;
-	}
-	if (*str == (unsigned char)c)
-		return ((char *)str);
-	return (NULL);
-}
 char	*ft_strtrim(char *str)
 {
 	size_t	start;

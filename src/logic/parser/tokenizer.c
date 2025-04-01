@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 14:25:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 15:21:54 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/02 01:09:26 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 
 int	tokenize(char *prompt, int *i, int is_variable, t_token *token)
 {
-	if (prompt[*i] && ft_strchr("\"\'", prompt[*i]))
+	if (prompt[*i] && index_of(prompt[*i], "\"\'") != -1)
 	{
 		if (!tokenize_quote(token, prompt, i))
 			return (0);
 	}
-	else if (prompt[*i] && ft_strchr("<>", prompt[*i]))
+	else if (prompt[*i] && index_of(prompt[*i], "<>") != -1)
 		tokenize_redir(token, prompt, i);
 	else if (prompt[*i] == '|')
 		tokenize_one(token, i, Pipe);

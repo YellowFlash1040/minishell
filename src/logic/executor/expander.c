@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/26 12:38:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 16:40:11 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/02 01:11:34 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,14 +158,12 @@ int	expand_command(t_command *command)
 
 void	expand_commands(t_list **commands)
 {
-	int	i;
 	t_list_node	*node;
 
-	i = 0;
-	node = get_node(i, *commands);
+	node = (*commands)->head;
 	while (node)
 	{
 		expand_command((t_command *)node->value);
-		node = get_node(++i, *commands);
+		node = node->next;
 	}
 }
