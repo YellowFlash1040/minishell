@@ -37,7 +37,10 @@ BUILTINS_DIR	:= $(TESTS_DIR)/builtins
 PARSER_DIR		:= $(TESTS_DIR)/parser
 # INTERMEDIATE_FILES_DIR	:= $(TESTS_DIR)/intermediate_files
 
-TESTS_DIRS		:= $(PARSER_DIR)
+TESTS_DIRS		:= $(PARSER_DIR) \
+					$(BUILTINS_DIR) \
+					$(EXECUTOR_DIR) \
+					$(TESTS_DIR)
 
 # All source folders
 SRC_DIRS		:= $(TESTS_DIRS) \

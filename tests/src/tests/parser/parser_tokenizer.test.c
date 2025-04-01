@@ -12,7 +12,7 @@ int	test1(void)
 	t_token			*token;
 	int				i;
 
-	tokens = create_token_list(prompt);
+	tokens = create_token_list(prompt, 0);
 	if (!tokens)
 		return (SUCCESS);
 	i = 0;
@@ -43,7 +43,7 @@ int	test3(void)
 	t_token			*token;
 	int				i;
 
-	tokens = create_token_list(prompt);
+	tokens = create_token_list(prompt, 0);
 	if (!tokens)
 		return (FAILURE);
 	if (tokens->count != (sizeof(correct) / sizeof(correct[0])))

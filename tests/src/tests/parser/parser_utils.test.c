@@ -22,7 +22,7 @@ int test1(void)
 	if (!pipeline)
 		return (FAILURE);
 	prompt = ft_strdup("a \"aa\" b");
-	tokens = create_token_list(prompt);
+	tokens = create_token_list(prompt, 0);
 	if (!tokens)
 		return (FAILURE);
 	printf("type: \"%d\"\n", read_token(tokens, 0)->type);
