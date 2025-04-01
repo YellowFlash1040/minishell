@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/26 12:38:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 00:42:53 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/01 16:40:11 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*expand_str(t_list *env, char	*str)
 		{
 			tmp_str = extract_word2(str, &i, "$");
 			if (!tmp_str)
-				break  ;
+				break ;
 			add_to_list(result, tmp_str);
 		}
 	}

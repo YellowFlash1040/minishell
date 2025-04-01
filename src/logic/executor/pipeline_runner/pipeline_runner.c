@@ -127,4 +127,3 @@ int	move_to_the_next_pipe(int prev_pipe[2], int current_pipe[2])
 	prev_pipe[1] = current_pipe[1];
 	return (SUCCESS);
 }
-

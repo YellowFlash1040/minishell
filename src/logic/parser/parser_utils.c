@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 16:07:18 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/29 19:28:15 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/01 16:29:09 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,43 @@
 #include "token.h"
 #include "list.h"
 
-t_token *read_token(t_list *tokens, int index)
+t_token	*read_token(t_list *tokens, int index)
 {
-	t_list_node *node;
+	t_list_node	*node;
 
 	node = get_node(index, tokens);
 	if (index >= tokens->count)
 		return (NULL);
-	return ((t_token*) node->value);
+	return ((t_token *) node->value);
 }
 
-int	is_file(t_token *token)
+int	is_file(t_token_type type)
 {
-	return (token && (token->type == Word || token->type == EnvVariable || token->type == DoubleQuote || token->type == SingleQuote));
+	return (type == Word
+		|| type == EnvVariable
+		|| type == DoubleQuote
+		|| type == SingleQuote);
 }
 
-int is_redir(t_token *token)
+int	is_redir(t_token_type type)
 {
-	return (token && (token->type == RedirAppend || token->type == RedirDelim || token->type == RedirInput || token->type == RedirOutput));
+	return (type == RedirAppend
+		|| type == RedirDelim
+		|| type == RedirInput
+		|| type == RedirOutput);
 }
 
 int	n_args(t_list *tokens, int index)
 {
-	t_token *token;
+	t_token	*token;
 	int		n;
 
 	token = read_token(tokens, index++);
 	n = 0;
-	while (token && token->type != EndOfInput && (is_file(token) || is_redir(token)))
+	while (token && token->type != EndOfInput
+		&& (is_file(token->type) || is_redir(token->type)))
 	{
-		if (is_redir(token))
+		if (is_redir(token->type))
 		{
 			index++;
 			token = read_token(tokens, index++);
@@ -51,13 +58,15 @@ int	n_args(t_list *tokens, int index)
 		else
 		{
 			n++;
-			while (token && token->type != EndOfInput && is_file(token) && !is_whitespace(token->seperator))
+			while (token && token->type != EndOfInput
+				&& is_file(token->type) && !is_whitespace(token->seperator))
 				token = read_token(tokens, index++);
 			token = read_token(tokens, index++);
 		}
 	}
 	return (n);
 }
+
 char	*quote_str(t_token *token)
 {
 	char	*quoted_str;

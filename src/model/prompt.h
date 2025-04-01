@@ -30,7 +30,6 @@ void		destroy_prompt(t_prompt **prompt);
 
 #endif
 
-
 /*
 
 ARG=data && ls $ARG && ARG="hello world" || echo $ARG

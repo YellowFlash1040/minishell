@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parse_redirs.h                                     :+:    :+:            */
+/*   non_terminals.h                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/03/31 00:49:10 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 15:54:31 by ismo          ########   odam.nl         */
+/*   Created: 2025/04/01 15:58:05 by ismo          #+#    #+#                 */
+/*   Updated: 2025/04/01 15:59:17 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_REDIRS_H
-# define PARSE_REDIRS_H
+#ifndef NON_TERMINALS_H
+# define NON_TERMINALS_H
 
-int	add_file_redir(t_command **command,
-		char **filename,
-		t_token_type redir_type);
+int	nt_file(t_list *tokens, int *depth, char **blob);
+int	nt_comb(t_list *tokens, int *depth, char **comb);
+int	nt_redir(t_list *tokens, int *depth, t_command **command);
+int	nt_command(t_list *tokens, int *depth, t_command **command);
+int	nt_pipeline(t_list *tokens, int *depth, t_pipeline **pipeline, t_list *env);
 #endif

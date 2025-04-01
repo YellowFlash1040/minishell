@@ -6,16 +6,17 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 15:12:56 by ismo          #+#    #+#                 */
-/*   Updated: 2025/03/29 15:42:03 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/01 14:58:05 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token.h"
 #include <stdlib.h>
 
-t_token	*init_token()
+t_token	*init_token(void)
 {
-	t_token *token;
+	t_token	*token;
+
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);

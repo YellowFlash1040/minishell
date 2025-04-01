@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 14:22:40 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 00:13:24 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/01 14:57:43 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 # define OPERATORS "<|>$\'\""
 # define OPERATORS_VAR "<|>$\'\"="
 
-typedef enum token_type {
+typedef enum token_type
+{
 	SingleQuote,
 	DoubleQuote,
 	RedirInput,
@@ -27,15 +28,16 @@ typedef enum token_type {
 	Word,
 	EqualSign,
 	EndOfInput
-} t_token_type;
+}	t_token_type;
 
-typedef struct token {
-	t_token_type 	type;
+typedef struct token
+{
+	t_token_type	type;
 	char			*value;
 	char			seperator;
-} t_token;
+}	t_token;
 
-t_token	*init_token();
+t_token	*init_token(void);
 void	destroy_token(t_token *token);
 void	free_token(void *tok);
 #endif

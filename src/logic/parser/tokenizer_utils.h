@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parse_redirs.h                                     :+:    :+:            */
+/*   tokenizer_utils.h                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/03/31 00:49:10 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 15:54:31 by ismo          ########   odam.nl         */
+/*   Created: 2025/04/01 15:15:43 by ismo          #+#    #+#                 */
+/*   Updated: 2025/04/01 15:24:27 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_REDIRS_H
-# define PARSE_REDIRS_H
+#ifndef TOKENIZER_UTILS_H
+# define TOKENIZER_UTILS_H
 
-int	add_file_redir(t_command **command,
-		char **filename,
-		t_token_type redir_type);
+int		get_wlen(char *prompt, int *i, int is_variable);
+char	*scan_word(char *prompt, int *i, int is_variable);
+char	*read_quote(char quote, char *prompt, int *i);
 #endif
