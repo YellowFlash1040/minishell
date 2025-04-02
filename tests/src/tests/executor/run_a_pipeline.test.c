@@ -106,7 +106,7 @@ int	test1(void)
 	build_pipeline(&pipeline);
 
 	command = create_command(exe1, args1, NULL, NULL);
-	command->environment = environment;	
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
 	command = create_command(exe2, args2, NULL, NULL);
 	command->environment = environment;
@@ -159,7 +159,7 @@ int	test2(void)
 	build_pipeline(&pipeline);
 
 	command = create_command(exe1, args1, NULL, NULL);
-	command->environment = environment;	
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
 		command = create_command(exe2, args2, NULL, NULL);
 	command->environment = environment;add_to_list(pipeline->commands, command);
@@ -210,7 +210,7 @@ int	test3(void)
 	build_pipeline(&pipeline);
 
 	command = create_command(exe1, args1, NULL, NULL);
-	command->environment = environment;	
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
 		command = create_command(exe2, args2, NULL, NULL);
 		command->environment = environment;
@@ -264,7 +264,7 @@ int	test4(void)
 	build_pipeline(&pipeline);
 
 	command = create_command(exe1, args1, NULL, NULL);
-	command->environment = environment;	
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
 		command = create_command(exe2, args2, NULL, NULL);
 		command->environment = environment;
@@ -318,7 +318,7 @@ int	test5(void)
 	build_pipeline(&pipeline);
 
 	command = create_command(exe1, args1, NULL, NULL);
-	command->environment = environment;	
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
 		command = create_command(exe2, args2, NULL, NULL);
 		command->environment = environment;
@@ -372,7 +372,7 @@ int	test6(void)
 	build_pipeline(&pipeline);
 
 	command = create_command(exe1, args1, NULL, NULL);
-	command->environment = environment;	
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
 		command = create_command(exe2, args2, NULL, NULL);
 		command->environment = environment;
@@ -428,7 +428,7 @@ int	test7(void)
 	build_pipeline(&pipeline);
 
 	command = create_command(exe1, args1, NULL, NULL);
-	command->environment = environment;	
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
 	command = create_command(exe2, args2, NULL, NULL);
 	command->environment = environment;

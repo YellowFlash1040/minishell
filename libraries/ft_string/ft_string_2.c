@@ -45,7 +45,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	res[index] = '\0';
 	return (res);
 }
-
 char	*ft_strtrim(char *str)
 {
 	size_t	start;

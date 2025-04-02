@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_string.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:35:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/21 12:42:42 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:11:39 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ bool	ft_strcmp(char *s1, char *s2);
 char	*ft_strdup(char *str);
 
 /**
- * @brief Replaces all occurrences of a character in a string 
+ * @brief Replaces all occurrences of a character in a string
  * with another character.
  *
  * This function iterates through the given string and replaces all instances
  * of the character `old` with the character `new`. The replacement is done
  * directly on the string passed as the argument, so no new string is returned.
  *
- * @param str The string in which the characters will be replaced. 
+ * @param str The string in which the characters will be replaced.
  * It must be a null-terminated string.
  * @param old The character to be replaced.
  * @param new The character that will replace `old`.
@@ -105,7 +105,7 @@ void	replace(char *str, char old, char new);
  *
  * This function takes two input strings, allocates enough memory to hold
  * both strings plus a null-terminator, and concatenates them into a new string.
- * The function returns the newly created string 
+ * The function returns the newly created string
  * or `NULL` if the memory allocation fails.
  *
  * @param s1 The first string to be concatenated. It may be `NULL`.
@@ -114,7 +114,7 @@ void	replace(char *str, char old, char new);
  * @return A pointer to the newly created string containing the concatenation
  *         of `s1` and `s2`, or `NULL` if memory allocation fails.
  *
- * @note The caller is responsible for freeing the returned string, 
+ * @note The caller is responsible for freeing the returned string,
  * and the given strings `s1`, `s2`.
  * @note Usage example:
  * @note ```c
@@ -128,25 +128,25 @@ char	*ft_strjoin(char *s1, char *s2);
 /**
  * @brief Creates a substring from a given string starting at a specified index.
  *
- * This function extracts a substring from the input string `s`, 
+ * This function extracts a substring from the input string `s`,
  * starting from the index `start`
- * and with a maximum length of `len`. 
+ * and with a maximum length of `len`.
  * If the `start` index is greater than or equal to the length of
- * the string, the function returns an empty string. 
+ * the string, the function returns an empty string.
  * If `start + len` exceeds the length of the string,
- * the length of the substring is adjusted 
+ * the length of the substring is adjusted
  * to fit the remaining portion of the string.
  *
- * @param s The string from which to extract the substring. 
+ * @param s The string from which to extract the substring.
  * It must be a null-terminated string.
  * @param start The starting index from which to begin the substring extraction.
  * @param len The maximum length of the substring to be extracted.
  *
- * @return A newly allocated string containing the extracted substring, 
+ * @return A newly allocated string containing the extracted substring,
  * or NULL if memory allocation fails.
  *         The returned string is null-terminated.
  *
- * @note The caller is responsible for freeing the memory 
+ * @note The caller is responsible for freeing the memory
  * of the returned substring.
  *
  * @example
@@ -158,25 +158,25 @@ char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 
 /**
- * @brief Splits a string into an array of substrings 
+ * @brief Splits a string into an array of substrings
  * based on a delimiter character.
  *
- * This function splits the input string `s` into an array of substrings, 
+ * This function splits the input string `s` into an array of substrings,
  * each separated by the character `c`.
- * The function returns a dynamically allocated array of strings, 
+ * The function returns a dynamically allocated array of strings,
  * with each substring as an element in the array.
- * `The array is null-terminated`, 
- * and the caller is responsible for freeing the memory 
+ * `The array is null-terminated`,
+ * and the caller is responsible for freeing the memory
  * used by the array and its contents.
  *
  * @param s The string to be split. It must be a `null-terminated string`.
  * @param c The delimiter character used to split the string.
  *
- * @return A pointer to an array of strings (substrings), 
+ * @return A pointer to an array of strings (substrings),
  * or NULL if memory allocation fails or an error occurs.
  * The array is terminated with a NULL pointer.
  *
- * @note The caller is responsible for freeing the array of substrings 
+ * @note The caller is responsible for freeing the array of substrings
  * and each individual string.
  * @note Usage example:
  * @note ```c
@@ -207,7 +207,7 @@ char	**ft_split(char *s, char c);
  * The index `i` is updated to point to the character after the extracted word.
  *
  * @param s The string to extract the word from.
- * @param i The current index in the string, 
+ * @param i The current index in the string,
  * which will be updated after the word extraction.
  * @param c The delimiter character used to separate words.
  * @return A newly allocated string containing the extracted word.

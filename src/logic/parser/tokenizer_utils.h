@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.h                                           :+:      :+:    :+:   */
+/*   tokenizer_utils.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 14:02:33 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/02 15:36:00 by ibenne           ###   ########.fr       */
+/*   Created: 2025/04/01 15:15:43 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/02 14:07:24 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPORT_H
-# define EXPORT_H
+#ifndef TOKENIZER_UTILS_H
+# define TOKENIZER_UTILS_H
 
-# include "environment.h"
-# include "command.h"
-# include "pipeline.h"
-# include "token.h"
-# include "tokenizer.h"
-# include "parser.h"
-
-int	export(t_command *command);
-
+int		get_wlen(char *prompt, int *i, char *delims);
+char	*scan_word(char *prompt, int *i, char *delims);
+char	*read_quote(char quote, char *prompt, int *i);
 #endif

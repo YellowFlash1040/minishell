@@ -3,38 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   set.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 17:34:49 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/16 17:48:16 by akovtune         ###   ########.fr       */
+/*   Created: 2025/03/16 14:02:49 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/02 15:38:40 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "set.h"
 
-int	split_argument_into_parts(t_string argument, t_string parts[2]);
-
 int	set(t_command *command)
 {
 	t_list			*env;
-	t_string_array	args;
-	t_string		parts[2];
-	int				result;
+	t_list			*tokens;
+	char			*name;
+	char			*value;
 	int				i;
 
 	if (!command || !command->arguments || !command->environment)
 		return (FAILURE);
-	args = command->arguments;
 	env = command->environment;
 	i = 1;
-	while (args[i])
+	while (command->arguments[i])
 	{
-		result = split_argument_into_parts(args[i], parts);
-		if (result != SUCCESS)
-			return (result);
-		result = set_env_variable(env, parts[0], parts[1], false);
-		if (result != SUCCESS)
-			return (free(parts[0]), free(parts[1]), result);
+		tokens = create_token_list(command->arguments[i], true);
+		if (parse_variable(tokens, &name, &value) != SUCCESS)
+			return (destroy_list(&tokens, free_token), FAILURE);
+		if (set_env_variable(env, name, value, false) != SUCCESS)
+			return (destroy_list(&tokens, free_token),
+				free(name), free(value), FAILURE);
+		free(name);
+		destroy_list(&tokens, free_token);
 		i++;
 	}
 	return (SUCCESS);

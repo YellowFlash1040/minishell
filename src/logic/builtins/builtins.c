@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 13:04:08 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/16 18:13:17 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:24:01 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	is_builtin(t_string binary_name)
 {
 	const t_string	builtins[] = {"echo", "cd",
-		"pwd", "export", "unset", "env", "exit", NULL};
+		"pwd", "export", "unset", "env", "exit", "set", NULL};
 	int				i;
 
 	i = -1;

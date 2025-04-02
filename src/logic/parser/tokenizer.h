@@ -1,25 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.h                                           :+:      :+:    :+:   */
+/*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 14:02:33 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/02 15:36:00 by ibenne           ###   ########.fr       */
+/*   Created: 2025/04/01 15:54:51 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/02 15:07:26 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPORT_H
-# define EXPORT_H
+#ifndef TOKENIZER_H
+# define TOKENIZER_H
 
-# include "environment.h"
-# include "command.h"
-# include "pipeline.h"
-# include "token.h"
-# include "tokenizer.h"
-# include "parser.h"
-
-int	export(t_command *command);
-
+t_list	*create_token_list(char *prompt, int is_variable);
 #endif
