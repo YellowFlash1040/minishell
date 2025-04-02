@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   tokenizers.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ismo <ismo@student.codam.nl>                 +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/04/01 15:20:13 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 15:35:29 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   tokenizers.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 15:20:13 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/02 15:05:45 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,15 @@ void	tokenize_redir(t_token *token, char *prompt, int *i)
 
 int	tokenize_env(t_token *token, char *prompt, int *i, int is_variable)
 {
+	char	*operators;
+
+	if (is_variable)
+		operators = OPERATORS_VAR;
+	else
+		operators = OPERATORS;
 	token->type = EnvVariable;
 	(*i)++;
-	token->value = scan_word(prompt, i, is_variable);
+	token->value = scan_word(prompt, i, operators);
 	if (!token->value)
 		return (0);
 	return (1);
@@ -68,8 +74,14 @@ int	tokenize_env(t_token *token, char *prompt, int *i, int is_variable)
 
 int	tokenize_word(t_token *token, char *prompt, int *i, int is_variable)
 {
+	char	*operators;
+
+	if (is_variable)
+		operators = OPERATORS_VAR;
+	else
+		operators = OPERATORS;
 	token->type = Word;
-	token->value = scan_word(prompt, i, is_variable);
+	token->value = scan_word(prompt, i, operators);
 	if (!token->value)
 		return (0);
 	return (1);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   export.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: akovtune <akovtune@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/16 14:02:49 by akovtune      #+#    #+#                 */
-/*   Updated: 2025/04/01 16:38:26 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 14:02:49 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/02 15:06:56 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "token.h"
 #include "tokenizer.h"
 #include "parser.h"
+#include <stdbool.h>
 
 int	export(t_command *command)
 {
@@ -30,7 +31,7 @@ int	export(t_command *command)
 	i = 1;
 	while (command->arguments[i])
 	{
-		tokens = create_token_list(command->arguments[i], 1);
+		tokens = create_token_list(command->arguments[i], true);
 		if (parse_variable(tokens, &name, &value) != SUCCESS)
 			return (destroy_list(&tokens, free_token), FAILURE);
 		if (set_env_variable(env, name, value, 1) != SUCCESS)

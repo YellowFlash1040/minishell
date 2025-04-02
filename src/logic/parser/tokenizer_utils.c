@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   tokenizer_utils.c                                  :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ismo <ismo@student.codam.nl>                 +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/04/01 15:15:24 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/02 01:07:11 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   tokenizer_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 15:15:24 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/02 14:07:47 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,26 @@
 #include "stdlib.h"
 #include "ft_string.h"
 
-int	get_wlen(char *prompt, int *i, int is_variable)
+int	get_wlen(char *prompt, int *i, char *delims)
 {
 	int		wlen;
-	char	*operators;
 
 	wlen = 0;
-	if (!is_variable)
-		operators = OPERATORS;
-	else
-		operators = OPERATORS_VAR;
 	while (prompt[*i + wlen]
-		&& index_of(prompt[*i + wlen], operators) == -1
+		&& index_of(prompt[*i + wlen], delims) == -1
 		&& !is_whitespace(prompt[*i + wlen]))
 		wlen++;
 	return (wlen);
 }
 
-char	*scan_word(char *prompt, int *i, int is_variable)
+char	*scan_word(char *prompt, int *i, char *delims)
 {
 	int		j;
 	int		wlen;
 	char	*word;
 
 	j = 0;
-	wlen = get_wlen(prompt, i, is_variable);
+	wlen = get_wlen(prompt, i, delims);
 	word = (char *)malloc(wlen + 1);
 	if (!word)
 		return (NULL);

@@ -47,22 +47,19 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	char	*line;
 	t_list	*tokens;
-	t_pipeline **pipeline;
+	t_pipeline *pipeline;
 	t_list		*env;
 
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
 	(void) argc;
 	(void) argv;
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 	rl_catch_signals = 0;
 	rl_event_hook = NULL;
-	pipeline = (t_pipeline **)malloc(sizeof(t_pipeline *));
-	*pipeline = NULL;
-	if (!pipeline)
-		return (0);
+	pipeline = NULL;
 	env = init_environment(envp);
 	if (!env)
-		return (free(pipeline), 0);
+		return (0);
 	line = readline("$> ");
 	while (line)
 	{
@@ -74,27 +71,25 @@ int	main(int argc, char *argv[], char *envp[])
 				free(line);
 				break;
 			}
-			parse_tokens(tokens, pipeline, env);
+			parse_tokens(tokens, &pipeline, env);
 			destroy_list(&tokens, free_token);
-			tokens = NULL;
-			if (*pipeline)
+			if (pipeline)
 			{
-				expand_commands(&(*pipeline)->commands);
+				expand_commands(&pipeline->commands);
 				g_received_signal = -1;
-				run_a_pipeline(*pipeline);
+				run_a_pipeline(pipeline);
 				if (g_received_signal != -1)
 				{
 					printf("\n");
 					rl_on_new_line();
 				}
-				destroy_pipeline(pipeline);
+				destroy_pipeline(&pipeline);
 			}
 			add_history(line);
 		}
 		free(line);
 		line = readline("$> ");
 	}
-	free(pipeline);
 	destroy_environment(&env);
 	return (0);
 }

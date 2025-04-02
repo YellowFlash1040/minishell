@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   expander.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ismo <ismo@student.codam.nl>                 +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/26 12:38:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/02 01:11:34 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/26 12:38:15 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/02 15:10:17 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "command.h"
 #include "lst_to_str.h"
 #include "token.h"
+#include "tokenizer_utils.h"
 #include "tokenizer.h"
 #include "parser_utils.h"
 
@@ -36,7 +37,7 @@ char	*expand_str(t_list *env, char	*str)
 		if (str[i] == '$')
 		{
 			i++;
-			var_name = extract_word2(str, &i, " $");
+			var_name = scan_word(str, &i, " $");
 			if (!var_name)
 			{
 				tmp_str = ft_strdup("$");
@@ -47,7 +48,7 @@ char	*expand_str(t_list *env, char	*str)
 			{
 				tmp_str = get_env_variable(env, var_name);
 				if (!tmp_str)
-					tmp_str = ft_strdup(" ");
+					tmp_str = ft_strdup("");
 				if (!tmp_str)
 					return (NULL);
 				tmp_str = ft_strdup(tmp_str);
@@ -56,7 +57,7 @@ char	*expand_str(t_list *env, char	*str)
 		}
 		else
 		{
-			tmp_str = extract_word2(str, &i, "$");
+			tmp_str = scan_word(str, &i, "$");
 			if (!tmp_str)
 				break ;
 			add_to_list(result, tmp_str);

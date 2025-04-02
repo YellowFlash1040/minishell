@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   lst_to_str.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ismo <ismo@student.codam.nl>                 +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/29 17:21:07 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/02 01:11:14 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   lst_to_str.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/29 17:21:07 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/02 15:10:40 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 #include "list.h"
+#include <stdbool.h>
 
 int	lst_strlen(t_list **list)
-{	int			len;
+{
+	int			len;
 	t_list_node	*node;
 
 	len = 0;
