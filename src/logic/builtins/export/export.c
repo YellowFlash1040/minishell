@@ -6,16 +6,11 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 14:02:49 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/02 15:23:04 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/02 15:35:50 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipeline.h"
 #include "export.h"
-#include "token.h"
-#include "tokenizer.h"
-#include "parser.h"
-#include <stdbool.h>
 
 int	export(t_command *command)
 {
