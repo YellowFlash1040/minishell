@@ -31,7 +31,6 @@ typedef struct command
 	t_file			*input_file;
 	t_file			*output_file;
 	t_file			*error_file;
-	char			is_redir_parsable;
 	int				exit_status_code;
 	int				unused_pipe_end;
 	bool			needs_a_subshell;

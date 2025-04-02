@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 14:02:49 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/02 15:06:56 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/02 15:23:04 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	export(t_command *command)
 		tokens = create_token_list(command->arguments[i], true);
 		if (parse_variable(tokens, &name, &value) != SUCCESS)
 			return (destroy_list(&tokens, free_token), FAILURE);
-		if (set_env_variable(env, name, value, 1) != SUCCESS)
+		if (set_env_variable(env, name, value, true) != SUCCESS)
 			return (destroy_list(&tokens, free_token),
 				free(name), free(value), FAILURE);
 		free(name);
