@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:38:15 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/02 16:18:51 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/02 16:49:28 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ char	*expand_str(t_list *env, char	*str)
 			if (!var_name)
 				return (NULL);
 			tmp_str = dup_env_var(env, var_name);
-`
 			if (!tmp_str)
 				return (NULL);
 			add_to_list(result, tmp_str);

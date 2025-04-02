@@ -71,6 +71,8 @@ int	main(int argc, char *argv[], char *envp[])
 				free(line);
 				break;
 			}
+			add_history(line);
+			free(line);
 			parse_pipeline(tokens, &pipeline, env);
 			destroy_list(&tokens, free_token);
 			if (pipeline)
@@ -85,9 +87,7 @@ int	main(int argc, char *argv[], char *envp[])
 				}
 				destroy_pipeline(&pipeline);
 			}
-			add_history(line);
 		}
-		free(line);
 		line = readline("$> ");
 	}
 	destroy_environment(&env);

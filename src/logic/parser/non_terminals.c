@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   non_terminals.c                                    :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ismo <ismo@student.codam.nl>                 +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/04/01 15:56:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 16:30:59 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   non_terminals.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 15:56:42 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/02 18:31:17 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "parser.h"
 #include "parse_redirs.h"
 #include "global_status_codes.h"
-#include "lst_to_str.h"
+#include "lst_to_str.h
 
 int	nt_file(t_list *tokens, int *depth, char **blob)
 {
