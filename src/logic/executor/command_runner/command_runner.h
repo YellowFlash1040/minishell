@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   command_runner.h                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+      
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2025/02/19 18:34:16 by akovtune          #+#    #+#             */
 /*   Updated: 2025/02/20 17:13:28 by akovtune         ###   ########.fr       */
@@ -19,6 +19,7 @@
 # include "builtins.h"
 # include "error_printer.h"
 # include <errno.h>
+# include "expander.h"
 
 // # define CHILD_PROCESS pid == 0
 

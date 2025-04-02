@@ -14,7 +14,6 @@
 /* ************************************************************************** */
 
 #include "command_runner.h"
-#include "expander.h"
 
 int	execute_command(t_command *command);
 int	execute_builtin(t_command *command);
