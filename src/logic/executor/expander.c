@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:38:15 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/02 15:10:17 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/02 16:18:51 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,25 @@
 #include "tokenizer_utils.h"
 #include "tokenizer.h"
 #include "parser_utils.h"
+
+char	*dup_env_var(t_list *env, char *name)
+{
+	char	*value;
+
+	if (ft_strlen(name) <= 0)
+		value = ft_strdup("$");
+	else
+	{
+		value = get_env_variable(env, name);
+		if (!value)
+			return (ft_strdup(""));
+		else
+			value = ft_strdup(value);
+	}
+	if (!value)
+		return (NULL);
+	return (value);
+}
 
 char	*expand_str(t_list *env, char	*str)
 {
@@ -39,20 +58,11 @@ char	*expand_str(t_list *env, char	*str)
 			i++;
 			var_name = scan_word(str, &i, " $");
 			if (!var_name)
-			{
-				tmp_str = ft_strdup("$");
-				if (!tmp_str)
-					return (NULL);
-			}
-			else
-			{
-				tmp_str = get_env_variable(env, var_name);
-				if (!tmp_str)
-					tmp_str = ft_strdup("");
-				if (!tmp_str)
-					return (NULL);
-				tmp_str = ft_strdup(tmp_str);
-			}
+				return (NULL);
+			tmp_str = dup_env_var(env, var_name);
+`
+			if (!tmp_str)
+				return (NULL);
 			add_to_list(result, tmp_str);
 		}
 		else
@@ -66,16 +76,6 @@ char	*expand_str(t_list *env, char	*str)
 	tmp_str = lst_to_str(&result);
 	destroy_list(&result, free);
 	return (tmp_str);
-}
-
-char	*dup_env_var(t_list *env, char *name)
-{
-	char	*value;
-
-	value = get_env_variable(env, name);
-	if (!value)
-		return (ft_strdup(""));
-	return (ft_strdup(value));
 }
 
 char	*expand_comb(t_list *env, char *arg)

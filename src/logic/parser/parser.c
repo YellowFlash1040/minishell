@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:11:42 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/02 14:59:53 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/02 15:42:50 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	parse_variable(t_list *tokens, char **name, char **value)
 	return (SUCCESS);
 }
 
-int	parse_tokens(t_list *tokens, t_pipeline **pipeline, t_list *env)
+int	parse_pipeline(t_list *tokens, t_pipeline **pipeline, t_list *env)
 {
 	int	index;
 

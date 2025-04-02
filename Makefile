@@ -149,6 +149,12 @@ fclean: clean
 		$(MAKE) -C $$lib fclean > /dev/null; \
 	done
 
+leaks: fclean compile_leaks
+
+compile_leaks: $(OBJ) $(LIBRARIES)
+	@$(CC) $(CFLAGS) -fsanitize=leak $^ $(LDFLAGS) -o $(NAME)
+	@echo "$(GREEN)Compiled $@ successfully!$(RESET)"
+
 # Rebuild the Project
 re: fclean all
 

@@ -71,7 +71,7 @@ int	main(int argc, char *argv[], char *envp[])
 				free(line);
 				break;
 			}
-			parse_tokens(tokens, &pipeline, env);
+			parse_pipeline(tokens, &pipeline, env);
 			destroy_list(&tokens, free_token);
 			if (pipeline)
 			{
