@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenizers.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 15:20:13 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/02 15:05:45 by ibenne           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   tokenizers.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/04/01 15:20:13 by ismo          #+#    #+#                 */
+/*   Updated: 2025/04/04 15:45:56 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token.h"
 #include "tokenizer_utils.h"
+#include <stdbool.h>
 
 int	tokenize_quote(t_token *token, char *prompt, int *i)
 {
@@ -66,7 +67,7 @@ int	tokenize_env(t_token *token, char *prompt, int *i, int is_variable)
 		operators = OPERATORS;
 	token->type = EnvVariable;
 	(*i)++;
-	token->value = scan_word(prompt, i, operators);
+	token->value = scan_word(prompt, i, operators, true);
 	if (!token->value)
 		return (0);
 	return (1);
@@ -81,7 +82,7 @@ int	tokenize_word(t_token *token, char *prompt, int *i, int is_variable)
 	else
 		operators = OPERATORS;
 	token->type = Word;
-	token->value = scan_word(prompt, i, operators);
+	token->value = scan_word(prompt, i, operators, true);
 	if (!token->value)
 		return (0);
 	return (1);

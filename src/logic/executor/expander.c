@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 12:38:15 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/02 16:49:28 by ibenne           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   expander.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/03/26 12:38:15 by ismo          #+#    #+#                 */
+/*   Updated: 2025/04/04 15:45:06 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,7 @@
 #include "tokenizer_utils.h"
 #include "tokenizer.h"
 #include "parser_utils.h"
-
-char	*dup_env_var(t_list *env, char *name)
-{
-	char	*value;
-
-	if (ft_strlen(name) <= 0)
-		value = ft_strdup("$");
-	else
-	{
-		value = get_env_variable(env, name);
-		if (!value)
-			return (ft_strdup(""));
-		else
-			value = ft_strdup(value);
-	}
-	if (!value)
-		return (NULL);
-	return (value);
-}
+#include "expander_utils.h"
 
 char	*expand_str(t_list *env, char	*str)
 {
@@ -56,21 +38,20 @@ char	*expand_str(t_list *env, char	*str)
 		if (str[i] == '$')
 		{
 			i++;
-			var_name = scan_word(str, &i, " $");
+			var_name = scan_word(str, &i, "$", true);
 			if (!var_name)
-				return (NULL);
+				return (destroy_list(&result, free), NULL);
 			tmp_str = dup_env_var(env, var_name);
+			free(var_name);
 			if (!tmp_str)
-				return (NULL);
+				return (destroy_list(&result, free), free(var_name), NULL);
 			add_to_list(result, tmp_str);
+			continue ;
 		}
-		else
-		{
-			tmp_str = scan_word(str, &i, "$");
-			if (!tmp_str)
-				break ;
-			add_to_list(result, tmp_str);
-		}
+		tmp_str = scan_word(str, &i, "$", false);
+		if (!tmp_str)
+			break ;
+		add_to_list(result, tmp_str);
 	}
 	tmp_str = lst_to_str(&result);
 	destroy_list(&result, free);
@@ -92,7 +73,7 @@ char	*expand_comb(t_list *env, char *arg)
 		return (NULL);
 	result = init_list();
 	if (!result)
-		return (NULL);
+		return (destroy_list(&tokens, free_token), NULL);
 	t = 0;
 	token = read_token(tokens, t++);
 	while (token && token->type != EndOfInput)
@@ -143,11 +124,11 @@ int	expand_command(t_command *command)
 		i++;
 	}
 	i = 0;
-	int_node = get_node(i++, command->intermediate_files);
+	int_node = command->intermediate_files->head;
 	while (int_node && int_node->value)
 	{
 		expand_file(command->environment, int_node->value);
-		int_node = get_node(i++, command->intermediate_files);
+		int_node = int_node->next;
 	}
 	if (command->input_file && command->input_file->fd != STDIN_FILENO)
 		expand_file(command->environment, command->input_file);

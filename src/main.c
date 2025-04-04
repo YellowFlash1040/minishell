@@ -13,6 +13,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "prompt.h"
 #include "global_status_codes.h"
 #include "list.h"
 #include "token.h"
@@ -23,6 +24,7 @@
 #include "parser.h"
 #include "environment.h"
 #include "expander.h"
+#include "term_col.h"
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -49,6 +51,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_list	*tokens;
 	t_pipeline *pipeline;
 	t_list		*env;
+	int			col;
 
 	(void) argc;
 	(void) argv;
@@ -60,7 +63,7 @@ int	main(int argc, char *argv[], char *envp[])
 	env = init_environment(envp);
 	if (!env)
 		return (0);
-	line = readline("$> ");
+	line = readline("\033[0;31m$> \033[0m");
 	while (line)
 	{
 		if (*line)
@@ -88,7 +91,11 @@ int	main(int argc, char *argv[], char *envp[])
 				destroy_pipeline(&pipeline);
 			}
 		}
-		line = readline("$> ");
+		col = get_term_col();
+		if (col == -1 || col > 1)
+			printf("\n");
+		rl_mark = col;
+		line = readline("\033[0;31m$> \033[0m");
 	}
 	destroy_environment(&env);
 	return (0);
