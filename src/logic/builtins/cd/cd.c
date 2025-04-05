@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:01:31 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/29 17:58:41 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/02 18:11:12 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 bool		has_more_than_2_args(t_command *command);
 t_string	get_new_directory(t_list *env, t_string_array args);
+int			change_directory(t_string new_dir, t_command *command);
 int			update_env_variables(t_list *env, t_string new_oldpwd);
 
 int	cd(t_command *command)
@@ -25,42 +26,41 @@ int	cd(t_command *command)
 	if (!command || !command->arguments)
 		return (FAILURE);
 	if (has_more_than_2_args(command))
-	{
-		print_error_message("cd: too many arguments\n");
-		return (SUCCESS);
-	}
+		return (print_error_message("cd: too many arguments\n"), SUCCESS);
 	new_oldpwd = getcwd(NULL, 0);
 	if (!new_oldpwd)
 		return (FAILURE);
 	new_dir = get_new_directory(command->environment, command->arguments);
 	if (!new_dir)
 		return (free(new_oldpwd), FAILURE);
-	if (chdir(new_dir) == -1)
-		return (perror("cd"), FAILURE);
+	result = change_directory(new_dir, command);
+	if (result != SUCCESS)
+		return (free(new_oldpwd), result);
 	result = update_env_variables(command->environment, new_oldpwd);
 	if (result != SUCCESS)
 		return (result);
 	return (SUCCESS);
 }
 
-t_string	get_new_directory(t_list *env, t_string_array args)
+int	change_directory(t_string new_dir, t_command *command)
 {
-	t_string	new_directory;
+	int	result;
 
-	if (args[1] == NULL || ft_strcmp(args[1], ""))
-		return (get_env_variable(env, "HOME"));
-	if (ft_strcmp(args[1], "-"))
+	result = chdir(new_dir);
+	if (result == -1)
 	{
-		new_directory = get_env_variable(env, "OLDPWD");
-		if (!new_directory)
+		if (errno == ENOENT)
 		{
-			print_error_message("cd: OLDPWD not set\n");
-			return (NULL);
+			command->exit_status_code = FAILURE;
+			if (index_of('~', new_dir) != -1)
+				print_error_message("cd: we don't support '~' expansion\n");
+			else
+				perror("cd");
+			return (SUCCESS);
 		}
-		printf("%s\n", new_directory);
-		return (new_directory);
+		return (perror("cd"), FAILURE);
 	}
-	return (args[1]);
+	return (SUCCESS);
 }
 
 int	update_env_variables(t_list *env, t_string new_oldpwd)
