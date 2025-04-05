@@ -38,9 +38,13 @@ void	signal_handler(int signum)
 	if (RL_ISSTATE(RL_STATE_READCMD) && signum == SIGINT)
 	{
 		write(1, "^C\n", 3);
-		rl_on_new_line();
 		rl_replace_line("", 0);
+		rl_on_new_line();
 		rl_redisplay();
+	}
+	else if (signum == SIGQUIT)
+	{
+		exit(0);
 	}
 	g_received_signal = signum;
 }
@@ -51,7 +55,6 @@ int	main(int argc, char *argv[], char *envp[])
 	t_list	*tokens;
 	t_pipeline *pipeline;
 	t_list		*env;
-	int			col;
 
 	(void) argc;
 	(void) argv;
@@ -59,11 +62,10 @@ int	main(int argc, char *argv[], char *envp[])
 	signal(SIGQUIT, signal_handler);
 	rl_catch_signals = 0;
 	rl_event_hook = NULL;
-	pipeline = NULL;
 	env = init_environment(envp);
 	if (!env)
 		return (0);
-	line = readline("\033[0;31m$> \033[0m");
+	line = readline("$> ");
 	while (line)
 	{
 		if (*line)
@@ -91,11 +93,7 @@ int	main(int argc, char *argv[], char *envp[])
 				destroy_pipeline(&pipeline);
 			}
 		}
-		col = get_term_col();
-		if (col == -1 || col > 1)
-			printf("\n");
-		rl_mark = col;
-		line = readline("\033[0;31m$> \033[0m");
+		line = readline("$> ");
 	}
 	destroy_environment(&env);
 	return (0);

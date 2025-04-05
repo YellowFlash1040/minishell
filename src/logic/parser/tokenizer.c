@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 14:25:15 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/02 15:03:08 by ibenne           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   tokenizer.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/03/10 14:25:15 by ismo          #+#    #+#                 */
+/*   Updated: 2025/04/04 15:58:31 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,9 @@ int	tokenize(char *prompt, int *i, int is_variable, t_token *token)
 	else if (is_variable && prompt[*i] == '=')
 		tokenize_one(token, i, EqualSign);
 	else if (prompt[*i] == '$')
-	{
-		if (!tokenize_env(token, prompt, i, is_variable))
-			return (0);
-	}
+		tokenize_env(token, prompt, i, is_variable);
 	else if (prompt[*i] && !is_whitespace(prompt[*i]))
-	{
-		if (!tokenize_word(token, prompt, i, is_variable))
-			return (0);
-	}
+		tokenize_word(token, prompt, i, is_variable);
 	else
 		token->type = EndOfInput;
 	return (1);

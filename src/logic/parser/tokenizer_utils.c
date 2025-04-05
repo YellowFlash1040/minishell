@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/01 15:15:24 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/04 15:47:02 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/04 15:51:15 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	*scan_word(char *prompt, int *i, char *delims, bool no_whitespace)
 
 	j = 0;
 	wlen = get_wlen(prompt, i, delims, no_whitespace);
+	if (wlen < 1)
+		return (NULL);
 	word = (char *)malloc(wlen + 1);
 	if (!word)
 		return (NULL);

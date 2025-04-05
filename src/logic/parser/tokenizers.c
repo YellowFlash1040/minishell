@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/01 15:20:13 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/04 15:45:56 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/04 15:58:01 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	tokenize_redir(t_token *token, char *prompt, int *i)
 	(*i)++;
 }
 
-int	tokenize_env(t_token *token, char *prompt, int *i, int is_variable)
+void	tokenize_env(t_token *token, char *prompt, int *i, int is_variable)
 {
 	char	*operators;
 
@@ -68,12 +68,9 @@ int	tokenize_env(t_token *token, char *prompt, int *i, int is_variable)
 	token->type = EnvVariable;
 	(*i)++;
 	token->value = scan_word(prompt, i, operators, true);
-	if (!token->value)
-		return (0);
-	return (1);
 }
 
-int	tokenize_word(t_token *token, char *prompt, int *i, int is_variable)
+void	tokenize_word(t_token *token, char *prompt, int *i, int is_variable)
 {
 	char	*operators;
 
@@ -83,9 +80,6 @@ int	tokenize_word(t_token *token, char *prompt, int *i, int is_variable)
 		operators = OPERATORS;
 	token->type = Word;
 	token->value = scan_word(prompt, i, operators, true);
-	if (!token->value)
-		return (0);
-	return (1);
 }
 
 void	tokenize_one(t_token *token, int *i, t_token_type type)
