@@ -61,7 +61,13 @@ int	handle_child_process(t_command *command)
 	if (WIFEXITED(exit_status))
 		command->exit_status_code = WEXITSTATUS(exit_status);
 	else if (WIFSIGNALED(exit_status))
+	{
 		command->exit_status_code = WTERMSIG(exit_status);
+		if (command->exit_status_code == SIGINT)
+			command->exit_status_code = 130;
+		if (command->exit_status_code == SIGQUIT)
+			command->exit_status_code = 131;
+	}
 	else if (WIFSTOPPED(exit_status))
 		command->exit_status_code = WSTOPSIG(exit_status);
 	else
