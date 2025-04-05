@@ -98,7 +98,11 @@ re: fclean all
 run: $(TEST_BINS)
 	@for test in $(notdir $(TEST_BINS)); do \
 		echo "$(BOLD_BLUE)Running $$test$(RESET)"; \
-		$(BIN_DIR)/$$test; \
+		# $(BIN_DIR)/$$test; \
+		valgrind --leak-check=full --track-fds=yes --log-file=valgrind.txt $(BIN_DIR)/$$test; \
+		grep -E 'FILE|lost|ERROR SUMMARY|Invalid' valgrind.txt \
+		| grep -v 'lost: 0' | grep -v ': 4 open' | grep -v ': 0 errors' \
+		|| echo "==== All heap blocks were freed -- no leaks are possible"; \
 		echo ""; \
 	done
 

@@ -17,11 +17,16 @@
 
 int		run_commands(t_list *commands, int prev_pipe[2], int current_pipe[2],
 			int *pipeline_status_code);
-int		setup_current_pipe(int current_pipe[2], int i, int commands_count);
+int		setup_current_pipe(int prev_pipe[2], int current_pipe[2], int i,
+			int commands_count);
 int		setup_and_run_command(t_command *command, int prev_pipe[2],
 			int current_pipe[2]);
 int		move_to_the_next_pipe(int prev_pipe[2], int current_pipe[2]);
 int		save_result_to_env(t_list *env, int pipeline_status_code);
+bool	close_pipes(int prev_pipe[2], int current_pipe[2]);
+
+extern int		g_received_signal;
+// int		g_received_signal = -1;
 
 int	run_a_pipeline(t_pipeline *pipeline)
 {
@@ -53,37 +58,37 @@ int	run_commands(t_list *commands, int prev_pipe[2], int current_pipe[2],
 {
 	int			result;
 	t_list_node	*node;
-	t_command	*command;
 	int			i;
 
 	node = commands->head;
-	prev_pipe[0] = STDIN_FILENO;
-	prev_pipe[1] = -1;
 	i = -1;
 	while (++i < commands->count)
 	{
-		command = (t_command *)node->value;
-		result = setup_current_pipe(current_pipe, i, commands->count);
+		result = setup_current_pipe(prev_pipe, current_pipe, i,
+				commands->count);
 		if (result != SUCCESS)
 			return (result);
-		result = setup_and_run_command(command, prev_pipe, current_pipe);
-		if (result != SUCCESS || command->id == 0)
+		result = setup_and_run_command(node->value, prev_pipe, current_pipe);
+		if (result != SUCCESS)
 			return (result);
+		*pipeline_status_code = ((t_command *)node->value)->exit_status_code;
+		if (g_received_signal != -1 && close_pipes(prev_pipe, current_pipe))
+			break ;
 		result = move_to_the_next_pipe(prev_pipe, current_pipe);
 		if (result != SUCCESS)
 			return (result);
 		node = node->next;
 	}
-	*pipeline_status_code = command->exit_status_code;
 	return (SUCCESS);
 }
-/*
-if (g_received_signal != -1)
-			break;
-*/
+//after setup_and_run_command();
+// if (result != SUCCESS || command->id == 0)
+//
+//another version with casting:
+//if (result != SUCCESS || ((t_command *)node->value)->id == 0)
 
 int	setup_and_run_command(t_command *command, int prev_pipe[2],
-		int current_pipe[2])
+	int current_pipe[2])
 {
 	int	result;
 
@@ -99,10 +104,16 @@ int	setup_and_run_command(t_command *command, int prev_pipe[2],
 	return (SUCCESS);
 }
 
-int	setup_current_pipe(int current_pipe[2], int i, int commands_count)
+int	setup_current_pipe(int prev_pipe[2], int current_pipe[2], int i,
+	int commands_count)
 {
 	int	result;
 
+	if (i == 0)
+	{
+		prev_pipe[READ_END] = STDIN_FILENO;
+		prev_pipe[WRITE_END] = -1;
+	}
 	if (i != commands_count - 1)
 	{
 		result = pipe(current_pipe);

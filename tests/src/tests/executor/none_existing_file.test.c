@@ -45,6 +45,10 @@ int	test1(void)
 	int result;
 	t_command *command;
 
+	/*
+		echo < none_existing_file.txt
+	*/
+
 	char *exe_path = "echo";
 	char *args[] = {exe_path, NULL};
 	command = create_command(exe_path, args, "none_existing_file.txt", NULL);
@@ -64,6 +68,10 @@ int	test2(void)
 {
 	int result;
 	t_command *command;
+
+	/*
+		echo test2 > none_existing_output_file2.txt
+	*/
 
 	char *exe_path = "echo";
 	char *args[] = {exe_path, "test2", NULL};
@@ -85,6 +93,10 @@ int	test3(void)
 	int result;
 	t_command *command;
 
+	/*
+		echo test3 < none_existing_file.txt > none_existing_output_file3.txt
+	*/
+
 	char *exe_path = "echo";
 	char *args[] = {exe_path, "test3", NULL};
 	command = create_command(exe_path, args, "none_existing_file.txt", "assets/executor/none_existing_file/none_existing_output_file3.txt");
@@ -105,6 +117,10 @@ int	test4(void)
 	int result;
 	t_command *command;
 
+	/*
+		Same as test number 1, but this time it runs in a subshell
+	*/
+
 	char *exe_path = "echo";
 	char *args[] = {exe_path, NULL};
 	command = create_command(exe_path, args, "none_existing_file.txt", NULL);
@@ -123,6 +139,10 @@ int	test5(void)
 {
 	int result;
 	t_command *command;
+
+	/*
+		echo test5 > none_existing_output_file5.txt
+	*/
 
 	char *exe_path = "echo";
 	char *args[] = {exe_path, "test5", NULL};
@@ -143,6 +163,10 @@ int	test6(void)
 	int result;
 	t_command *command;
 
+	/*
+		echo < none_existing_file.txt > none_existing_output_file6.txt
+	*/
+
 	char *exe_path = "echo";
 	char *args[] = {exe_path, NULL};
 	command = create_command(exe_path, args, "none_existing_file.txt", "assets/executor/none_existing_file/none_existing_output_file6.txt");
@@ -162,6 +186,10 @@ int	test7(void)
 	int result;
 	t_command *command;
 
+	/*
+		grep r < none_existing_file.txt
+	*/
+
 	char *exe_path = "grep";
 	char *args[] = {exe_path, "r", NULL};
 	command = create_command(exe_path, args, "none_existing_file.txt", NULL);
@@ -180,6 +208,10 @@ int	test8(void)
 {
 	int result;
 	t_command *command;
+
+	/*
+		exit < none_existing_file.txt
+	*/
 
 	char *exe_path = "exit";
 	char *args[] = {exe_path, NULL};

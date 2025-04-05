@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   exit_builtin.c                                     :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/16 18:08:18 by akovtune      #+#    #+#                 */
-/*   Updated: 2025/03/31 13:10:55 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   exit_builtin.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 18:08:18 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/05 17:01:39 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	exit_builtin(t_command *command)
 {
 	int	exit_status;
 
-	printf("exit\n");
+	write(STDERR_FILENO, "exit\n", 5);
 	exit_status = SUCCESS;
 	if (command->arguments[1])
 	{
