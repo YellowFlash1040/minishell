@@ -6,6 +6,11 @@ int	test2(void);
 int	test3(void);
 int	test4(void);
 
+// int main(int argsc, char *args[], char* envp[])
+// (void)argsc;
+// (void)args;
+// environment = init_environment(envp);
+
 int main(void)
 {
 	int (*tests[])(void) =
@@ -43,13 +48,22 @@ int test1(void)
 
 	result = run_a_command(command);
 
+	printf("result: %d\n", result);
+	printf("command exit status code: %d\n", command->exit_status_code);
+	
 	if (command->exit_status_code != SUCCESS)
 		result = command->exit_status_code;
 
 	t_string_array export_env = construct_environment_for_export(env);
-	int i = -1;
-	while (export_env[++i])
-		printf("%s\n", export_env[i]);
+	// int i = -1;
+	// while (export_env[++i])
+	// 	printf("%s\n", export_env[i]);
+	// destroy_string_array(&export_env);
+
+	int i = 0;
+	while (export_env[i])
+		i++;
+	printf("%s\n", export_env[i]);
 	destroy_string_array(&export_env);
 
 	destroy_command(&command);
@@ -84,9 +98,9 @@ int test2(void)
 		result = command->exit_status_code;
 
 	t_string_array export_env = construct_environment_for_export(env);
-	int i = -1;
-	while (export_env[++i])
-		printf("%s\n", export_env[i]);
+	// int i = -1;
+	// while (export_env[++i])
+	// 	printf("%s\n", export_env[i]);
 	destroy_string_array(&export_env);
 
 	destroy_command(&command);
@@ -123,9 +137,9 @@ int test3(void)
 	destroy_command(&command);
 
 	t_string_array export_env = construct_environment_for_export(env);
-	int i = -1;
-	while (export_env[++i])
-		printf("%s\n", export_env[i]);
+	// int i = -1;
+	// while (export_env[++i])
+	// 	printf("%s\n", export_env[i]);
 	destroy_string_array(&export_env);
 
 	destroy_environment(&env);
@@ -156,14 +170,17 @@ int test4(void)
 
 	result = run_a_command(command);
 
+	printf("result: %d\n", result);
+	printf("command exit status code: %d\n", command->exit_status_code);
+
 	if (command->exit_status_code != SUCCESS)
 		result = command->exit_status_code;
 	destroy_command(&command);
 
 	t_string_array export_env = construct_environment_for_export(env);
-	int i = -1;
-	while (export_env[++i])
-		printf("%s\n", export_env[i]);
+	// int i = -1;
+	// while (export_env[++i])
+	// 	printf("%s\n", export_env[i]);
 	destroy_string_array(&export_env);
 
 	destroy_environment(&env);
