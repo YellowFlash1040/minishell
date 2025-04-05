@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:25:09 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/30 15:06:17 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/05 17:04:44 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ int	launch_binary(t_string name, t_string_array args, t_list *env)
 		destroy_string_array(&environment);
 		if (errno == ENOENT)
 		{
-			result = print_not_found_err(name);
+			if (ft_strcmp(name, ""))
+				result = print_not_found_err("''");
+			else
+				result = print_not_found_err(name);
 			if (result != SUCCESS)
 				return (result);
 			return (127);
