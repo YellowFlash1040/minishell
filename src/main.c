@@ -37,7 +37,8 @@ void	signal_handler(int signum)
 {
 	if (RL_ISSTATE(RL_STATE_READCMD) && signum == SIGINT)
 	{
-		write(1, "^C\n", 3);
+		write(STDOUT_FILENO, "^C\n", 3);
+		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
@@ -49,11 +50,11 @@ void	signal_handler(int signum)
 	g_received_signal = signum;
 }
 
+void	run_shell_loop(t_list *env);
+int		process_line(t_string line, t_list *env);
+
 int	main(int argc, char *argv[], char *envp[])
 {
-	char	*line;
-	t_list	*tokens;
-	t_pipeline *pipeline;
 	t_list		*env;
 
 	(void) argc;
@@ -65,37 +66,52 @@ int	main(int argc, char *argv[], char *envp[])
 	env = init_environment(envp);
 	if (!env)
 		return (0);
+	run_shell_loop(env);
+	destroy_environment(&env);
+	return (0);
+}
+
+void	run_shell_loop(t_list *env)
+{
+	char		*line;
+	int			result;
+
 	line = readline("$> ");
 	while (line)
 	{
 		if (*line)
 		{
-			tokens = create_token_list(line, 0);
-			if (!tokens)
-			{
-				free(line);
-				break;
-			}
-			add_history(line);
-			free(line);
-			parse_pipeline(tokens, &pipeline, env);
-			destroy_list(&tokens, free_token);
-			if (pipeline)
-			{
-				expand_commands(&pipeline->commands);
-				g_received_signal = -1;
-				run_a_pipeline(pipeline);
-				if (g_received_signal != -1)
-				{
-					printf("\n");
-					rl_on_new_line();
-				}
-				destroy_pipeline(&pipeline);
-			}
+			result = process_line(line, env);
+			if (result != SUCCESS)
+				break ;
 		}
 		line = readline("$> ");
 	}
-	destroy_environment(&env);
-	return (0);
 }
 
+int	process_line(t_string line, t_list *env)
+{
+	t_list		*tokens;
+	t_pipeline	*pipeline;
+
+	pipeline = NULL;
+	tokens = create_token_list(line, 0);
+	if (!tokens)
+		return (free(line), FAILURE);
+	parse_pipeline(tokens, &pipeline, env);
+	destroy_list(&tokens, free_token);
+	if (pipeline)
+	{
+		expand_commands(&pipeline->commands);
+		g_received_signal = -1;
+		run_a_pipeline(pipeline);
+		if (g_received_signal != -1)
+		{
+			printf("\n");
+			rl_on_new_line();
+		}
+		destroy_pipeline(&pipeline);
+	}
+	add_history(line);
+	return (SUCCESS);
+}

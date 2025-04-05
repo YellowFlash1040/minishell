@@ -382,7 +382,7 @@ int test16(void)
 	t_command *command;
 
 	/*
-		echo standard fd's test
+		echo standard "fd's" test
 	*/
 
 	char *exe_path = "echo";

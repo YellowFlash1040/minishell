@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 18:03:39 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/26 18:14:06 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/05 14:35:40 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,9 @@ int	capture_heredoc(int pipe_fd, t_string delimiter)
 {
 	t_string	line;
 
-	while (true)
+	line = readline("> ");
+	while (line)
 	{
-		line = readline("> ");
-		if (!line)
-			return (FAILURE);
 		if (ft_strcmp(line, delimiter))
 		{
 			free(line);
@@ -50,6 +48,7 @@ int	capture_heredoc(int pipe_fd, t_string delimiter)
 		write(pipe_fd, line, ft_strlen(line));
 		write(pipe_fd, "\n", 1);
 		free(line);
+		line = readline("> ");
 	}
 	return (SUCCESS);
 }

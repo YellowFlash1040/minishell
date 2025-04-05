@@ -71,6 +71,10 @@ int	test1(void)
 	int result;
 	t_command *command;
 
+	/*
+		ls
+	*/
+
 	char *exe_path = "/bin/ls";
 	char *args[] = {exe_path, NULL};
 	command = create_command(exe_path, args, NULL, NULL);
@@ -90,6 +94,10 @@ int	test2(void)
 	int result;
 	t_command *command;
 
+	/*
+		cat < input.txt
+	*/
+
 	char *exe_path = "/bin/cat";
 	char *args[] = {exe_path, NULL};
 	command = create_command(exe_path, args, "assets/executor/command_runner/test2/input.txt", NULL);
@@ -108,6 +116,10 @@ int	test3(void)
 {
 	int result;
 	t_command *command;
+
+	/*
+		nonexistentcommand
+	*/
 
 	char *exe_path = "nonexistentcommand";
 	char *args[] = {exe_path, NULL};
@@ -132,6 +144,10 @@ int	test4(void)
 	int result;
 	t_command *command;
 
+	/*
+		""
+	*/
+
 	char *exe_path = "";
 	char *args[] = {exe_path, NULL};
 	command = create_command(exe_path, args, NULL, NULL);
@@ -155,6 +171,10 @@ int	test5(void)
 	int result;
 	t_command *command;
 
+	/*
+		ls --invalidoption
+	*/
+
 	char *exe_path = "/bin/ls";
 	char *args[] = {exe_path, "--invalidoption", NULL};
 	command = create_command(exe_path, args, NULL, NULL);
@@ -173,6 +193,10 @@ int	test6(void)
 {
 	int result;
 	t_command *command;
+
+	/*
+		grep is < input.txt
+	*/
 
 	char *exe_path = "/bin/grep";
 	char *args[] = {exe_path, "is", NULL};
@@ -193,6 +217,10 @@ int test7(void)
 	int result;
 	t_command *command;
 
+	/*
+		wc -l < input.txt
+	*/
+
 	char *exe_path = "/bin/wc";
 	char *args[] = {exe_path, "-l", NULL};
 	command = create_command(exe_path, args, "assets/executor/command_runner/test10/input.txt", NULL);
@@ -212,6 +240,10 @@ int test8(void)
 	int result;
 	t_command *command;
 
+	/*
+		cowsay "hello world!"
+	*/
+
 	char *exe_path = "cowsay";
 	char *args[] = {exe_path, "hello world!", NULL};
 	command = create_command(exe_path, args, NULL, NULL);
@@ -230,6 +262,10 @@ int test9(void)
 {
 	int result;
 	t_command *command;
+
+	/*
+		grepo h < input.txt > output.txt
+	*/
 
 	char *exe_path = "grepo";
 	char *args[] = {exe_path, "h", NULL};
@@ -254,6 +290,10 @@ int test10(void)
 	int result;
 	t_command *command;
 
+	/*
+		false
+	*/
+
 	char *exe_path = "/bin/false";
 	char *args[] = {exe_path, NULL};
 	command = create_command(exe_path, args, NULL, NULL);
@@ -272,6 +312,10 @@ int test11(void)
 {
 	int result;
 	t_command *command;
+
+	/*
+		true
+	*/
 
 	char *exe_path = "/bin/true";
 	char *args[] = {exe_path, NULL};
@@ -292,6 +336,10 @@ int	test12(void)
 	int result;
 	t_command *command;
 
+	/*
+		printf test > output.txt
+	*/
+
 	char *exe_path = "/bin/printf";
 	char *args[] = {exe_path, "test", NULL};
 	command = create_command(exe_path, args, NULL, "assets/executor/command_runner/test9/output.txt");
@@ -310,6 +358,10 @@ int	test13(void)
 {
 	int result;
 	t_command *command;
+
+	/*
+		unset PWD; cd $PWD; pwd
+	*/
 
 	char *exe_path = "unset";
 	char *args[] = {exe_path, "PWD", NULL};
@@ -348,6 +400,10 @@ int	test14(void)
 {
 	int result;
 	t_command *command;
+
+	/*
+		unset OLDPWD; cd -; pwd
+	*/
 
 	char *exe_path = "unset";
 	char *args[] = {exe_path, "OLDPWD", NULL};
@@ -392,6 +448,10 @@ int	test15(void)
 	int result;
 	t_command *command;
 
+	/*
+		unset PWD; cd ..; pwd
+	*/
+
 	char *exe_path = "unset";
 	char *args[] = {exe_path, "PWD", NULL};
 	command = create_command(exe_path, args, NULL, NULL);
@@ -429,6 +489,10 @@ int	test16(void)
 {
 	int result;
 	t_command *command;
+
+	/*
+		unset PWD; cd ..; echo $PWD
+	*/
 
 	char *exe_path = "unset";
 	char *args[] = {exe_path, "PWD", NULL};
@@ -468,6 +532,10 @@ int	test17(void)
 {
 	int result;
 	t_command *command;
+
+	/*
+		unset PWD; echo $PWD
+	*/
 
 	char *exe_path = "unset";
 	char *args[] = {exe_path, "PWD", NULL};
@@ -578,6 +646,10 @@ int	test19(void)
 	int result;
 	t_command *command;
 
+	/*
+		exit > output.txt
+	*/
+
 	char *exe_path = "exit";
 	char *args[] = {exe_path, NULL};
 	command = create_command(exe_path, args, NULL, "assets/executor/command_runner/test19/test_EXIT.txt");
@@ -597,6 +669,10 @@ int	test20(void)
 {
 	int result;
 	t_command *command;
+
+	/*
+		grep h < ../input.txt > ../result.txt
+	*/
 
 	char *exe_path = "grep";
 	char *args[] = {exe_path, "h", NULL};
