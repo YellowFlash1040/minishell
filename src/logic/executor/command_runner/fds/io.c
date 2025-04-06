@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:34:37 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/06 17:08:48 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:41:16 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 // int		process_file(t_file *file);
 // bool	check_file(t_file *file);
 // int		get_a_heredoc(t_redirection *redirection, t_command *command);
+int	setup_redirections(t_command *command);
+int	setup_redirection(t_stream_binding *redirection);
 
 int	setup_command_io(t_command *command)
 {
@@ -44,7 +46,8 @@ int	setup_command_io(t_command *command)
 		}
 		return (result);
 	}
-	return (SUCCESS);
+	result = setup_redirections(command);
+	return (result);
 }
 //"if (command->id != -1)" means that:
 //if I called fork(), then I saved the pid inside the command->id 
@@ -62,13 +65,6 @@ int	setup_command_io(t_command *command)
 //and If I close it here, there will nothing to read from for the next command
 //and that's why I have this "if (command->id != -1)" check
 
-/*
-typedef struct stream_binding
-{
-	int				standard_fd;
-	t_stream		*stream;
-}	t_stream_binding;
-
 int	setup_redirections(t_command *command)
 {
 	t_stream_binding	redirections[3];
@@ -81,8 +77,8 @@ int	setup_redirections(t_command *command)
 	i = -1;
 	while (++i < 3)
 	{
-		result = setup_redirection(&redirections[i], command);
-		if (result != SUCCESS || command->exit_status_code != SUCCESS)
+		result = setup_redirection(&redirections[i]);
+		if (result != SUCCESS)
 		{
 			if (command->input_stream->fd != STDIN_FILENO)
 				close(command->input_stream->fd);
@@ -90,38 +86,21 @@ int	setup_redirections(t_command *command)
 				close(command->output_stream->fd);
 			if (command->error_stream->fd != STDERR_FILENO)
 				close(command->error_stream->fd);
-			return (result);
 		}
+		return (result);
 	}
 	return (SUCCESS);
 }
 
-int	setup_redirection(t_stream_binding *redirection, t_command *command)
+int	setup_redirection(t_stream_binding *redirection)
 {
 	int	result;
 
-	if (redirection->file->path != NULL)
+	if (redirection->stream->fd != redirection->standard_fd)
 	{
-		result = process_file(redirection->file);
-		if (result == FILE_ACCESS_ERR)
-			command->exit_status_code = FAILURE;
-		if (result != SUCCESS)
-			return (result);
-	}
-	if (redirection->standard_fd == STDIN_FILENO
-		&& command->needs_a_here_doc)
-	{
-		result = get_a_heredoc(redirection, command);
-		if (result != SUCCESS)
-			return (result);
-	}
-	if (redirection->file->fd != redirection->standard_fd)
-	{
-		result = redirect(redirection->standard_fd,
-				redirection->file->fd);
+		result = redirect(redirection->standard_fd, redirection->stream->fd);
 		if (result != SUCCESS)
 			return (result);
 	}
 	return (SUCCESS);
 }
-*/

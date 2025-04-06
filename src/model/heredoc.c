@@ -6,13 +6,13 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:26:01 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/06 12:40:28 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/06 19:05:40 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "heredoc.h"
 
-t_heredoc	*init_heredoc(t_string delimiter)
+t_heredoc	*init_heredoc(void)
 {
 	t_heredoc	*heredoc;
 
@@ -20,7 +20,7 @@ t_heredoc	*init_heredoc(t_string delimiter)
 	if (!heredoc)
 		return (NULL);
 	heredoc->fd = -1;
-	heredoc->delimiter = delimiter;
+	heredoc->delimiter = NULL;
 	return (heredoc);
 }
 

@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 13:19:10 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/06 16:20:42 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/06 19:17:13 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ void	destroy_redirection(t_redirection **redirection_ref)
 	if (!redirection_ref || !*redirection_ref)
 		return ;
 	redirection = *redirection_ref;
-	if (redirection->stream)
-		destroy_stream(&redirection->stream);
 	if (redirection->target)
 		destroy_redirection_target(&redirection->target);
 	free(redirection);
 	*redirection_ref = NULL;
 }
+//I don't need to free redirection->stream, 
+//since it will be always bounded against one of the
+//command->input/output/error_stream
+//and those will be freed inside destroy_command() function

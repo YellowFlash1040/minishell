@@ -23,15 +23,15 @@ t_command	*init_command(void)
 		return (NULL);
 	command->id = -1;
 	command->executable = NULL;
-	command->environment = NULL;
 	command->arguments = NULL;
 	command->input_stream = NULL;
 	command->output_stream = NULL;
 	command->error_stream = NULL;
+	command->redirections = NULL;
+	command->environment = NULL;
 	command->exit_status_code = 0;
 	command->unused_pipe_end = -1;
 	command->needs_a_subshell = true;
-	command->redirections = NULL;
 	return (command);
 }
 
@@ -43,7 +43,7 @@ void	destroy_command(t_command **command_ref)
 		return ;
 	command = *command_ref;
 	if (command->executable)
-		free(command->executable);
+		destroy_string(&command->executable);
 	if (command->arguments)
 		destroy_string_array(&command->arguments);
 	if (command->input_stream)

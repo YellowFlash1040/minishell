@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:24:36 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/06 13:42:46 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/06 19:05:14 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct heredoc
 	int			fd;
 }	t_heredoc;
 
-t_heredoc	*init_heredoc(t_string delimiter);
+t_heredoc	*init_heredoc(void);
 void		destroy_heredoc(t_heredoc **heredoc_ref);
 
 #endif

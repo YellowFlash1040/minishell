@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 13:55:27 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/06 16:20:54 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/06 19:02:33 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ t_redirection_target	*init_redirection_target(void)
 void	destroy_redirection_target(t_redirection_target **target_ref)
 {
 	t_redirection_target	*target;
+	t_file					*file;
+	t_heredoc				*heredoc;
 
 	if (!target_ref || !*target_ref)
 		return ;
@@ -34,9 +36,15 @@ void	destroy_redirection_target(t_redirection_target **target_ref)
 	if (target->value)
 	{
 		if (target->type == FILE_TYPE)
-			destroy_file(target->value);
+		{
+			file = (t_file *)target->value;
+			destroy_file(&file);
+		}
 		else if (target->type == HERE_DOC)
-			destroy_heredoc(target->value);
+		{
+			heredoc = (t_heredoc *)target->value;
+			destroy_heredoc(&heredoc);
+		}
 	}
 	free(target);
 	*target_ref = NULL;
