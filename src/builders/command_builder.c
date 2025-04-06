@@ -12,7 +12,7 @@
 
 #include "command_builder.h"
 
-int	build_std_files(t_command *command);
+int	build_std_streams(t_command *command);
 
 int	build_command(t_command **command_ref)
 {
@@ -25,28 +25,28 @@ int	build_command(t_command **command_ref)
 	if (!*command_ref)
 		return (COMMAND_INIT_ERR);
 	command = *command_ref;
-	result = build_std_files(command);
+	result = build_std_streams(command);
 	if (result != SUCCESS)
 		return (result);
-	command->intermediate_files = init_list();
-	if (!command->intermediate_files)
+	command->redirections = init_list();
+	if (!command->redirections)
 		return (LIST_INIT_ERR);
 	return (SUCCESS);
 }
 
-int	build_std_files(t_command *command)
+int	build_std_streams(t_command *command)
 {
-	command->input_file = init_file();
-	if (!command->input_file)
-		return (INPUT_FILE_INIT_ERR);
-	command->input_file->fd = STDIN_FILENO;
-	command->output_file = init_file();
-	if (!command->output_file)
-		return (OUTPUT_FILE_INIT_ERR);
-	command->output_file->fd = STDOUT_FILENO;
-	command->error_file = init_file();
-	if (!command->error_file)
-		return (ERROR_FILE_INIT_ERR);
-	command->error_file->fd = STDERR_FILENO;
+	command->input_stream = init_stream();
+	if (!command->input_stream)
+		return (INPUT_STREAM_INIT_ERR);
+	command->input_stream->fd = STDIN_FILENO;
+	command->output_stream = init_stream();
+	if (!command->output_stream)
+		return (OUTPUT_STREAM_INIT_ERR);
+	command->output_stream->fd = STDOUT_FILENO;
+	command->error_stream = init_stream();
+	if (!command->error_stream)
+		return (ERROR_STREAM_INIT_ERR);
+	command->error_stream->fd = STDERR_FILENO;
 	return (SUCCESS);
 }

@@ -92,8 +92,8 @@ int	setup_and_run_command(t_command *command, int prev_pipe[2],
 {
 	int	result;
 
-	command->input_file->fd = prev_pipe[READ_END];
-	command->output_file->fd = current_pipe[WRITE_END];
+	command->input_stream->fd = prev_pipe[READ_END];
+	command->output_stream->fd = current_pipe[WRITE_END];
 	command->unused_pipe_end = current_pipe[READ_END];
 	result = run_a_command(command);
 	if (result != SUCCESS)
