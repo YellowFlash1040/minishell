@@ -21,10 +21,12 @@
 #include "pipeline.h"
 #include "pipeline_builder.h"
 #include "pipeline_runner.h"
+#include "parser_utils.h"
 #include "parser.h"
 #include "environment.h"
 #include "expander.h"
 #include "term_col.h"
+#include "signals.h"
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -32,23 +34,6 @@
 #include <readline/history.h>
 
 int		g_received_signal = -1;
-
-void	signal_handler(int signum)
-{
-	if (RL_ISSTATE(RL_STATE_READCMD) && signum == SIGINT)
-	{
-		write(STDOUT_FILENO, "^C\n", 3);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	else if (signum == SIGQUIT)
-	{
-		exit(0);
-	}
-	g_received_signal = signum;
-}
 
 void	run_shell_loop(t_list *env);
 int		process_line(t_string line, t_list *env);
@@ -59,10 +44,6 @@ int	main(int argc, char *argv[], char *envp[])
 
 	(void) argc;
 	(void) argv;
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
-	rl_catch_signals = 0;
-	rl_event_hook = NULL;
 	env = init_environment(envp);
 	if (!env)
 		return (0);
@@ -76,6 +57,7 @@ void	run_shell_loop(t_list *env)
 	char		*line;
 	int			result;
 
+	set_handlers(Interactive);
 	line = readline("$> ");
 	while (line)
 	{
@@ -84,6 +66,8 @@ void	run_shell_loop(t_list *env)
 			result = process_line(line, env);
 			if (result != SUCCESS)
 				break ;
+			if (needs_newline())
+				printf("\n");
 		}
 		line = readline("$> ");
 	}
@@ -96,22 +80,20 @@ int	process_line(t_string line, t_list *env)
 
 	pipeline = NULL;
 	tokens = create_token_list(line, 0);
-	if (!tokens)
-		return (free(line), FAILURE);
-	parse_pipeline(tokens, &pipeline, env);
-	destroy_list(&tokens, free_token);
-	if (pipeline)
+	if (!tokens || parse_pipeline(tokens, &pipeline, env) != SUCCESS)
+		printf("Syntax error\n");
+	else if (read_token(tokens, 0)->type == EndOfInput)
+		return (destroy_list(&tokens, free_token), SUCCESS);
+	else if (pipeline)
 	{
 		expand_commands(&pipeline->commands);
 		g_received_signal = -1;
+		set_handlers(NonInteractive);
 		run_a_pipeline(pipeline);
-		if (g_received_signal != -1)
-		{
-			printf("\n");
-			rl_on_new_line();
-		}
 		destroy_pipeline(&pipeline);
 	}
+	set_handlers(Interactive);
 	add_history(line);
+	destroy_list(&tokens, free_token);
 	return (SUCCESS);
 }

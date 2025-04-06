@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/01 15:56:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/05 13:47:23 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/06 16:12:29 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	nt_file(t_list *tokens, int *depth, char **blob)
 		return (FAILURE);
 	index = *depth;
 	token = read_token(tokens, index++);
-	if (!token)
+	if (!token || !is_file(token->type))
 		return (FAILURE);
 	if (token->type == EnvVariable)
 		*blob = ft_strjoin("$", token->value);
@@ -53,6 +53,8 @@ int	nt_comb(t_list *tokens, int *depth, char **comb)
 
 	index = *depth;
 	token = read_token(tokens, index);
+	if (token->type == EndOfInput || !is_file(token->type))
+		return (FAILURE);
 	strlist = init_list();
 	if (!strlist)
 		return (FAILURE);

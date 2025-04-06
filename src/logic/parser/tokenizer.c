@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 14:25:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/04 15:58:31 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/06 15:46:54 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ t_token	*get_next_token(char *prompt, int *i, int is_variable)
 		return (free_token(token), NULL);
 	if (token->type != EndOfInput)
 		token->seperator = prompt[*i];
+	else
+		token->seperator = '\0';
 	return (token);
 }
 

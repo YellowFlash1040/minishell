@@ -16,21 +16,15 @@ int test1(void)
 {
 	char	*prompt;
 	t_list *tokens;
-	t_pipeline **pipeline;
 
-	pipeline = malloc(sizeof(t_pipeline **));
-	if (!pipeline)
-		return (FAILURE);
-	prompt = ft_strdup("a \"aa\" b");
+	prompt = "a \"aa\" b>>";
 	tokens = create_token_list(prompt, 0);
 	if (!tokens)
 		return (FAILURE);
-	printf("type: \"%d\"\n", read_token(tokens, 0)->type);
-	printf("value: \"%s\"\n", read_token(tokens, 0)->value);
-	printf("seperator: \"%c\"\n",  read_token(tokens, 0)->seperator);
-	printf("n_args: %d\n", n_args(tokens, 0));
+	printf("prompt: %s, n_args: %d\n", prompt, n_args(tokens, 0));
 	if (n_args(tokens, 0) != 3)
-		return (FAILURE);
+		return (destroy_list(&tokens, free_token), FAILURE);
+	destroy_list(&tokens, free_token);
 	return (SUCCESS);
 }
 

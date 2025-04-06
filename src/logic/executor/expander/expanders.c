@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/04 16:47:23 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/04 17:07:26 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/06 16:39:59 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	expand_arguments(t_command *command)
 		}
 		else
 			return (FAILURE);
-		if (i == 0)
+		if (!command->executable && i == 0)
 			command->executable = ft_strdup(command->arguments[i]);
 		if (!command->executable)
 			return (FAILURE);
