@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:40:49 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/06 16:51:16 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:05:25 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	get_target_fd(t_redirection_target *target, int *fd)
 
 int	setup_stream(t_stream *stream, int fd)
 {
+	int			result;
 	int			standard_fd;
 
 	if (stream->type == INPUT)
@@ -90,6 +91,9 @@ int	setup_stream(t_stream *stream, int fd)
 		return (FAILURE);
 	if (stream->fd != standard_fd)
 		close(stream->fd);
+	result = redirect(standard_fd, fd);
+	if (result != SUCCESS)
+		return (result);
 	stream->fd = fd;
 	return (SUCCESS);
 }

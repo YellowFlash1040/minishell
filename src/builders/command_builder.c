@@ -40,13 +40,16 @@ int	build_std_streams(t_command *command)
 	if (!command->input_stream)
 		return (INPUT_STREAM_INIT_ERR);
 	command->input_stream->fd = STDIN_FILENO;
+	command->input_stream->type = INPUT;
 	command->output_stream = init_stream();
 	if (!command->output_stream)
 		return (OUTPUT_STREAM_INIT_ERR);
 	command->output_stream->fd = STDOUT_FILENO;
+	command->output_stream->type = OUTPUT;
 	command->error_stream = init_stream();
 	if (!command->error_stream)
 		return (ERROR_STREAM_INIT_ERR);
 	command->error_stream->fd = STDERR_FILENO;
+	command->error_stream->type = ERROR;
 	return (SUCCESS);
 }
