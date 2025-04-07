@@ -94,6 +94,7 @@ int	process_line(t_string line, t_list *env)
 	}
 	set_handlers(Interactive);
 	add_history(line);
-	destroy_list(&tokens, free_token);
+	if (tokens)
+		destroy_list(&tokens, free_token);
 	return (SUCCESS);
 }
