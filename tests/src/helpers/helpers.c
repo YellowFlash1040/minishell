@@ -72,13 +72,21 @@ void	setup_command(t_command *command, char *exe_path, char **args,
 
 	if (input_file)
 	{
-		command->input_file->path = ft_strdup(input_file);
-		command->input_file->mode = READ;
+		t_file *input_f = init_file();
+		input_f->path = ft_strdup(input_file);
+		input_f->mode = READ;
+		open_file(input_f);
+		command->input_stream->fd = input_f->fd;
+		destroy_file(&input_f);
 	}
 
 	if (output_file)
 	{
-		command->output_file->path = ft_strdup(output_file);
-		command->output_file->mode = TRUNCATE;
+		t_file *output_f = init_file();
+		output_f->path = ft_strdup(output_file);
+		output_f->mode = TRUNCATE;
+		open_file(output_f);
+		command->output_stream->fd = output_f->fd;
+		destroy_file(&output_f);
 	}
 }

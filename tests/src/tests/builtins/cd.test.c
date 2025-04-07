@@ -203,7 +203,7 @@ int test6(void* var)
 	*/
 
 	char *exe_path = "cd";
-	char *args[] = {exe_path, "/home/akovtune/codam/core", NULL};
+	char *args[] = {exe_path, "/home/akovtune/codam", NULL};
 	command = create_command(exe_path, args, NULL, NULL);
 	command->needs_a_subshell = false;
 	command->environment = env;

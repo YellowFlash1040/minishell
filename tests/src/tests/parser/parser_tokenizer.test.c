@@ -20,9 +20,10 @@ int	test1(void)
 	{
 		token = get_node(i, tokens)->value;
 		if (token->type != correct[i])
-			return (FAILURE);
+			return (destroy_list(&tokens, free_token), FAILURE);
 		i++;
 	}
+	destroy_list(&tokens, free_token);
 	return (SUCCESS);
 }
 
@@ -68,6 +69,7 @@ int	test3(void)
 		printf("%s\n", token->value);
 		return (FAILURE);
 	}
+	destroy_list(&tokens, free_token);
 	return (SUCCESS);
 }
 

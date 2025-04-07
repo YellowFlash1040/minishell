@@ -557,7 +557,7 @@ int	test9(void)
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
-	printf("result: %d\n", result);
+	// printf("result: %d\n", result);
 
 	if (result != SUCCESS)
 		return (result);
