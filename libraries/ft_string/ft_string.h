@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_string.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/08 17:35:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/02 15:11:39 by ibenne           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_string.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/01/08 17:35:18 by akovtune      #+#    #+#                 */
+/*   Updated: 2025/04/07 12:32:20 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ char	**ft_split(char *s, char c);
  * @return A newly allocated string containing the extracted word.
  */
 char	*extract_word(char *s, int *i, char c);
+void	*ft_memset(void *s, int c, size_t n);
 
 /**
  * @brief Counts the number of words in a string separated by a delimiter.
