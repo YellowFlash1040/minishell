@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:34:37 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/06 18:41:16 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/07 14:25:00 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ int	setup_redirections(t_command *command)
 				close(command->output_stream->fd);
 			if (command->error_stream->fd != STDERR_FILENO)
 				close(command->error_stream->fd);
+			return (result);
 		}
-		return (result);
 	}
 	return (SUCCESS);
 }
