@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/04 15:24:30 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/07 14:55:50 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/07 15:20:22 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 bool	needs_newline(void)
 {
 	char				c;
-	struct		termios term;
+	struct termios		term;
 	bool				needs_nl;
 
 	needs_nl = false;
@@ -38,11 +38,8 @@ bool	needs_newline(void)
 		needs_nl = true;
 	if (read(STDIN_FILENO, &c, 1) < 1 || c != 'R')
 		needs_nl = true;
-	while (c && c != 'R')
-	{
-		if (read(STDIN_FILENO, &c, 1) < 1)
-			break ;
-	}
+	while (c && c != 'R' && read(STDIN_FILENO, &c, 1) >= 1)
+		continue ;
 	term.c_lflag |= (ECHO | ICANON);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (needs_nl);

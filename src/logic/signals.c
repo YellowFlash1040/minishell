@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/06 16:59:01 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/07 12:37:45 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/07 15:23:27 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ void	non_interactive_sigint_handler(int signum)
 	rl_on_new_line();
 	g_received_signal = signum;
 }
+
 void	set_handlers(t_sigmode mode)
 {
-	struct sigaction act_sigint;
-	struct sigaction act_sigquit;
+	struct sigaction	act_sigint;
+	struct sigaction	act_sigquit;
 
 	ft_memset(&act_sigint, 0, sizeof(act_sigint));
 	ft_memset(&act_sigquit, 0, sizeof(act_sigquit));
@@ -54,5 +55,3 @@ void	set_handlers(t_sigmode mode)
 		sigaction(SIGINT, &act_sigint, NULL);
 	}
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/04 16:47:23 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/06 16:39:59 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/07 15:22:15 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include "parser_utils.h"
 #include "expander_utils.h"
 
-void expand_token(t_list *env, t_token *token, t_list *list)
+void	expand_token(t_list *env, t_token *token, t_list *list)
 {
 	if (token->type == SingleQuote || token->type == Word)
 		add_to_list(list, ft_strdup(token->value));
@@ -35,7 +35,7 @@ void expand_token(t_list *env, t_token *token, t_list *list)
 char	*expand_comb(t_list *env, char *arg)
 {
 	char	*expanded_arg;
-	t_list 	*result;
+	t_list	*result;
 	t_list	*tokens;
 	int		t;
 	t_token	*token;
@@ -63,7 +63,7 @@ char	*expand_comb(t_list *env, char *arg)
 
 void	expand_path(t_list *env, t_file *file)
 {
-	char *expanded_path;
+	char	*expanded_path;
 
 	expanded_path = expand_comb(env, file->path);
 	if (expanded_path)

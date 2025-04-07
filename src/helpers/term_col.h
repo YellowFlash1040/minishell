@@ -6,12 +6,12 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/04 15:26:56 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/07 14:56:22 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/07 15:04:32 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TERM_COL_H
 # define TERM_COL_H
 
-bool needs_newline();
+bool	needs_newline(void);
 #endif

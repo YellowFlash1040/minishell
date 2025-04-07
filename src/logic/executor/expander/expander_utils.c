@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/04 01:33:48 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/04 16:58:32 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/07 15:48:09 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,21 @@ char	*dup_env_var(t_list *env, char *name)
 	return (value);
 }
 
+char	*expand_double_quote_var(t_list *env, char *str, int *i)
+{
+	char			*var_name;
+	char			*tmp_str;
+
+	(*i)++;
+	var_name = scan_word(str, i, "$", true);
+	tmp_str = dup_env_var(env, var_name);
+	free(var_name);
+	return (tmp_str);
+}
+
 char	*expand_double_quote(t_list *env, char	*str)
 {
 	t_list			*result;
-	char			*var_name;
 	char			*tmp_str;
 	int				i;
 
@@ -48,24 +59,14 @@ char	*expand_double_quote(t_list *env, char	*str)
 	i = 0;
 	while (str[i])
 	{
-
 		if (str[i] == '$')
-		{
-			i++;
-			var_name = scan_word(str, &i, "$", true);
-			tmp_str = dup_env_var(env, var_name);
-			free(var_name);
-			if (!tmp_str)
-				return (destroy_list(&result, free), free(var_name), NULL);
-			add_to_list(result, tmp_str);
-			continue ;
-		}
-		tmp_str = scan_word(str, &i, "$", false);
+			tmp_str = expand_double_quote_var(env, str, &i);
+		else
+			tmp_str = scan_word(str, &i, "$", false);
 		if (!tmp_str)
-			break ;
+			return (destroy_list(&result, free), NULL);
 		add_to_list(result, tmp_str);
 	}
 	tmp_str = lst_to_str(&result);
-	destroy_list(&result, free);
-	return (tmp_str);
+	return (destroy_list(&result, free), tmp_str);
 }
