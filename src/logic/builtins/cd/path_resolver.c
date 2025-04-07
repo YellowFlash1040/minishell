@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:01:51 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/02 18:14:58 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/07 12:43:51 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_string	replace_tilde_with_home(t_string path, t_list *env)
 	t_string	new_directory;
 	t_string	temp;
 
-	printf("We are inside\n");
 	user_home_folder = get_home_directory(env);
 	if (!user_home_folder)
 		return (NULL);
@@ -62,8 +61,7 @@ t_string	replace_tilde_with_home(t_string path, t_list *env)
 		return (NULL);
 	new_directory = ft_strjoin(user_home_folder, temp);
 	free(temp);
-	printf("new_directory: %s\n", new_directory);
 	if (!new_directory)
-		return (free(temp), NULL);
+		return (NULL);
 	return (new_directory);
 }
