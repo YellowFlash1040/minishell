@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_redirs.c                                     :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ismo <ismo@student.codam.nl>                 +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/31 00:48:56 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/07 13:49:54 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_redirs.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/31 00:48:56 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/07 14:26:16 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ int	add_redirection(t_command **command,
 	if (!redir)
 		return (false);
 	if (redir_type == RedirDelim && !add_heredoc_redirection(redir, command, redir_value))
-		return (free(redir), false);
+		return (destroy_redirection(&redir), false);
 	else if (!add_file_redir(redir, command, redir_type, redir_value))
-		return (free(redir), free(redir->target), false);
+		return (destroy_redirection(&redir), false);
 	if (!add_to_list((*command)->redirections, redir))
-		return (free(redir->target), free(redir), false);
+		return (destroy_redirection(&redir), false);
 	return (true);
 }
