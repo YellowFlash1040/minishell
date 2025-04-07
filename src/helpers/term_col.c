@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/04 15:24:30 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/04 17:11:50 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/07 14:55:50 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 #include <termios.h>
 #include <stdbool.h>
 
-bool needs_newline() {
-	char		c;
+bool	needs_newline(void)
+{
+	char				c;
 	struct		termios term;
-	bool			needs_nl;
+	bool				needs_nl;
 
 	needs_nl = false;
 	tcgetattr(STDIN_FILENO, &term);

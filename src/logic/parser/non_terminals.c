@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/01 15:56:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/06 16:12:29 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/07 14:55:18 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,9 @@ int	nt_comb(t_list *tokens, int *depth, char **comb)
 		token = read_token(tokens, index);
 	}
 	tmpstr = lst_to_str(&strlist);
-	destroy_list(&strlist, free);
 	*comb = tmpstr;
 	*depth = index;
-	return (SUCCESS);
+	return (destroy_list(&strlist, free), SUCCESS);
 }
 
 int	nt_redir(t_list *tokens, int *depth, t_command **command)
