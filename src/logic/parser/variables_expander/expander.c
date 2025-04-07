@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/26 12:38:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/07 02:36:10 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/07 12:19:27 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,10 @@ void	expand_file(t_list *env, t_file *file)
 
 int	expand_command(t_command *command)
 {
-	int			i;
-	char		*tmp_str;
-	// t_list_node	*int_node;
+	int				i;
+	char			*tmp_str;
+	t_list_node		*redir_node;
+	t_redirection	*redir;
 
 	i = 0;
 	while (command->arguments[i])
@@ -144,16 +145,14 @@ int	expand_command(t_command *command)
 		i++;
 	}
 	i = 0;
-	// int_node = get_node(i++, command->intermediate_files);
-	// while (int_node && int_node->value)
-	// {
-	// 	expand_file(command->environment, int_node->value);
-	// 	int_node = get_node(i++, command->intermediate_files);
-	// }
-	// if (command->input_file && command->input_file->fd != STDIN_FILENO)
-	// 	expand_file(command->environment, command->input_file);
-	// if (command->output_file && command->output_file->fd != STDOUT_FILENO)
-	// 	expand_file(command->environment, command->output_file);
+	redir_node = command->redirections->head;
+	while (redir_node && redir_node->value)
+	{
+		redir = (t_redirection *) redir_node->value;
+		if (redir->target->type == FILE_TYPE)
+			expand_file(command->environment, redir->target->value);
+		redir_node = redir_node->next;
+	}
 	return (SUCCESS);
 }
 
