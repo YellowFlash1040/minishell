@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/31 00:48:56 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/07 12:07:57 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/07 13:49:54 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,25 @@ t_write_mode	get_mode(t_token_type redir_type)
 	if (redir_type == RedirAppend)
 		return (APPEND);
 	return (NONE);
+}
+
+int add_heredoc_redirection(t_redirection *redir, t_command **command, char *delimeter)
+{
+	t_heredoc	*heredoc;
+	t_redirection_target	*redir_target;
+
+	redir_target = init_redirection_target();
+	if (!redir_target)
+		return (false);
+	redir_target->type = HERE_DOC;
+	heredoc = init_heredoc();
+	if (!heredoc)
+		return (free(redir_target), false);
+	heredoc->delimiter = delimeter;
+	redir_target->value = heredoc;
+	redir->target = redir_target;
+	redir->stream = (*command)->input_stream;
+	return (true);
 }
 
 int	add_file_redir(t_redirection *redir, t_command **command, t_token_type redir_type, char *filename)
@@ -50,24 +69,6 @@ int	add_file_redir(t_redirection *redir, t_command **command, t_token_type redir
 	return (true);
 }
 
-int add_heredoc_redirection(t_redirection *redir, t_command **command, char *delimeter)
-{
-	t_heredoc	*heredoc;
-	t_redirection_target	*redir_target;
-
-	redir_target = init_redirection_target();
-	if (!redir_target)
-		return (false);
-	redir_target->type = HERE_DOC;
-	heredoc = init_heredoc(delimeter);
-	if (!heredoc)
-		return (false);
-	redir_target->value = heredoc;
-	redir->target = redir_target;
-	redir->stream = (*command)->input_stream;
-	return (true);
-}
-
 int	add_redirection(t_command **command,
 	char *redir_value,
 	t_token_type redir_type)
@@ -78,10 +79,9 @@ int	add_redirection(t_command **command,
 	if (!redir)
 		return (false);
 	if (redir_type == RedirDelim && !add_heredoc_redirection(redir, command, redir_value))
-		return (free(redir), free(redir->target), false);
+		return (free(redir), false);
 	else if (!add_file_redir(redir, command, redir_type, redir_value))
 		return (free(redir), free(redir->target), false);
-	redir->stream = (*command)->output_stream;
 	if (!add_to_list((*command)->redirections, redir))
 		return (free(redir->target), free(redir), false);
 	return (true);
