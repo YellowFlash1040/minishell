@@ -58,7 +58,7 @@ int	main(int argc, char *argv[], char *envp[])
 	rl_event_hook = NULL;
 	env = init_environment(envp);
 	if (!env)
-		return (0);
+		return (FAILURE);
 	run_shell_loop(env);
 	destroy_environment(&env);
 	return (0);
