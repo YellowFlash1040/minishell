@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/06 16:59:01 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/07 15:23:27 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/08 01:44:30 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,12 @@
 
 extern int		g_received_signal;
 
-void	interactive_sigint_handler(int signum)
+void	main_sigint_handler(int signum)
 {
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_received_signal = signum;
-}
-
-void	non_interactive_sigint_handler(int signum)
-{
-	rl_on_new_line();
 	g_received_signal = signum;
 }
 
@@ -42,16 +36,16 @@ void	set_handlers(t_sigmode mode)
 
 	ft_memset(&act_sigint, 0, sizeof(act_sigint));
 	ft_memset(&act_sigquit, 0, sizeof(act_sigquit));
-	if (mode == Interactive)
+	if (mode == MainSignals)
 	{
-		act_sigint.sa_handler = &interactive_sigint_handler;
+		act_sigint.sa_handler = &main_sigint_handler;
 		sigaction(SIGINT, &act_sigint, NULL);
 		act_sigquit.sa_handler = SIG_IGN;
 		sigaction(SIGQUIT, &act_sigquit, NULL);
 	}
-	else if (mode == NonInteractive)
+	else if (mode == HeredocSignals)
 	{
-		act_sigint.sa_handler = &non_interactive_sigint_handler;
+		act_sigint.sa_handler = SIG_DFL;
 		sigaction(SIGINT, &act_sigint, NULL);
 	}
 }

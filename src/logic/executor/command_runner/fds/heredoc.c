@@ -1,17 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 18:03:39 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/05 14:35:40 by akovtune         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   heredoc.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: akovtune <akovtune@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/03/26 18:03:39 by akovtune      #+#    #+#                 */
+/*   Updated: 2025/04/08 01:25:34 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command_runner.h"
+#include "signals.h"
 #include <readline/readline.h>
+
+extern int		g_received_signal;
 
 int	capture_heredoc(int pipe_fd, t_string delimiter);
 
@@ -37,10 +40,11 @@ int	capture_heredoc(int pipe_fd, t_string delimiter)
 {
 	t_string	line;
 
+	set_handlers(HeredocSignals);
 	line = readline("> ");
 	while (line)
 	{
-		if (ft_strcmp(line, delimiter))
+		if (g_received_signal != -1 || ft_strcmp(line, delimiter))
 		{
 			free(line);
 			break ;

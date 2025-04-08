@@ -57,7 +57,7 @@ void	run_shell_loop(t_list *env)
 	char		*line;
 	int			result;
 
-	set_handlers(Interactive);
+	set_handlers(MainSignals);
 	line = readline("$> ");
 	while (line)
 	{
@@ -88,11 +88,9 @@ int	process_line(t_string line, t_list *env)
 	{
 		expand_commands(&pipeline->commands);
 		g_received_signal = -1;
-		set_handlers(NonInteractive);
 		run_a_pipeline(pipeline);
 		destroy_pipeline(&pipeline);
 	}
-	set_handlers(Interactive);
 	add_history(line);
 	if (tokens)
 		destroy_list(&tokens, free_token);

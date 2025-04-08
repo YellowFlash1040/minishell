@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/04 15:24:30 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/07 15:20:22 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/08 01:59:19 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <termios.h>
 #include <stdbool.h>
+#include <sys/ioctl.h>
 
 bool	needs_newline(void)
 {
@@ -27,19 +28,18 @@ bool	needs_newline(void)
 	term.c_lflag &= ~(ECHO | ICANON);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	write(STDOUT_FILENO, "\033[6n", 4);
-	if (read(STDIN_FILENO, &c, 1) < 1)
-		needs_nl = true;
-	while (c && c != ';')
-	{
-		if (read(STDIN_FILENO, &c, 1) < 1)
-			needs_nl = true;
-	}
-	if (read(STDIN_FILENO, &c, 1) < 1 || c != '1')
-		needs_nl = true;
-	if (read(STDIN_FILENO, &c, 1) < 1 || c != 'R')
-		needs_nl = true;
-	while (c && c != 'R' && read(STDIN_FILENO, &c, 1) >= 1)
-		continue ;
+	// if (read(STDIN_FILENO, &c, 1) < 1)
+	// 	needs_nl = true;
+	// while (c && c != ';')
+	// {
+	// 	if (read(STDIN_FILENO, &c, 1) < 1)
+	// 		needs_nl = true;
+	// }
+	// if (read(STDIN_FILENO, &c, 1) < 1 || c != '1')
+	// 	needs_nl = true;
+	// if (read(STDIN_FILENO, &c, 1) < 1 || c != 'R')
+	// 	needs_nl = true;
+	ioctl(STDIN_FILENO, I_FLUSH, FLUSHRW);
 	term.c_lflag |= (ECHO | ICANON);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (needs_nl);
