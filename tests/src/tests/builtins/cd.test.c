@@ -213,7 +213,10 @@ int test6(void* var)
 	result = run_a_command(command);
 
 	if (command->exit_status_code != SUCCESS)
-		return (command->exit_status_code);
+	{
+		int exit_status_code = command->exit_status_code;
+		return (destroy_command(&command), exit_status_code);
+	}
 
 	printf("new: %s\n", get_env_variable(env, "PWD"));
 

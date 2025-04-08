@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   expander.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/26 12:38:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/04 17:07:12 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/26 12:38:15 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/08 17:02:20 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,23 @@
 #include "tokenizer.h"
 #include "parser_utils.h"
 #include "expanders.h"
+#include "expander_utils.h"
 
 int	expand_command(t_command *command)
 {
-	t_list_node	*int_node;
+	t_list_node		*redir_node;
+	t_redirection	*redir;
 
 	if (expand_arguments(command) != SUCCESS)
 		return (FAILURE);
-	int_node = command->intermediate_files->head;
-	while (int_node && int_node->value)
+	redir_node = command->redirections->head;
+	while (redir_node && redir_node->value)
 	{
-		expand_path(command->environment, int_node->value);
-		int_node = int_node->next;
+		redir = (t_redirection *) redir_node->value;
+		if (redir->target->type == FILE_TYPE)
+			expand_path(command->environment, redir->target->value);
+		redir_node = redir_node->next;
 	}
-	if (command->input_file && command->input_file->fd != STDIN_FILENO)
-		expand_path(command->environment, command->input_file);
-	if (command->output_file && command->output_file->fd != STDOUT_FILENO)
-		expand_path(command->environment, command->output_file);
 	return (SUCCESS);
 }
 

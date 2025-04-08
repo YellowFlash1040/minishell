@@ -108,8 +108,9 @@ runv: $(TEST_BINS)
 	for test in $(notdir $(TEST_BINS)); do \
 		echo "$(BOLD_BLUE)Running $$test$(RESET)"; \
 		valgrind --leak-check=full --track-fds=yes --log-file=valgrind.txt $(BIN_DIR)/$$test; \
-		if grep -E 'FILE|lost|ERROR SUMMARY|Invalid' valgrind.txt | grep -v 'lost: 0' | grep -v ': 11 open' | grep -v ': 0 errors'; then \
+		if grep -E 'FILE|lost|ERROR SUMMARY|Invalid' valgrind.txt | grep -v 'lost: 0' | grep -v ': 4 open' | grep -v ': 0 errors'; then \
 			failure_count=$$((failure_count+1)); \
+			exit; \
 		else \
 			echo "==== All heap blocks were freed -- no leaks are possible"; \
 			success_count=$$((success_count+1)); \

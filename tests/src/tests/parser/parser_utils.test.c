@@ -22,7 +22,10 @@ int test1(void)
 	free(prompt);
 	if (!tokens)
 		return (FAILURE);
-	printf("prompt: %s, n_args: %d\n", prompt, n_args(tokens, 0));
+	printf("type: \"%d\"\n", read_token(tokens, 0)->type);
+	printf("value: \"%s\"\n", read_token(tokens, 0)->value);
+	printf("seperator: \"%c\"\n",  read_token(tokens, 0)->seperator);
+	printf("n_args: %d\n", n_args(tokens, 0));
 	if (n_args(tokens, 0) != 3)
 		return (FAILURE);
 	destroy_list(&tokens, free_token);

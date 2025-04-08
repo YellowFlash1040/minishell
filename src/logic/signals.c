@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:59:01 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/08 16:23:39 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/08 17:53:51 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <string.h>
 
 extern int		g_received_signal;
+// int		g_received_signal = -1;
 
 void	interactive_sigint_handler(int signum)
 {
@@ -65,7 +66,7 @@ void	set_handlers(t_sigmode mode)
 	{
 		act_sigint.sa_handler = &main_sigint_handler;
 		sigaction(SIGINT, &act_sigint, NULL);
-		act_sigquit.sa_handler = SIG_IGN;
+		act_sigquit.sa_handler = SIG_DFL;
 		sigaction(SIGQUIT, &act_sigquit, NULL);
 	}
 	else if (mode == ForkSignals)

@@ -6,13 +6,14 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 18:03:39 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/08 16:50:32 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/08 17:19:49 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "heredoc_processor.h"
 
 extern int		g_received_signal;
+// int		g_received_signal = -1;
 
 int	capture_heredoc(int pipe_fd, t_string delimiter);
 

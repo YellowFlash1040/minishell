@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parser.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/12 15:11:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/05 13:48:05 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 15:11:42 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/08 17:32:17 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int	parse_variable(t_list *tokens, char **name, char **value)
 	if (!name || !token)
 		return (free(*name), FAILURE);
 	if (token->type == EndOfInput)
+	{
+		*value = NULL;
 		return (SUCCESS);
+	}
 	while (token->type == EqualSign)
 		token = read_token(tokens, ++index);
 	if (!token || nt_comb(tokens, &index, value) != SUCCESS)
