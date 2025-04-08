@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:59:01 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/08 17:53:51 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/08 18:22:30 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	set_handlers(t_sigmode mode)
 	{
 		act_sigint.sa_handler = &main_sigint_handler;
 		sigaction(SIGINT, &act_sigint, NULL);
-		act_sigquit.sa_handler = SIG_DFL;
+		act_sigquit.sa_handler = SIG_IGN;
 		sigaction(SIGQUIT, &act_sigquit, NULL);
 	}
 	else if (mode == ForkSignals)
