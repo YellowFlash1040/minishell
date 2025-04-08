@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_string.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:35:18 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/02 15:11:39 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/08 17:52:50 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,5 +230,7 @@ int		count_words(char *s, char delimiter);
 
 char	*ft_strtrim(char *str);
 int		is_whitespace(char c);
+
+bool	string_contains(t_string str, t_string substr);
 
 #endif

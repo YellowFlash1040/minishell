@@ -79,3 +79,27 @@ int	is_whitespace(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n' || c == '\r');
 }
+
+bool	string_contains(t_string str, t_string substr)
+{
+	t_string	s1;
+	t_string	s2;
+	int			i;
+
+	if (!str || !substr)
+		return (false);
+	i = -1;
+	while (str[++i] != '\0')
+	{
+		s1 = str[i];
+		s2 = substr;
+		while (*s1 && *s2 && *s1 == *s2)
+		{
+			s1++;
+			s2++;
+		}
+		if (*s2 == '\0')
+			return (true);
+	}
+	return (false);
+}

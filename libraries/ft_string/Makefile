@@ -11,7 +11,7 @@ OBJ_DIR		:= obj
 # Files
 FILES		:= ft_string.c \
 				ft_string_2.c \
-				ft_string_3.c
+				ft_split.c
 
 #Headers
 HEADERS		:= ft_string.h
