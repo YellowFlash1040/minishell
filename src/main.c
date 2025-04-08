@@ -66,6 +66,7 @@ void	run_shell_loop(t_list *env)
 		if (*line)
 		{
 			result = process_line(line, env);
+			free(line);
 			if (result != SUCCESS)
 				break ;
 			if (needs_newline())
