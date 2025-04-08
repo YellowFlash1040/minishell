@@ -18,6 +18,7 @@
 
 # include "builtins.h"
 # include "error_printer.h"
+# include "signals.h"
 # include <errno.h>
 # include "expander.h"
 

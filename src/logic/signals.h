@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   signals.h                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ismo <ismo@student.codam.nl>                 +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/04/06 17:27:12 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/08 01:07:57 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   signals.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/06 17:27:12 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/08 14:43:43 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 typedef enum sigmode
 {
+	ForkSignals,
 	MainSignals,
-	HeredocSignals,
+	InteractiveSignals,
 }	t_sigmode;
 
 void	set_handlers(t_sigmode mode);

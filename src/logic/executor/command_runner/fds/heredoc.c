@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   heredoc.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: akovtune <akovtune@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/26 18:03:39 by akovtune      #+#    #+#                 */
-/*   Updated: 2025/04/08 01:25:34 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/26 18:03:39 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/08 14:30:01 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command_runner.h"
-#include "signals.h"
 #include <readline/readline.h>
+#include <signal.h>
 
 extern int		g_received_signal;
 
@@ -40,7 +40,7 @@ int	capture_heredoc(int pipe_fd, t_string delimiter)
 {
 	t_string	line;
 
-	set_handlers(HeredocSignals);
+
 	line = readline("> ");
 	while (line)
 	{

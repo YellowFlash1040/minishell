@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   signals.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ismo <ismo@student.codam.nl>                 +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/04/06 16:59:01 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/08 01:44:30 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/06 16:59:01 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/08 14:44:32 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,20 @@
 
 extern int		g_received_signal;
 
-void	main_sigint_handler(int signum)
+void	interactive_sigint_handler(int signum)
 {
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 	g_received_signal = signum;
+}
+
+void	fork_sigint_handlers(int signum)
+{
+	write(STDOUT_FILENO, "^C\n", 3);
+	g_received_signal = signum;
+	exit(1);
 }
 
 void	set_handlers(t_sigmode mode)
@@ -36,16 +43,25 @@ void	set_handlers(t_sigmode mode)
 
 	ft_memset(&act_sigint, 0, sizeof(act_sigint));
 	ft_memset(&act_sigquit, 0, sizeof(act_sigquit));
-	if (mode == MainSignals)
+	if (mode == InteractiveSignals)
 	{
-		act_sigint.sa_handler = &main_sigint_handler;
+		act_sigint.sa_handler = &interactive_sigint_handler;
 		sigaction(SIGINT, &act_sigint, NULL);
 		act_sigquit.sa_handler = SIG_IGN;
 		sigaction(SIGQUIT, &act_sigquit, NULL);
 	}
-	else if (mode == HeredocSignals)
+	else if (mode == MainSignals)
 	{
-		act_sigint.sa_handler = SIG_DFL;
+		act_sigint.sa_handler = SIG_IGN;
 		sigaction(SIGINT, &act_sigint, NULL);
+		act_sigquit.sa_handler = SIG_IGN;
+		sigaction(SIGQUIT, &act_sigquit, NULL);
+	}
+	else if (mode == ForkSignals)
+	{
+		act_sigint.sa_handler = fork_sigint_handlers;
+		sigaction(SIGINT, &act_sigint, NULL);
+		act_sigquit.sa_handler = SIG_DFL;
+		sigaction(SIGQUIT, &act_sigquit, NULL);
 	}
 }

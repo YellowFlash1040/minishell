@@ -45,6 +45,9 @@ int	main(int argc, char *argv[], char *envp[])
 	(void) argc;
 	(void) argv;
 	env = init_environment(envp);
+	rl_catch_signals = false;
+	rl_event_hook = NULL;
+	set_handlers(MainSignals);
 	if (!env)
 		return (0);
 	run_shell_loop(env);
@@ -57,8 +60,9 @@ void	run_shell_loop(t_list *env)
 	char		*line;
 	int			result;
 
-	set_handlers(MainSignals);
+	set_handlers(InteractiveSignals);
 	line = readline("$> ");
+	set_handlers(MainSignals);
 	while (line)
 	{
 		if (*line)
@@ -69,7 +73,9 @@ void	run_shell_loop(t_list *env)
 			if (needs_newline())
 				printf("\n");
 		}
+		set_handlers(InteractiveSignals);
 		line = readline("$> ");
+		set_handlers(MainSignals);
 	}
 }
 
