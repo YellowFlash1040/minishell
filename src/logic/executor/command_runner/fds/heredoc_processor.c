@@ -1,38 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
+/*   heredoc_processor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 18:03:39 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/08 14:30:01 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/08 16:50:32 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "command_runner.h"
-#include <readline/readline.h>
-#include <signal.h>
+#include "heredoc_processor.h"
 
 extern int		g_received_signal;
 
 int	capture_heredoc(int pipe_fd, t_string delimiter);
 
-int	get_a_heredoc(t_redirection *redirection, t_command *command)
+int	process_heredoc(t_heredoc *heredoc)
 {
 	int	result;
 	int	pipe_fd[2];
 
-	if (redirection->file->fd != STDIN_FILENO)
-		close(command->input_file->fd);
+	if (!heredoc->delimiter)
+		return (FAILURE);
 	result = pipe(pipe_fd);
 	if (result == -1)
 		return (result);
-	result = capture_heredoc(pipe_fd[1], command->here_doc_delimiter);
+	result = capture_heredoc(pipe_fd[1], heredoc->delimiter);
 	close(pipe_fd[1]);
 	if (result != SUCCESS)
 		return (close(pipe_fd[0]), result);
-	command->input_file->fd = pipe_fd[0];
+	heredoc->fd = pipe_fd[0];
 	return (SUCCESS);
 }
 
@@ -56,3 +54,23 @@ int	capture_heredoc(int pipe_fd, t_string delimiter)
 	}
 	return (SUCCESS);
 }
+
+/*
+int	get_a_heredoc(t_redirection *redirection, t_command *command)
+{
+	int	result;
+	int	pipe_fd[2];
+
+	if (redirection->file->fd != STDIN_FILENO)
+		close(command->input_file->fd);
+	result = pipe(pipe_fd);
+	if (result == -1)
+		return (result);
+	result = capture_heredoc(pipe_fd[1], command->here_doc_delimiter);
+	close(pipe_fd[1]);
+	if (result != SUCCESS)
+		return (close(pipe_fd[0]), result);
+	command->input_file->fd = pipe_fd[0];
+	return (SUCCESS);
+}
+*/

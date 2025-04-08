@@ -42,8 +42,18 @@ int test1(void)
 	char *args[] = {exe_path, "h", NULL};
 	command = create_command(exe_path, args, NULL, NULL);
 	command->environment = environment;
-	command->here_doc_delimiter = ft_strdup("EOF");
-	command->needs_a_here_doc = true;
+
+	t_redirection *redirection = init_redirection();
+	t_redirection_target *target = init_redirection_target();
+	t_heredoc *heredoc = init_heredoc();
+
+	heredoc->delimiter = ft_strdup("EOF");
+	target->value = heredoc;
+	target->type = HERE_DOC;
+	redirection->target = target;
+	redirection->stream = command->input_stream;
+
+	add_to_list(command->redirections, redirection);
 
 	result = run_a_command(command);
 	

@@ -56,37 +56,36 @@ int	test_tokenizer(char	*prompt, t_list *correct_tokens)
 int	test1(void)
 {
 	char			*prompt = "test<< a.txt<     >$test";
-	t_list			*correct_tokens;
-	int				result;
+	t_token_type	correct[] = {Word, RedirDelim, Word, RedirInput, RedirOutput, EnvVariable};
+	t_list			*tokens;
+	t_token			*token;
+	int				i;
 
-	correct_tokens = init_list();
-	if (!add_token(correct_tokens, Word, "test", '<'))
-		return (FAILURE);
-	if (!add_token(correct_tokens, RedirDelim, NULL, ' '))
-		return (FAILURE);
-	if (!add_token(correct_tokens, Word, "a.txt", '<'))
-		return (FAILURE);
-	if (!add_token(correct_tokens, RedirInput, NULL, ' '))
-		return (FAILURE);
-	if (!add_token(correct_tokens, RedirOutput, NULL, '$'))
-		return (FAILURE);
-	if (!add_token(correct_tokens, EnvVariable, "test", '\0'))
-		return (FAILURE);
-	if (!add_token(correct_tokens, EndOfInput, NULL, '\0'))
-		return (FAILURE);
-	result = test_tokenizer(prompt, correct_tokens);
-	destroy_list(&correct_tokens, free_token);
-	return (result);
+	tokens = create_token_list(prompt, 0);
+	if (!tokens)
+		return (SUCCESS);
+	i = 0;
+	while (i < (int) (sizeof(correct) / sizeof(correct[0])))
+	{
+		token = get_node(i, tokens)->value;
+		if (token->type != correct[i])
+			return (destroy_list(&tokens, free_token), FAILURE);
+		i++;
+	}
+	destroy_list(&tokens, free_token);
+	return (SUCCESS);
 }
 
+// int	test2(void)
+// {
+// 	char			*prompt = "";
 
-/*
+// 	if (get_next_token(&prompt)->type == EndOfInput)
+// 		return (SUCCESS);
+// 	return (FAILURE);
+// }
 
-	TOKENIZE VARIABLES
-
-*/
-
-int	test2(void)
+int	test3(void)
 {
 	char			*prompt = "var=\"sdsd\"$something";
 	t_list			*correct_tokens;
@@ -103,9 +102,9 @@ int	test2(void)
 		return (FAILURE);
 	if (!add_token(correct_tokens, EndOfInput, NULL, '\0'))
 		return (FAILURE);
-	result = test_tokenizer(prompt, correct_tokens);
-	destroy_list(&correct_tokens, free_token);
-	return (result);
+	}
+	destroy_list(&tokens, free_token);
+	return (SUCCESS);
 }
 
 int	main(void)

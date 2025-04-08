@@ -96,11 +96,11 @@ int	test1(void)
 		ls | grep r | wc -l
 	*/
 
-	char *exe1 = "/bin/ls";
+	char *exe1 = "ls";
 	char *args1[] = {exe1, NULL};
-	char *exe2 = "/bin/grep";
+	char *exe2 = "grep";
 	char *args2[] = {exe2, "r", NULL};
-	char *exe3 = "/bin/wc";
+	char *exe3 = "wc";
 	char *args3[] = {exe3, "-l", NULL};
 
 	build_pipeline(&pipeline);
@@ -148,12 +148,12 @@ int	test2(void)
 	t_command* command;
 
 	/*
-		/bin/echo Hello | cat
+		echo Hello | cat
 	*/
 
-	char *exe1 = "/bin/echo";
+	char *exe1 = "echo";
 	char *args1[] = {exe1, "Hello", NULL};
-	char *exe2 = "/bin/cat";
+	char *exe2 = "cat";
 	char *args2[] = {exe2, NULL};
 
 	build_pipeline(&pipeline);
@@ -161,8 +161,9 @@ int	test2(void)
 	command = create_command(exe1, args1, NULL, NULL);
 	command->environment = environment;
 	add_to_list(pipeline->commands, command);
-		command = create_command(exe2, args2, NULL, NULL);
-	command->environment = environment;add_to_list(pipeline->commands, command);
+	command = create_command(exe2, args2, NULL, NULL);
+	command->environment = environment;
+	add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
@@ -197,14 +198,14 @@ int	test3(void)
 	t_command* command;
 
 	/*
-		/bin/echo "apple banana" | tr ' ' '\n' | wc -l
+		echo "apple banana" | tr ' ' '\n' | wc -l
 	*/
 
-	char *exe1 = "/bin/echo";
+	char *exe1 = "echo";
 	char *args1[] = {exe1, "apple banana", NULL};
-	char *exe2 = "/bin/tr";
+	char *exe2 = "tr";
 	char *args2[] = {exe2, " ", "\n", NULL};
-	char *exe3 = "/bin/wc";
+	char *exe3 = "wc";
 	char *args3[] = {exe3, "-l", NULL};
 
 	build_pipeline(&pipeline);
@@ -212,10 +213,10 @@ int	test3(void)
 	command = create_command(exe1, args1, NULL, NULL);
 	command->environment = environment;
 	add_to_list(pipeline->commands, command);
-		command = create_command(exe2, args2, NULL, NULL);
-		command->environment = environment;
+	command = create_command(exe2, args2, NULL, NULL);
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
-		command = create_command(exe3, args3, NULL, NULL);
+	command = create_command(exe3, args3, NULL, NULL);
 	command->environment = environment;add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
@@ -251,14 +252,14 @@ int	test4(void)
 	t_command* command;
 
 	/*
-		ls | /bin/invalid_cmd | wc -l
+		ls | invalid_cmd | wc -l
 	*/
 
-	char *exe1 = "/bin/ls";
+	char *exe1 = "ls";
 	char *args1[] = {exe1, NULL};
-	char *exe2 = "/bin/invalid_cmd";
+	char *exe2 = "invalid_cmd";
 	char *args2[] = {exe2, NULL};
-	char *exe3 = "/bin/wc";
+	char *exe3 = "wc";
 	char *args3[] = {exe3, "-l", NULL};
 
 	build_pipeline(&pipeline);
@@ -266,10 +267,10 @@ int	test4(void)
 	command = create_command(exe1, args1, NULL, NULL);
 	command->environment = environment;
 	add_to_list(pipeline->commands, command);
-		command = create_command(exe2, args2, NULL, NULL);
-		command->environment = environment;
+	command = create_command(exe2, args2, NULL, NULL);
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
-		command = create_command(exe3, args3, NULL, NULL);
+	command = create_command(exe3, args3, NULL, NULL);
 	command->environment = environment;add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
@@ -308,11 +309,11 @@ int	test5(void)
 		printf "" | cat | wc -c
 	*/
 
-	char *exe1 = "/bin/printf";
+	char *exe1 = "printf";
 	char *args1[] = {exe1, "", NULL};
-	char *exe2 = "/bin/cat";
+	char *exe2 = "cat";
 	char *args2[] = {exe2, NULL};
-	char *exe3 = "/bin/wc";
+	char *exe3 = "wc";
 	char *args3[] = {exe3, "-c", NULL};
 
 	build_pipeline(&pipeline);
@@ -320,10 +321,10 @@ int	test5(void)
 	command = create_command(exe1, args1, NULL, NULL);
 	command->environment = environment;
 	add_to_list(pipeline->commands, command);
-		command = create_command(exe2, args2, NULL, NULL);
-		command->environment = environment;
+	command = create_command(exe2, args2, NULL, NULL);
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
-		command = create_command(exe3, args3, NULL, NULL);
+	command = create_command(exe3, args3, NULL, NULL);
 	command->environment = environment;add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
@@ -374,10 +375,10 @@ int	test6(void)
 	command = create_command(exe1, args1, NULL, NULL);
 	command->environment = environment;
 	add_to_list(pipeline->commands, command);
-		command = create_command(exe2, args2, NULL, NULL);
-		command->environment = environment;
+	command = create_command(exe2, args2, NULL, NULL);
+	command->environment = environment;
 	add_to_list(pipeline->commands, command);
-		command = create_command(exe3, args3, NULL, NULL);
+	command = create_command(exe3, args3, NULL, NULL);
 	command->environment = environment;add_to_list(pipeline->commands, command);
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
@@ -413,16 +414,16 @@ int	test7(void)
 	t_command* command;
 
 	/*
-		/bin/echo "123 456" | sed 's/ /,/' | tr '1' '9' | cut -d',' -f2
+		echo "123 456" | sed 's/ /,/' | tr '1' '9' | cut -d',' -f2
 	*/
 
-	char *exe1 = "/bin/echo";
+	char *exe1 = "echo";
 	char *args1[] = {exe1, "123 456", NULL};
-	char *exe2 = "/bin/sed";
+	char *exe2 = "sed";
 	char *args2[] = {exe2, "s/ /,/", NULL};
-	char *exe3 = "/bin/tr";
+	char *exe3 = "tr";
 	char *args3[] = {exe3, "1", "9", NULL};
-	char *exe4 = "/bin/cut";
+	char *exe4 = "cut";
 	char *args4[] = {exe4, "-d", ",", "-f", "2", NULL};
 
 	build_pipeline(&pipeline);
@@ -472,14 +473,14 @@ int	test8(void)
 	t_command* command;
 
 	/*
-		/bin/echo "data" | /bin/false | cat
+		echo "data" | false | cat
 	*/
 
-	char *exe1 = "/bin/echo";
+	char *exe1 = "echo";
 	char *args1[] = {exe1, "data", NULL};
-	char *exe2 = "/bin/false";
+	char *exe2 = "false";
 	char *args2[] = {exe2, NULL};
-	char *exe3 = "/bin/cat";
+	char *exe3 = "cat";
 	char *args3[] = {exe3, NULL};
 
 	build_pipeline(&pipeline);
@@ -556,7 +557,7 @@ int	test9(void)
 
 	result = run_with_output_manipulations(run_a_pipeline, pipeline);
 
-	printf("result: %d\n", result);
+	// printf("result: %d\n", result);
 
 	if (result != SUCCESS)
 		return (result);

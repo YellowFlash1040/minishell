@@ -21,7 +21,6 @@
 
 # define FILE_INIT_ERR 140
 # define FILE_OPEN_ERR 141
-# define FD_DUP_ERR 142
 # define EMPTY_FILE_MODE_ERR 143
 # define EMPTY_FILE_REF_OR_PATH_ERR 144
 
@@ -46,15 +45,8 @@ typedef struct file
 	t_write_mode	mode;
 }					t_file;
 
-typedef struct redirection
-{
-	int				standard_fd;
-	t_file			*file;
-}					t_redirection;
-
 t_file				*init_file(void);
 void				destroy_file(t_file **file);
-int					redirect(int old_fd, int new_fd);
 int					open_file(t_file *file);
 
 #endif

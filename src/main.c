@@ -47,7 +47,7 @@ int	main(int argc, char *argv[], char *envp[])
 	env = init_environment(envp);
 	set_handlers(MainSignals);
 	if (!env)
-		return (0);
+		return (FAILURE);
 	run_shell_loop(env);
 	destroy_environment(&env);
 	return (0);

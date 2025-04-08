@@ -17,13 +17,14 @@ int test1(void)
 	char	*prompt;
 	t_list *tokens;
 
-	prompt = "a \"aa\" b>>";
+	prompt = ft_strdup("a \"aa\" b");
 	tokens = create_token_list(prompt, 0);
+	free(prompt);
 	if (!tokens)
 		return (FAILURE);
 	printf("prompt: %s, n_args: %d\n", prompt, n_args(tokens, 0));
 	if (n_args(tokens, 0) != 3)
-		return (destroy_list(&tokens, free_token), FAILURE);
+		return (FAILURE);
 	destroy_list(&tokens, free_token);
 	return (SUCCESS);
 }

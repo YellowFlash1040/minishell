@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_string.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/01/08 17:35:18 by akovtune      #+#    #+#                 */
-/*   Updated: 2025/04/07 12:32:20 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_string.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/08 17:35:18 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/08 16:44:03 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,5 +231,8 @@ int		count_words(char *s, char delimiter);
 
 char	*ft_strtrim(char *str);
 int		is_whitespace(char c);
+
+char	*init_string(int size);
+void	destroy_string(t_string *string_ref);
 
 #endif
