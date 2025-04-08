@@ -91,7 +91,7 @@ bool	string_contains(t_string str, t_string substr)
 	i = -1;
 	while (str[++i] != '\0')
 	{
-		s1 = str[i];
+		s1 = (str + i);
 		s2 = substr;
 		while (*s1 && *s2 && *s1 == *s2)
 		{
