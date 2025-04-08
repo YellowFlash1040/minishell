@@ -45,8 +45,6 @@ int	main(int argc, char *argv[], char *envp[])
 	(void) argc;
 	(void) argv;
 	env = init_environment(envp);
-	rl_catch_signals = false;
-	rl_event_hook = NULL;
 	set_handlers(MainSignals);
 	if (!env)
 		return (0);
