@@ -73,6 +73,7 @@ void	run_shell_loop(t_list *env)
 				printf("\x1b[2;30;47m%%\x1b[0m\n");
 		}
 		set_handlers(InteractiveSignals);
+		rl_replace_line("", 0);
 		line = readline("$> ");
 		set_handlers(MainSignals);
 	}

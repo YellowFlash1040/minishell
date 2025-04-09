@@ -6,7 +6,6 @@
 #include "parser_utils.h"
 #include "global_status_codes.h"
 #include "ft_string.h"
-#include "class_printer.h"
 #include "pipeline_runner.h"
 
 t_list* environment;
