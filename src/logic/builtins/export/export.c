@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   export.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/16 14:02:49 by akovtune      #+#    #+#                 */
-/*   Updated: 2025/04/09 13:14:04 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 14:02:49 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/09 18:09:13 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	export(t_command *command)
 	if (!command || !command->arguments || !command->environment)
 		return (FAILURE);
 	env = command->environment;
-	i = 1;
-	while (command->arguments[i])
+	i = 0;
+	while (command->arguments[++i])
 	{
 		tokens = create_token_list(command->arguments[i], true);
 		if (parse_variable(tokens, &name, &value) != SUCCESS)
@@ -37,7 +37,6 @@ int	export(t_command *command)
 				free(name), free(value), FAILURE);
 		free(name);
 		destroy_list(&tokens, free_token);
-		i++;
 	}
 	return (SUCCESS);
 }

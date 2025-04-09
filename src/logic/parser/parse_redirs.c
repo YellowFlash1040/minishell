@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_redirs.c                                     :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: akovtune <akovtune@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/31 00:48:56 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/07 15:00:35 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_redirs.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/31 00:48:56 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/09 12:35:24 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ t_write_mode	get_mode(t_token_type redir_type)
 	return (NONE);
 }
 
-int add_heredoc_redirection(t_redirection *redir, t_command **command, char *delimeter)
+int	add_heredoc_redirection(t_redirection *redir, t_command **command,
+	char *delimeter)
 {
-	t_heredoc	*heredoc;
+	t_heredoc				*heredoc;
 	t_redirection_target	*redir_target;
 
 	redir_target = init_redirection_target();
@@ -46,9 +47,10 @@ int add_heredoc_redirection(t_redirection *redir, t_command **command, char *del
 	return (true);
 }
 
-int	add_file_redir(t_redirection *redir, t_command **command, t_token_type redir_type, char *filename)
+int	add_file_redir(t_redirection *redir, t_command **command,
+	t_token_type redir_type, char *filename)
 {
-	t_file	*file;
+	t_file					*file;
 	t_redirection_target	*redir_target;
 
 	redir_target = init_redirection_target();

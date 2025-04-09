@@ -28,15 +28,13 @@ EXECUTOR_DIR			:= $(LOGIC_DIR)/executor
 BUILTINS_DIR			:= $(LOGIC_DIR)/builtins
 ENVIRONMENT_DIR			:= $(LOGIC_DIR)/environment
 PARSER_DIR				:= $(LOGIC_DIR)/parser
-EXPANDER_DIR			:= $(LOGIC_DIR)/expander
+SIGNALS_DIR				:= $(LOGIC_DIR)/signals
 
 # Executor directories (src/logic/executor/)
 COMMAND_RUNNER_DIR		:= $(EXECUTOR_DIR)/command_runner
 PIPELINE_RUNNER_DIR		:= $(EXECUTOR_DIR)/pipeline_runner
+VARIABLES_EXPANDER_DIR	:= $(EXECUTOR_DIR)/variables_expander
 FDS_DIR					:= $(COMMAND_RUNNER_DIR)/fds
-
-# Parser directories (src/logic/parser/)
-VARIABLES_EXPANDER_DIR	:= $(PARSER_DIR)/variables_expander
 
 # Builtin directories (src/logic/builtins/)
 CD_DIR					:= $(BUILTINS_DIR)/cd
@@ -47,6 +45,11 @@ UNSET_DIR				:= $(BUILTINS_DIR)/unset
 ENV_DIR					:= $(BUILTINS_DIR)/env
 PWD_DIR					:= $(BUILTINS_DIR)/pwd
 EXIT_DIR				:= $(BUILTINS_DIR)/exit_builtin
+
+# Logic directories (src/model/)
+ENVIRONMENT_MODEL_DIR	:= $(MODEL_DIR)/environment
+GENERAL_MODEL_DIR		:= $(MODEL_DIR)/general
+IO_MODEL_DIR			:= $(MODEL_DIR)/io
 
 # List of all source directories
 SRC_DIRS				:= $(SRC_DIR) \
@@ -72,7 +75,10 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(ENVIRONMENT_DIR) \
 							$(VARIABLES_EXPANDER_DIR) \
 							$(PARSER_DIR) \
-							$(EXPANDER_DIR)
+							$(ENVIRONMENT_MODEL_DIR) \
+							$(GENERAL_MODEL_DIR) \
+							$(IO_MODEL_DIR) \
+							$(SIGNALS_DIR)
 
 # Library directories (libraries/)
 LIST_LIB_DIR			:= $(LIB_DIR)/list
