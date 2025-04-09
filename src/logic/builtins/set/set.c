@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   set.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 14:02:49 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/08 18:15:45 by ibenne           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   set.c                                              :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/03/16 14:02:49 by akovtune      #+#    #+#                 */
+/*   Updated: 2025/04/09 15:12:16 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	set(t_command *command)
 		tokens = create_token_list(command->arguments[i], true);
 		if (parse_variable(tokens, &name, &value) != SUCCESS)
 		{
-			printf("export: parsing error\n");
+			perror("export: parsing error\n");
 			return (destroy_list(&tokens, free_token), FAILURE);
 		}
 		if (set_env_variable(env, name, value, false) != SUCCESS)

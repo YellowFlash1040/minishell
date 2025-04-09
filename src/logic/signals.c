@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/06 16:59:01 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/08 18:22:30 by ibenne           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   signals.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/04/06 16:59:01 by ismo          #+#    #+#                 */
+/*   Updated: 2025/04/09 13:03:24 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	set_handlers(t_sigmode mode)
 	}
 	else if (mode == ForkSignals)
 	{
-		act_sigint.sa_handler = fork_sigint_handlers;
+		act_sigint.sa_handler = &fork_sigint_handlers;
 		sigaction(SIGINT, &act_sigint, NULL);
 		act_sigquit.sa_handler = SIG_DFL;
 		sigaction(SIGQUIT, &act_sigquit, NULL);

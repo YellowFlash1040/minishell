@@ -28,11 +28,11 @@ EXECUTOR_DIR			:= $(LOGIC_DIR)/executor
 BUILTINS_DIR			:= $(LOGIC_DIR)/builtins
 ENVIRONMENT_DIR			:= $(LOGIC_DIR)/environment
 PARSER_DIR				:= $(LOGIC_DIR)/parser
+EXPANDER_DIR			:= $(LOGIC_DIR)/expander
 
 # Executor directories (src/logic/executor/)
 COMMAND_RUNNER_DIR		:= $(EXECUTOR_DIR)/command_runner
 PIPELINE_RUNNER_DIR		:= $(EXECUTOR_DIR)/pipeline_runner
-EXPANDER_DIR			:= $(EXECUTOR_DIR)/expander
 FDS_DIR					:= $(COMMAND_RUNNER_DIR)/fds
 
 # Parser directories (src/logic/parser/)
@@ -71,7 +71,8 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(EXIT_DIR) \
 							$(ENVIRONMENT_DIR) \
 							$(VARIABLES_EXPANDER_DIR) \
-							$(PARSER_DIR)
+							$(PARSER_DIR) \
+							$(EXPANDER_DIR)
 
 # Library directories (libraries/)
 LIST_LIB_DIR			:= $(LIB_DIR)/list
