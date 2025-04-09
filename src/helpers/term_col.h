@@ -6,7 +6,7 @@
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/04/04 15:26:56 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/07 15:04:32 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/10 00:39:24 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,4 +14,6 @@
 # define TERM_COL_H
 
 bool	needs_newline(void);
+void	set_term_attr(void);
+void	unset_term_attr(void);
 #endif
