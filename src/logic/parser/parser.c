@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:11:42 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/02 14:59:53 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/08 17:32:17 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,42 @@ int	parse_variable(t_list *tokens, char **name, char **value)
 		return (FAILURE);
 	*name = ft_strdup(token->value);
 	token = read_token(tokens, index);
-	if (!token || token->type != EqualSign)
-		return (FAILURE);
+	if (!name || !token)
+		return (free(*name), FAILURE);
+	if (token->type == EndOfInput)
+	{
+		*value = NULL;
+		return (SUCCESS);
+	}
 	while (token->type == EqualSign)
 		token = read_token(tokens, ++index);
 	if (!token || nt_comb(tokens, &index, value) != SUCCESS)
-		return (FAILURE);
+		return (free(*name), FAILURE);
 	return (SUCCESS);
 }
 
-int	parse_tokens(t_list *tokens, t_pipeline **pipeline, t_list *env)
+int	parse_pipeline(t_list *tokens, t_pipeline **pipeline, t_list *env)
 {
-	int	index;
+	int			depth;
+	t_command	*command;
+	t_token		*token;
 
-	index = 0;
-	if (nt_pipeline(tokens, &index, pipeline, env) == SUCCESS)
-		return (SUCCESS);
-	return (FAILURE);
+	depth = 0;
+	if (build_pipeline(pipeline) == FAILURE)
+		return (FAILURE);
+	while (true)
+	{
+		if (nt_command(tokens, &depth, &command) == FAILURE)
+			return (destroy_pipeline(pipeline), FAILURE);
+		command->environment = env;
+		add_to_list((*pipeline)->commands, command);
+		token = read_token(tokens, depth);
+		if (!token)
+			return (destroy_pipeline(pipeline), FAILURE);
+		if (token->type == Pipe)
+			depth++;
+		else if (token->type == EndOfInput)
+			break ;
+	}
+	return (SUCCESS);
 }

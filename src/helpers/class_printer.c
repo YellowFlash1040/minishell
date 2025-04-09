@@ -12,25 +12,25 @@
 
 #include "class_printer.h"
 
-void	print_a_command(t_command *command, char *tabs)
-{
-	char	*inside_tabs;
+// void	print_a_command(t_command *command, char *tabs)
+// {
+// 	char	*inside_tabs;
 
-	inside_tabs = "  ";
-	printf("%s{\n", tabs);
-	printf("%s%sexe: \"%s\"\n", tabs, inside_tabs, command->executable);
-	printf("%s%sarguments: ", tabs, inside_tabs);
-	print_a_string_array(command->arguments, "");
-	printf("%s%sinput file: \n", tabs, inside_tabs);
-	print_a_file(command->input_file, inside_tabs);
-	printf("%s%soutput file: \n", tabs, inside_tabs);
-	print_a_file(command->output_file, inside_tabs);
-	printf("%s%sunused pipe end: %d\n", tabs, inside_tabs,
-		command->unused_pipe_end);
-	printf("%s%sexit status code: %d\n", tabs, inside_tabs,
-		command->exit_status_code);
-	printf("%s}\n", tabs);
-}
+// 	inside_tabs = "  ";
+// 	printf("%s{\n", tabs);
+// 	printf("%s%sexe: \"%s\"\n", tabs, inside_tabs, command->executable);
+// 	printf("%s%sarguments: ", tabs, inside_tabs);
+// 	print_a_string_array(command->arguments, "");
+// 	printf("%s%sinput file: \n", tabs, inside_tabs);
+// 	print_a_file(command->input_file, inside_tabs);
+// 	printf("%s%soutput file: \n", tabs, inside_tabs);
+// 	print_a_file(command->output_file, inside_tabs);
+// 	printf("%s%sunused pipe end: %d\n", tabs, inside_tabs,
+// 		command->unused_pipe_end);
+// 	printf("%s%sexit status code: %d\n", tabs, inside_tabs,
+// 		command->exit_status_code);
+// 	printf("%s}\n", tabs);
+// }
 
 void	print_a_file(t_file *file, char *tabs)
 {

@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   expander.h                                         :+:    :+:            */
+/*   expander_utils.h                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/03/27 00:45:36 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 16:39:08 by ismo          ########   odam.nl         */
+/*   Created: 2025/04/07 15:21:46 by ismo          #+#    #+#                 */
+/*   Updated: 2025/04/07 15:21:47 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPANDER_H
-# define EXPANDER_H
+#ifndef EXPANDER_UTILS_H
+# define EXPANDER_UTILS_H
 
-void	expand_variable(t_list *env, t_variable *variable);
-void	expand_command(t_command *command);
-void	expand_commands(t_list **commands);
+char	*dup_env_var(t_list *env, char *name);
+char	*expand_double_quote(t_list *env, char	*str);
 #endif

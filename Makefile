@@ -32,7 +32,11 @@ PARSER_DIR				:= $(LOGIC_DIR)/parser
 # Executor directories (src/logic/executor/)
 COMMAND_RUNNER_DIR		:= $(EXECUTOR_DIR)/command_runner
 PIPELINE_RUNNER_DIR		:= $(EXECUTOR_DIR)/pipeline_runner
+EXPANDER_DIR			:= $(EXECUTOR_DIR)/expander
 FDS_DIR					:= $(COMMAND_RUNNER_DIR)/fds
+
+# Parser directories (src/logic/parser/)
+VARIABLES_EXPANDER_DIR	:= $(PARSER_DIR)/variables_expander
 
 # Builtin directories (src/logic/builtins/)
 CD_DIR					:= $(BUILTINS_DIR)/cd
@@ -56,6 +60,7 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(COMMAND_RUNNER_DIR) \
 							$(FDS_DIR) \
 							$(PIPELINE_RUNNER_DIR) \
+							$(EXPANDER_DIR) \
 							$(CD_DIR) \
 							$(ECHO_DIR) \
 							$(EXPORT_DIR) \
@@ -65,6 +70,7 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(PWD_DIR) \
 							$(EXIT_DIR) \
 							$(ENVIRONMENT_DIR) \
+							$(VARIABLES_EXPANDER_DIR) \
 							$(PARSER_DIR)
 
 # Library directories (libraries/)
@@ -148,6 +154,12 @@ fclean: clean
 	@for lib in $(LIB_DIR)/*; do \
 		$(MAKE) -C $$lib fclean > /dev/null; \
 	done
+
+leaks: fclean compile_leaks
+
+compile_leaks: $(OBJ) $(LIBRARIES)
+	@$(CC) $(CFLAGS) -fsanitize=leak $^ $(LDFLAGS) -o $(NAME)
+	@echo "$(GREEN)Compiled $@ successfully!$(RESET)"
 
 # Rebuild the Project
 re: fclean all
