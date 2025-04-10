@@ -21,3 +21,29 @@ int	print_error_message(t_string message)
 		return (perror("Error"), FAILURE);
 	return (SUCCESS);
 }
+
+int	print_permission_denied_err(t_string file_path)
+{
+	int	result;
+	
+	result = print_error_message(file_path);
+	if (result != SUCCESS)
+		return (result);
+	result = print_error_message(": Permission denied\n");
+	if (result != SUCCESS)
+		return (result);
+	return (SUCCESS);
+}
+
+int	print_no_such_file_err(t_string file_path)
+{
+	int	result;
+
+	result = print_error_message(file_path);
+	if (result != SUCCESS)
+		return (result);
+	result = print_error_message(": No such file or directory\n");
+	if (result != SUCCESS)
+		return (result);
+	return (SUCCESS);
+}

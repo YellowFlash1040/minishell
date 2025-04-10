@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:37:20 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/06 16:50:25 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:29:55 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdbool.h>
 
 # define FILE_ACCESS_ERR 197
+# define EMPTY_FILE_PATH_ERR 198
 
 int	process_file(t_file *file);
 
