@@ -19,5 +19,7 @@
 # include <stdio.h>
 
 int	print_error_message(t_string message);
+int	print_permission_denied_err(t_string file_path);
+int	print_no_such_file_err(t_string file_path);
 
 #endif
