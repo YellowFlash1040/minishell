@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   tokenizer.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/10 14:25:15 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/06 15:46:54 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 14:25:15 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/10 14:26:08 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	tokenize(char *prompt, int *i, int is_variable, t_token *token)
 	if (prompt[*i] && index_of(prompt[*i], "\"\'") != -1)
 	{
 		if (!tokenize_quote(token, prompt, i))
-			return (0);
+			return (false);
 	}
 	else if (prompt[*i] && index_of(prompt[*i], "<>") != -1)
 		tokenize_redir(token, prompt, i);
@@ -36,7 +36,7 @@ int	tokenize(char *prompt, int *i, int is_variable, t_token *token)
 		tokenize_word(token, prompt, i, is_variable);
 	else
 		token->type = EndOfInput;
-	return (1);
+	return (true);
 }
 
 t_token	*get_next_token(char *prompt, int *i, int is_variable)

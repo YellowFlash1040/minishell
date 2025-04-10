@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   term_col.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/04/04 15:24:30 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/10 01:00:47 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   term_col.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/04 15:24:30 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/10 15:13:28 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <termios.h>
 #include <stdbool.h>
 #include <sys/ioctl.h>
+
+extern int	g_received_signal;
 
 void	set_term_attr(void)
 {
@@ -40,6 +42,7 @@ bool	needs_newline(void)
 {
 	char				c;
 	bool				needs_nl;
+
 	needs_nl = false;
 	write(STDOUT_FILENO, "\033[6n", 4);
 	if (read(STDIN_FILENO, &c, 1) < 1)
@@ -54,4 +57,18 @@ bool	needs_newline(void)
 	if (read(STDIN_FILENO, &c, 1) < 1 || c != 'R')
 		needs_nl = true;
 	return (needs_nl);
+}
+
+void	print_optional_newline(void)
+{
+	set_term_attr();
+	if (needs_newline())
+	{
+		if (g_received_signal == -1)
+			printf("\x1b[2;30;47m%%\x1b[0m\n");
+		else
+			printf("\n");
+	}
+	unset_term_attr();
+	ioctl(STDIN_FILENO, TCFLSH, 0);
 }

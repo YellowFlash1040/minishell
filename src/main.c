@@ -71,16 +71,7 @@ void	run_shell_loop(t_list *env)
 			free(line);
 			if (result != SUCCESS)
 				break ;
-			set_term_attr();
-			if (needs_newline())
-			{
-				if (g_received_signal == -1)
-					printf("\x1b[2;30;47m%%\x1b[0m\n");
-				else
-					printf("\n");
-			}
-			unset_term_attr();
-			ioctl(STDIN_FILENO, TCFLSH, 0);
+			print_optional_newline();
 		}
 		set_handlers(InteractiveSignals);
 		line = readline("$> ");
