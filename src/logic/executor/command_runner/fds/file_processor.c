@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_processor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:57:38 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/10 15:48:14 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:30:39 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	process_file(t_file *file)
 {
 	int	result;
 
+	if (ft_strcmp(file->path, ""))
+        return (198);
 	if (!check_file(file))
 		return (FILE_ACCESS_ERR);
 	result = open_file(file);
