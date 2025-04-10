@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:56:42 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/08 16:50:57 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/10 15:18:08 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ int	nt_comb(t_list *tokens, int *depth, char **comb)
 			break ;
 		token = read_token(tokens, index);
 	}
-	tmpstr = lst_to_str(&strlist);
-	*comb = tmpstr;
+	*comb = lst_to_str(&strlist);
 	*depth = index;
 	return (destroy_list(&strlist, free), SUCCESS);
 }
@@ -100,7 +99,7 @@ int	nt_command(t_list *tokens, int *depth, t_command **command)
 		return (FAILURE);
 	index = *depth;
 	(*command)->arguments = init_string_array(n_args(tokens, index) + 1);
-	if (!(*command)->arguments)
+	if (!(*command)->arguments || n_args(tokens, index) < 1)
 		return (destroy_command(command), FAILURE);
 	arg = 0;
 	token = read_token(tokens, index);
@@ -109,7 +108,7 @@ int	nt_command(t_list *tokens, int *depth, t_command **command)
 		if (is_redir(token->type)
 			&& nt_redir(tokens, &index, command) != SUCCESS)
 			return (destroy_command(command), FAILURE);
-		if (is_file(token->type) && nt_comb(tokens, &index,
+		else if (is_file(token->type) && nt_comb(tokens, &index,
 				&(*command)->arguments[arg++]) != SUCCESS)
 			return (destroy_command(command), FAILURE);
 		token = read_token(tokens, index);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 00:48:56 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/09 12:35:24 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:10:42 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	add_file_redir(t_redirection *redir, t_command **command,
 	if (!file)
 		return (false);
 	file->mode = get_mode(redir_type);
-	file->path = ft_strdup(filename);
+	file->path = filename;
 	redir_target->value = file;
 	redir->target = redir_target;
 	if (file->mode == READ)

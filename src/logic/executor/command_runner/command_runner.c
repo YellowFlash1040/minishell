@@ -63,11 +63,12 @@ int	handle_child_process(t_command *command)
 		command->exit_status_code = WEXITSTATUS(exit_status);
 	else if (WIFSIGNALED(exit_status))
 	{
-		command->exit_status_code = WTERMSIG(exit_status);
-		if (command->exit_status_code == SIGINT)
-			command->exit_status_code = 130;
-		if (command->exit_status_code == SIGQUIT)
-			command->exit_status_code = 131;
+		exit_status = WTERMSIG(exit_status);
+		command->exit_status_code = 128 + exit_status;
+		if (exit_status == SIGINT)
+			write(1, "\n", 1);
+		else if (exit_status == SIGQUIT)
+			write(1, "Quit (core dumped)\n", 20);
 	}
 	else if (WIFSTOPPED(exit_status))
 		command->exit_status_code = WSTOPSIG(exit_status);
@@ -75,3 +76,15 @@ int	handle_child_process(t_command *command)
 		return (UNKNOWN_PROC_EXIT_STATUS_ERR);
 	return (SUCCESS);
 }
+
+// waitpid(pid, &status, 0);
+// 		if (WIFSIGNALED(status))
+// 		{
+// 			if (WTERMSIG(status) == SIGINT)
+// 				write(1, "\n", 1);
+// 			else if (WTERMSIG(status) == SIGQUIT)
+// 				write(1, "Quit (core dumped)\n", 20);
+// 			g_exit_status = 128 + WTERMSIG(status);
+// 		}
+// 		else if (WIFEXITED(status))
+// 			g_exit_status = WEXITSTATUS(status);
