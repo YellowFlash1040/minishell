@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:57:24 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/09 18:45:12 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:39:35 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ bool	check_for_n_flag(t_string first_arg)
 	return (true);
 }
 
-//I need to know whether the first argument is the -n flag, and if it is, 
+//I need to know whether the first argument is the -n flag, and if it is,
 //then I don't need to print it (the first argument)
 //and I don't need to print the new line in the end

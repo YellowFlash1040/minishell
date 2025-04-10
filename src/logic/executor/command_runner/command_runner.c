@@ -88,4 +88,3 @@ int	handle_child_process(t_command *command)
 // 		}
 // 		else if (WIFEXITED(status))
 // 			g_exit_status = WEXITSTATUS(status);
-
