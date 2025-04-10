@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:24:30 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/10 15:13:28 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/10 16:15:50 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ void	print_optional_newline(void)
 	set_term_attr();
 	if (needs_newline())
 	{
-		if (g_received_signal == -1)
-			printf("\x1b[2;30;47m%%\x1b[0m\n");
-		else
-			printf("\n");
+		printf("\x1b[1;30;47m%%\x1b[0m\n");
 	}
 	unset_term_attr();
 	ioctl(STDIN_FILENO, TCFLSH, 0);
