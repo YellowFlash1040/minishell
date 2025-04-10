@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:57:38 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/10 17:44:19 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/10 17:48:17 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	process_file(t_file *file)
 	int	result;
 
 	if (ft_strcmp(file->path, ""))
-		return (198);
+	{
+		print_no_such_file_err(file->path);
+		return (EMPTY_FILE_PATH_ERR);
+	}
 	if (!check_file(file))
 		return (FILE_ACCESS_ERR);
 	result = open_file(file);
@@ -44,12 +47,10 @@ bool	check_input_file(t_file *file)
 		return (true);
 	if (access(file->path, F_OK) == 0)
 	{
-		print_error_message(file->path);
-		print_error_message(": Permission denied\n");
+		print_permission_denied_err(file->path);
 		return (false);
 	}
-	print_error_message(file->path);
-	print_error_message(": No such file or directory\n");
+	print_no_such_file_err(file->path);
 	return (false);
 }
 
@@ -61,8 +62,7 @@ bool	check_output_file(t_file *file)
 		return (true);
 	if (access(file->path, F_OK) == 0)
 	{
-		print_error_message(file->path);
-		print_error_message(": Permission denied\n");
+		print_permission_denied_err(file->path);
 		return (false);
 	}
 	if (!string_contains(file->path, "/"))
@@ -71,8 +71,7 @@ bool	check_output_file(t_file *file)
 	if (access(file_directory, F_OK) == 0)
 		return (destroy_string(&file_directory), true);
 	destroy_string(&file_directory);
-	print_error_message(file->path);
-	print_error_message(": No such file or directory\n");
+	print_no_such_file_err(file->path);
 	return (false);
 }
 
