@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set.h                                              :+:      :+:    :+:   */
+/*   redirection_processor.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 17:34:39 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/02 15:41:37 by ibenne           ###   ########.fr       */
+/*   Created: 2025/04/06 16:39:06 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/06 16:50:04 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SET_H
-# define SET_H
+#ifndef REDIRECTION_PROCESSOR_H
+# define REDIRECTION_PROCESSOR_H
 
-# include "environment.h"
-# include "command.h"
-# include "pipeline.h"
-# include "token.h"
-# include "tokenizer.h"
-# include "parser.h"
+# include "heredoc_processor.h"
+# include "file_processor.h"
 
-int	set(t_command *command);
+int	process_redirections(t_list *redirections);
 
 #endif

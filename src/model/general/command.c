@@ -12,7 +12,7 @@
 
 #include "command.h"
 
-void	free_file(void *value);
+void	free_redirection(void *value);
 
 t_command	*init_command(void)
 {
@@ -23,17 +23,15 @@ t_command	*init_command(void)
 		return (NULL);
 	command->id = -1;
 	command->executable = NULL;
-	command->environment = NULL;
 	command->arguments = NULL;
-	command->input_file = NULL;
-	command->output_file = NULL;
-	command->error_file = NULL;
+	command->input_stream = NULL;
+	command->output_stream = NULL;
+	command->error_stream = NULL;
+	command->redirections = NULL;
+	command->environment = NULL;
 	command->exit_status_code = 0;
 	command->unused_pipe_end = -1;
 	command->needs_a_subshell = true;
-	command->intermediate_files = NULL;
-	command->needs_a_here_doc = false;
-	command->here_doc_delimiter = NULL;
 	return (command);
 }
 
@@ -45,27 +43,25 @@ void	destroy_command(t_command **command_ref)
 		return ;
 	command = *command_ref;
 	if (command->executable)
-		free(command->executable);
+		destroy_string(&command->executable);
 	if (command->arguments)
 		destroy_string_array(&command->arguments);
-	if (command->input_file)
-		destroy_file(&command->input_file);
-	if (command->output_file)
-		destroy_file(&command->output_file);
-	if (command->error_file)
-		destroy_file(&command->error_file);
-	if (command->intermediate_files)
-		destroy_list(&command->intermediate_files, free_file);
-	if (command->here_doc_delimiter)
-		free(command->here_doc_delimiter);
+	if (command->input_stream)
+		destroy_stream(&command->input_stream);
+	if (command->output_stream)
+		destroy_stream(&command->output_stream);
+	if (command->error_stream)
+		destroy_stream(&command->error_stream);
+	if (command->redirections)
+		destroy_list(&command->redirections, free_redirection);
 	free(command);
 	*command_ref = NULL;
 }
 
-void	free_file(void *value)
+void	free_redirection(void *value)
 {
-	t_file	*file;
+	t_redirection	*redirection;
 
-	file = (t_file *)value;
-	destroy_file(&file);
+	redirection = (t_redirection *)value;
+	destroy_redirection(&redirection);
 }

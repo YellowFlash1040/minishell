@@ -6,18 +6,20 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:34:37 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/26 18:16:03 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/07 14:25:00 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "command_runner.h"
+#include "io.h"
 
-int		setup_redirections(t_command *command);
-int		setup_redirection(t_redirection *redirection, t_command *command);
-int		process_file(t_file *file);
-bool	check_file(t_file *file);
-int		process_intermediate_files(t_list *intermediate_files);
-int		get_a_heredoc(t_redirection *redirection, t_command *command);
+// int		setup_redirections(t_command *command);
+// int		setup_redirection(t_stream_binding *redirection,
+//				t_command *command);
+// int		process_file(t_file *file);
+// bool	check_file(t_file *file);
+// int		get_a_heredoc(t_redirection *redirection, t_command *command);
+int	setup_redirections(t_command *command);
+int	setup_redirection(t_stream_binding *redirection);
 
 int	setup_command_io(t_command *command)
 {
@@ -28,20 +30,24 @@ int	setup_command_io(t_command *command)
 		if (command->unused_pipe_end != -1)
 			close(command->unused_pipe_end);
 	}
-	result = process_intermediate_files(command->intermediate_files);
-	if (result == FILE_ACCESS_ERR)
+	result = process_redirections(command->redirections);
+	if (result != SUCCESS)
 	{
-		command->exit_status_code = FAILURE;
-		return (SUCCESS);
+		if (command->input_stream->fd != STDIN_FILENO)
+			close(command->input_stream->fd);
+		if (command->output_stream->fd != STDOUT_FILENO)
+			close(command->output_stream->fd);
+		if (command->error_stream->fd != STDERR_FILENO)
+			close(command->error_stream->fd);
+		if (result == FILE_ACCESS_ERR)
+		{
+			command->exit_status_code = FAILURE;
+			return (SUCCESS);
+		}
+		return (result);
 	}
-	if (result != SUCCESS)
-		return (result);
 	result = setup_redirections(command);
-	if (result == FILE_ACCESS_ERR)
-		return (SUCCESS);
-	if (result != SUCCESS)
-		return (result);
-	return (SUCCESS);
+	return (result);
 }
 //"if (command->id != -1)" means that:
 //if I called fork(), then I saved the pid inside the command->id 
@@ -61,54 +67,38 @@ int	setup_command_io(t_command *command)
 
 int	setup_redirections(t_command *command)
 {
-	t_redirection	redirections[3];
-	int				result;
-	int				i;
+	t_stream_binding	redirections[3];
+	int					result;
+	int					i;
 
-	redirections[0] = (t_redirection){STDIN_FILENO, command->input_file};
-	redirections[1] = (t_redirection){STDOUT_FILENO, command->output_file};
-	redirections[2] = (t_redirection){STDERR_FILENO, command->error_file};
+	redirections[0] = (t_stream_binding){STDIN_FILENO, command->input_stream};
+	redirections[1] = (t_stream_binding){STDOUT_FILENO, command->output_stream};
+	redirections[2] = (t_stream_binding){STDERR_FILENO, command->error_stream};
 	i = -1;
 	while (++i < 3)
 	{
-		result = setup_redirection(&redirections[i], command);
-		if (result != SUCCESS || command->exit_status_code != SUCCESS)
+		result = setup_redirection(&redirections[i]);
+		if (result != SUCCESS)
 		{
-			if (command->input_file->fd != STDIN_FILENO)
-				close(command->input_file->fd);
-			if (command->output_file->fd != STDOUT_FILENO)
-				close(command->output_file->fd);
-			if (command->error_file->fd != STDERR_FILENO)
-				close(command->error_file->fd);
+			if (command->input_stream->fd != STDIN_FILENO)
+				close(command->input_stream->fd);
+			if (command->output_stream->fd != STDOUT_FILENO)
+				close(command->output_stream->fd);
+			if (command->error_stream->fd != STDERR_FILENO)
+				close(command->error_stream->fd);
 			return (result);
 		}
 	}
 	return (SUCCESS);
 }
 
-int	setup_redirection(t_redirection *redirection, t_command *command)
+int	setup_redirection(t_stream_binding *redirection)
 {
 	int	result;
 
-	if (redirection->file->path != NULL)
+	if (redirection->stream->fd != redirection->standard_fd)
 	{
-		result = process_file(redirection->file);
-		if (result == FILE_ACCESS_ERR)
-			command->exit_status_code = FAILURE;
-		if (result != SUCCESS)
-			return (result);
-	}
-	if (redirection->standard_fd == STDIN_FILENO
-		&& command->needs_a_here_doc)
-	{
-		result = get_a_heredoc(redirection, command);
-		if (result != SUCCESS)
-			return (result);
-	}
-	if (redirection->file->fd != redirection->standard_fd)
-	{
-		result = redirect(redirection->standard_fd,
-				redirection->file->fd);
+		result = redirect(redirection->standard_fd, redirection->stream->fd);
 		if (result != SUCCESS)
 			return (result);
 	}

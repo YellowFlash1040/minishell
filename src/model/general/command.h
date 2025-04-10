@@ -13,7 +13,8 @@
 #ifndef COMMAND_H
 # define COMMAND_H
 
-# include "file.h"
+# include "stream.h"
+# include "redirection.h"
 # include "list.h"
 # include "string_array.h"
 # include <wait.h>
@@ -25,19 +26,23 @@
 
 typedef struct command
 {
+	/// @brief Default: `-1`
 	pid_t			id;
 	t_string		executable;
 	t_string_array	arguments;
-	t_file			*input_file;
-	t_file			*output_file;
-	t_file			*error_file;
+	t_stream		*input_stream;
+	t_stream		*output_stream;
+	t_stream		*error_stream;
+	/// @brief Default: `NULL`
+	t_list			*redirections;
+	/// @brief Default: `0`
 	int				exit_status_code;
+	/// @brief Default: `-1`
 	int				unused_pipe_end;
+	/// @brief Default: `true`
 	bool			needs_a_subshell;
+	/// @brief Default: `NULL`
 	t_list			*environment;
-	t_list			*intermediate_files;
-	bool			needs_a_here_doc;
-	t_string		here_doc_delimiter;
 }					t_command;
 
 t_command			*init_command(void);

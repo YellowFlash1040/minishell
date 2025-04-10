@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   non_terminals.c                                    :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ismo <ismo@student.codam.nl>                 +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/04/01 15:56:42 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 16:30:59 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   non_terminals.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 15:56:42 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/08 16:50:57 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	nt_file(t_list *tokens, int *depth, char **blob)
 		return (FAILURE);
 	index = *depth;
 	token = read_token(tokens, index++);
-	if (!token)
+	if (!token || !is_file(token->type))
 		return (FAILURE);
 	if (token->type == EnvVariable)
 		*blob = ft_strjoin("$", token->value);
@@ -53,6 +53,8 @@ int	nt_comb(t_list *tokens, int *depth, char **comb)
 
 	index = *depth;
 	token = read_token(tokens, index);
+	if (token->type == EndOfInput || !is_file(token->type))
+		return (FAILURE);
 	strlist = init_list();
 	if (!strlist)
 		return (FAILURE);
@@ -66,10 +68,9 @@ int	nt_comb(t_list *tokens, int *depth, char **comb)
 		token = read_token(tokens, index);
 	}
 	tmpstr = lst_to_str(&strlist);
-	destroy_list(&strlist, free);
 	*comb = tmpstr;
 	*depth = index;
-	return (SUCCESS);
+	return (destroy_list(&strlist, free), SUCCESS);
 }
 
 int	nt_redir(t_list *tokens, int *depth, t_command **command)
@@ -84,13 +85,7 @@ int	nt_redir(t_list *tokens, int *depth, t_command **command)
 	redir = token->type;
 	if (!token || nt_comb(tokens, &index, &value) == FAILURE)
 		return (FAILURE);
-	if (redir == RedirDelim)
-	{
-		(*command)->needs_a_here_doc = 1;
-		(*command)->here_doc_delimiter = value;
-	}
-	else
-		add_file_redir(command, &value, redir);
+	add_redirection(command, value, redir);
 	*depth = index;
 	return (SUCCESS);
 }

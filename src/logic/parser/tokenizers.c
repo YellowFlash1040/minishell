@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenizers.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 15:20:13 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/02 15:05:45 by ibenne           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   tokenizers.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/04/01 15:20:13 by ismo          #+#    #+#                 */
+/*   Updated: 2025/04/04 15:58:01 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token.h"
 #include "tokenizer_utils.h"
+#include <stdbool.h>
 
 int	tokenize_quote(t_token *token, char *prompt, int *i)
 {
@@ -56,7 +57,7 @@ void	tokenize_redir(t_token *token, char *prompt, int *i)
 	(*i)++;
 }
 
-int	tokenize_env(t_token *token, char *prompt, int *i, int is_variable)
+void	tokenize_env(t_token *token, char *prompt, int *i, int is_variable)
 {
 	char	*operators;
 
@@ -66,13 +67,10 @@ int	tokenize_env(t_token *token, char *prompt, int *i, int is_variable)
 		operators = OPERATORS;
 	token->type = EnvVariable;
 	(*i)++;
-	token->value = scan_word(prompt, i, operators);
-	if (!token->value)
-		return (0);
-	return (1);
+	token->value = scan_word(prompt, i, operators, true);
 }
 
-int	tokenize_word(t_token *token, char *prompt, int *i, int is_variable)
+void	tokenize_word(t_token *token, char *prompt, int *i, int is_variable)
 {
 	char	*operators;
 
@@ -81,10 +79,7 @@ int	tokenize_word(t_token *token, char *prompt, int *i, int is_variable)
 	else
 		operators = OPERATORS;
 	token->type = Word;
-	token->value = scan_word(prompt, i, operators);
-	if (!token->value)
-		return (0);
-	return (1);
+	token->value = scan_word(prompt, i, operators, true);
 }
 
 void	tokenize_one(t_token *token, int *i, t_token_type type)

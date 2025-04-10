@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parse_redirs.h                                     :+:    :+:            */
+/*   term_col.h                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/03/31 00:49:10 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/06 20:08:02 by ismo          ########   odam.nl         */
+/*   Created: 2025/04/04 15:26:56 by ismo          #+#    #+#                 */
+/*   Updated: 2025/04/07 15:04:32 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_REDIRS_H
-# define PARSE_REDIRS_H
+#ifndef TERM_COL_H
+# define TERM_COL_H
 
-int	add_redirection(t_command **command,
-		char *filename,
-		t_token_type redir_type);
+bool	needs_newline(void);
 #endif

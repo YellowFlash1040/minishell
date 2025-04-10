@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set.h                                              :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 17:34:39 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/02 15:41:37 by ibenne           ###   ########.fr       */
+/*   Created: 2025/04/06 17:27:12 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/09 14:07:05 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SET_H
-# define SET_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-# include "environment.h"
-# include "command.h"
-# include "pipeline.h"
-# include "token.h"
-# include "tokenizer.h"
-# include "parser.h"
+# include "signal_handlers.h"
+# include <signal.h>
 
-int	set(t_command *command);
+typedef enum sigmode
+{
+	ForkSignals,
+	MainSignals,
+	InteractiveSignals,
+}	t_sigmode;
 
+void	set_handlers(t_sigmode mode);
 #endif

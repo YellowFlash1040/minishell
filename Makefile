@@ -28,10 +28,12 @@ EXECUTOR_DIR			:= $(LOGIC_DIR)/executor
 BUILTINS_DIR			:= $(LOGIC_DIR)/builtins
 ENVIRONMENT_DIR			:= $(LOGIC_DIR)/environment
 PARSER_DIR				:= $(LOGIC_DIR)/parser
+SIGNALS_DIR				:= $(LOGIC_DIR)/signals
 
 # Executor directories (src/logic/executor/)
 COMMAND_RUNNER_DIR		:= $(EXECUTOR_DIR)/command_runner
 PIPELINE_RUNNER_DIR		:= $(EXECUTOR_DIR)/pipeline_runner
+VARIABLES_EXPANDER_DIR	:= $(EXECUTOR_DIR)/variables_expander
 FDS_DIR					:= $(COMMAND_RUNNER_DIR)/fds
 
 # Builtin directories (src/logic/builtins/)
@@ -43,6 +45,11 @@ UNSET_DIR				:= $(BUILTINS_DIR)/unset
 ENV_DIR					:= $(BUILTINS_DIR)/env
 PWD_DIR					:= $(BUILTINS_DIR)/pwd
 EXIT_DIR				:= $(BUILTINS_DIR)/exit_builtin
+
+# Logic directories (src/model/)
+ENVIRONMENT_MODEL_DIR	:= $(MODEL_DIR)/environment
+GENERAL_MODEL_DIR		:= $(MODEL_DIR)/general
+IO_MODEL_DIR			:= $(MODEL_DIR)/io
 
 # List of all source directories
 SRC_DIRS				:= $(SRC_DIR) \
@@ -56,6 +63,7 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(COMMAND_RUNNER_DIR) \
 							$(FDS_DIR) \
 							$(PIPELINE_RUNNER_DIR) \
+							$(EXPANDER_DIR) \
 							$(CD_DIR) \
 							$(ECHO_DIR) \
 							$(EXPORT_DIR) \
@@ -65,7 +73,12 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(PWD_DIR) \
 							$(EXIT_DIR) \
 							$(ENVIRONMENT_DIR) \
-							$(PARSER_DIR)
+							$(VARIABLES_EXPANDER_DIR) \
+							$(PARSER_DIR) \
+							$(ENVIRONMENT_MODEL_DIR) \
+							$(GENERAL_MODEL_DIR) \
+							$(IO_MODEL_DIR) \
+							$(SIGNALS_DIR)
 
 # Library directories (libraries/)
 LIST_LIB_DIR			:= $(LIB_DIR)/list
@@ -148,6 +161,12 @@ fclean: clean
 	@for lib in $(LIB_DIR)/*; do \
 		$(MAKE) -C $$lib fclean > /dev/null; \
 	done
+
+leaks: fclean compile_leaks
+
+compile_leaks: $(OBJ) $(LIBRARIES)
+	@$(CC) $(CFLAGS) -fsanitize=leak $^ $(LDFLAGS) -o $(NAME)
+	@echo "$(GREEN)Compiled $@ successfully!$(RESET)"
 
 # Rebuild the Project
 re: fclean all

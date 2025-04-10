@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/10 15:12:56 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/01 14:58:05 by ismo          ########   odam.nl         */
+/*   Updated: 2025/04/05 17:40:00 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_token	*init_token(void)
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
+	token->type = -1;
 	token->value = NULL;
 	token->seperator = '\0';
 	return (token);

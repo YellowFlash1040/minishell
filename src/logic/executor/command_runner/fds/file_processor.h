@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set.h                                              :+:      :+:    :+:   */
+/*   file_processor.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 17:34:39 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/02 15:41:37 by ibenne           ###   ########.fr       */
+/*   Created: 2025/04/06 16:37:20 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/06 16:50:25 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SET_H
-# define SET_H
+#ifndef FILE_PROCESSOR_H
+# define FILE_PROCESSOR_H
 
-# include "environment.h"
-# include "command.h"
-# include "pipeline.h"
-# include "token.h"
-# include "tokenizer.h"
-# include "parser.h"
+# include "file.h"
+# include "error_printer.h"
+# include <stdbool.h>
 
-int	set(t_command *command);
+# define FILE_ACCESS_ERR 197
+
+int	process_file(t_file *file);
 
 #endif

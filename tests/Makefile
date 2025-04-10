@@ -98,13 +98,29 @@ re: fclean all
 run: $(TEST_BINS)
 	@for test in $(notdir $(TEST_BINS)); do \
 		echo "$(BOLD_BLUE)Running $$test$(RESET)"; \
-		# $(BIN_DIR)/$$test; \
-		valgrind --leak-check=full --track-fds=yes --log-file=valgrind.txt $(BIN_DIR)/$$test; \
-		grep -E 'FILE|lost|ERROR SUMMARY|Invalid' valgrind.txt \
-		| grep -v 'lost: 0' | grep -v ': 4 open' | grep -v ': 0 errors' \
-		|| echo "==== All heap blocks were freed -- no leaks are possible"; \
+		$(BIN_DIR)/$$test \
 		echo ""; \
 	done
+
+# Run the Tests with valgrind
+runv: $(TEST_BINS)
+	@success_count=0; failure_count=0; \
+	for test in $(notdir $(TEST_BINS)); do \
+		echo "$(BOLD_BLUE)Running $$test$(RESET)"; \
+		valgrind --leak-check=full --track-fds=yes --log-file=valgrind.txt $(BIN_DIR)/$$test; \
+		if grep -E 'FILE|lost|ERROR SUMMARY|Invalid' valgrind.txt | grep -v 'lost: 0' | grep -v ': 4 open' | grep -v ': 0 errors'; then \
+			failure_count=$$((failure_count+1)); \
+			exit; \
+		else \
+			echo "==== All heap blocks were freed -- no leaks are possible"; \
+			success_count=$$((success_count+1)); \
+		fi; \
+		echo ""; \
+	done; \
+	echo "SUMMARY:"; \
+	echo "$$success_count test(s) succeded ✅"; \
+	echo "$$failure_count test(s) failed ❌"; \
+	echo ""
 
 print:
 	@echo "CC: $(CC)"

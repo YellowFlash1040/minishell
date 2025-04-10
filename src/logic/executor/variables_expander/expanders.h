@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parse_redirs.h                                     :+:    :+:            */
+/*   expanders.h                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ismo <ismo@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/03/31 00:49:10 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/06 20:08:02 by ismo          ########   odam.nl         */
+/*   Created: 2025/04/04 16:48:36 by ismo          #+#    #+#                 */
+/*   Updated: 2025/04/04 17:06:42 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_REDIRS_H
-# define PARSE_REDIRS_H
+#ifndef EXPANDERS_H
+# define EXPANDERS_H
 
-int	add_redirection(t_command **command,
-		char *filename,
-		t_token_type redir_type);
+char	*expand_comb(t_list *env, char *arg);
+void	expand_path(t_list *env, t_file *file);
+int		expand_arguments(t_command *command);
 #endif

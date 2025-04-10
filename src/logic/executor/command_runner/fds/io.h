@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set.h                                              :+:      :+:    :+:   */
+/*   io.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 17:34:39 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/02 15:41:37 by ibenne           ###   ########.fr       */
+/*   Created: 2025/04/06 16:33:09 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/06 18:32:03 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SET_H
-# define SET_H
+#ifndef IO_H
+# define IO_H
 
-# include "environment.h"
 # include "command.h"
-# include "pipeline.h"
-# include "token.h"
-# include "tokenizer.h"
-# include "parser.h"
+# include "redirection_processor.h"
 
-int	set(t_command *command);
+typedef struct stream_binding
+{
+	int				standard_fd;
+	t_stream		*stream;
+}	t_stream_binding;
 
 #endif

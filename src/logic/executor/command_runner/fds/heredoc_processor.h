@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set.h                                              :+:      :+:    :+:   */
+/*   heredoc_processor.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 17:34:39 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/02 15:41:37 by ibenne           ###   ########.fr       */
+/*   Created: 2025/04/06 16:36:20 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/06 16:44:49 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SET_H
-# define SET_H
+#ifndef HEREDOC_PROCESSOR_H
+# define HEREDOC_PROCESSOR_H
 
-# include "environment.h"
-# include "command.h"
-# include "pipeline.h"
-# include "token.h"
-# include "tokenizer.h"
-# include "parser.h"
+# include <readline/readline.h>
+# include <unistd.h>
+# include "heredoc.h"
+# include "global_status_codes.h"
 
-int	set(t_command *command);
+int	process_heredoc(t_heredoc *heredoc);
 
 #endif

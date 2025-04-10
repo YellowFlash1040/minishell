@@ -6,7 +6,6 @@
 #include "parser_utils.h"
 #include "global_status_codes.h"
 #include "ft_string.h"
-#include "class_printer.h"
 #include "pipeline_runner.h"
 
 t_list* environment;
@@ -16,13 +15,10 @@ int test1(void)
 {
 	char	*prompt;
 	t_list *tokens;
-	t_pipeline **pipeline;
 
-	pipeline = malloc(sizeof(t_pipeline **));
-	if (!pipeline)
-		return (FAILURE);
 	prompt = ft_strdup("a \"aa\" b");
 	tokens = create_token_list(prompt, 0);
+	free(prompt);
 	if (!tokens)
 		return (FAILURE);
 	printf("type: \"%d\"\n", read_token(tokens, 0)->type);
@@ -31,6 +27,7 @@ int test1(void)
 	printf("n_args: %d\n", n_args(tokens, 0));
 	if (n_args(tokens, 0) != 3)
 		return (FAILURE);
+	destroy_list(&tokens, free_token);
 	return (SUCCESS);
 }
 

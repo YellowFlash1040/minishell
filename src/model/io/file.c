@@ -38,21 +38,6 @@ void	destroy_file(t_file **file_ref)
 	*file_ref = NULL;
 }
 
-int	redirect(int old_fd, int new_fd)
-{
-	int	result;
-	int	duplicated_fd;
-	int	redirected_fd;
-
-	duplicated_fd = new_fd;
-	redirected_fd = old_fd;
-	result = dup2(duplicated_fd, redirected_fd);
-	if (result == -1)
-		return (perror("dup2 error"), FD_DUP_ERR);
-	close(duplicated_fd);
-	return (SUCCESS);
-}
-
 int	open_file(t_file *file)
 {
 	if (!file || !file->path)

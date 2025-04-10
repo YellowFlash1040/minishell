@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:57:24 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/29 18:30:02 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:45:12 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	check_for_n_flag(t_string first_arg)
 {
 	int	i;
 
-	if (!first_arg || first_arg[0] != '-')
+	if (!first_arg || first_arg[0] != '-' || first_arg[1] == '\0')
 		return (false);
 	i = 1;
 	while (first_arg[i])

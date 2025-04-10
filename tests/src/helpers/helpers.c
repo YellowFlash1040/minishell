@@ -72,13 +72,29 @@ void	setup_command(t_command *command, char *exe_path, char **args,
 
 	if (input_file)
 	{
-		command->input_file->path = ft_strdup(input_file);
-		command->input_file->mode = READ;
+		t_file* input_f = init_file();
+		t_redirection_target* input_target = init_redirection_target();
+		t_redirection* input_redirection = init_redirection();
+		input_f->path = ft_strdup(input_file);
+		input_f->mode = READ;
+		input_target->type = FILE_TYPE;
+		input_target->value = input_f;
+		input_redirection->stream = command->input_stream;
+		input_redirection->target = input_target;
+		add_to_list(command->redirections, input_redirection);
 	}
 
 	if (output_file)
 	{
-		command->output_file->path = ft_strdup(output_file);
-		command->output_file->mode = TRUNCATE;
+		t_file* output_f = init_file();
+		t_redirection_target* output_target = init_redirection_target();
+		t_redirection* output_redirection = init_redirection();
+		output_f->path = ft_strdup(output_file);
+		output_f->mode = TRUNCATE;
+		output_target->type = FILE_TYPE;
+		output_target->value = output_f;
+		output_redirection->stream = command->output_stream;
+		output_redirection->target = output_target;
+		add_to_list(command->redirections, output_redirection);
 	}
 }
