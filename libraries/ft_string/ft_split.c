@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_string_3.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/03/09 17:22:07 by akovtune      #+#    #+#                 */
-/*   Updated: 2025/04/07 12:32:10 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/09 17:22:07 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/11 17:12:36 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,6 @@ char	*extract_word(char *s, int *i, char c)
 		(*i)++;
 	end = *i;
 	return (ft_substr(s, start, end - start));
-}
-
-void	*ft_memset(void *s, int c, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n)
-	{
-		*(unsigned char *)(s + i) = c;
-		i++;
-	}
-	return (s);
 }
 
 int	count_words(char *s, char delimiter)
