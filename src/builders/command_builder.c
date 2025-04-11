@@ -27,10 +27,10 @@ int	build_command(t_command **command_ref)
 	command = *command_ref;
 	result = build_std_streams(command);
 	if (result != SUCCESS)
-		return (result);
+		return (destroy_command(command_ref), result);
 	command->redirections = init_list();
 	if (!command->redirections)
-		return (LIST_INIT_ERR);
+		return (destroy_command(command_ref), LIST_INIT_ERR);
 	return (SUCCESS);
 }
 
