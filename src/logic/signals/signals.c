@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:59:01 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/09 14:08:07 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:13:47 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	choose_handlers(t_sigmode mode, struct sigaction *sigint,
 			struct sigaction *sigquit);
-void	initialize_sigactions(struct sigaction *sigint,
+void	initialize_sigactions(t_sigmode mode, struct sigaction *sigint,
 			struct sigaction *sigquit);
 
 void	set_handlers(t_sigmode mode)
@@ -22,13 +22,15 @@ void	set_handlers(t_sigmode mode)
 	struct sigaction	act_sigint;
 	struct sigaction	act_sigquit;
 
-	initialize_sigactions(&act_sigint, &act_sigquit);
+	ft_memset(&act_sigint, 0, sizeof(struct sigaction));
+	ft_memset(&act_sigquit, 0, sizeof(struct sigaction));
+	initialize_sigactions(mode, &act_sigint, &act_sigquit);
 	choose_handlers(mode, &act_sigint, &act_sigquit);
 	sigaction(SIGINT, &act_sigint, NULL);
 	sigaction(SIGQUIT, &act_sigquit, NULL);
 }
 
-void	initialize_sigactions(struct sigaction *sigint,
+void	initialize_sigactions(t_sigmode mode, struct sigaction *sigint,
 	struct sigaction *sigquit)
 {
 	sigset_t	sa_mask;
@@ -38,8 +40,11 @@ void	initialize_sigactions(struct sigaction *sigint,
 	sigaddset(&sa_mask, SIGQUIT);
 	sigint->sa_mask = sa_mask;
 	sigquit->sa_mask = sa_mask;
-	sigint->sa_flags = SA_RESTART;
-	sigquit->sa_flags = SA_RESTART;
+	if (mode == MainSignals)
+	{
+		sigint->sa_flags = SA_RESTART;
+		sigquit->sa_flags = SA_RESTART;
+	}
 }
 
 void	choose_handlers(t_sigmode mode, struct sigaction *sigint,

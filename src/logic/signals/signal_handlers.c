@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   signal_handlers.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 14:00:40 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/09 14:31:30 by akovtune         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   signal_handlers.c                                  :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: akovtune <akovtune@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/04/09 14:00:40 by akovtune      #+#    #+#                 */
+/*   Updated: 2025/04/10 01:08:43 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signal_handlers.h"
+#include <signal.h>
+#include <sys/ioctl.h>
 
 extern int		g_received_signal;
 
@@ -32,5 +34,5 @@ void	fork_sigint_handler(int signum)
 {
 	write(STDOUT_FILENO, "\n", 1);
 	g_received_signal = signum;
-	exit(1);
+	exit(130);
 }

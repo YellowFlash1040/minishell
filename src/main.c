@@ -32,6 +32,8 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/ioctl.h>
+#include <termios.h>
 
 int		g_received_signal = -1;
 
@@ -69,11 +71,9 @@ void	run_shell_loop(t_list *env)
 			free(line);
 			if (result != SUCCESS)
 				break ;
-			if (needs_newline())
-				printf("\x1b[2;30;47m%%\x1b[0m\n");
+			print_optional_newline();
 		}
 		set_handlers(InteractiveSignals);
-		rl_replace_line("", 0);
 		line = readline("$> ");
 		set_handlers(MainSignals);
 	}
@@ -87,7 +87,7 @@ int	process_line(t_string line, t_list *env)
 	pipeline = NULL;
 	tokens = create_token_list(line, 0);
 	if (!tokens || parse_pipeline(tokens, &pipeline, env) != SUCCESS)
-		printf("Syntax error\n");
+		print_error_message("Syntax error\n");
 	else if (read_token(tokens, 0)->type == EndOfInput)
 		return (destroy_list(&tokens, free_token), SUCCESS);
 	else if (pipeline)
