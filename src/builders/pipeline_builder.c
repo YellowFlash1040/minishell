@@ -12,18 +12,18 @@
 
 #include "pipeline_builder.h"
 
-int	build_pipeline(t_pipeline **pipeline)
+int	build_pipeline(t_pipeline **pipeline_ref)
 {
-	t_pipeline	*pipeline_v;
+	t_pipeline	*pipeline;
 
-	if (!pipeline)
+	if (!pipeline_ref)
 		return (EMPTY_PIPELINE_REF_ERR);
-	*pipeline = init_pipeline();
-	if (!*pipeline)
+	*pipeline_ref = init_pipeline();
+	if (!*pipeline_ref)
 		return (PIPELINE_INIT_ERR);
-	pipeline_v = *pipeline;
-	pipeline_v->commands = init_list();
-	if (!pipeline_v->commands)
-		return (destroy_pipeline(pipeline), COMMANDS_LIST_INIT_ERR);
+	pipeline = *pipeline_ref;
+	pipeline->commands = init_list();
+	if (!pipeline->commands)
+		return (destroy_pipeline(pipeline_ref), COMMANDS_LIST_INIT_ERR);
 	return (SUCCESS);
 }
