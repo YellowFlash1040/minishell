@@ -33,7 +33,7 @@ int	run_a_command(t_command *command)
 		command->id = pid;
 		if (pid == 0)
 		{
-			set_handlers(ForkSignals);
+			reset_signal_handlers_to_default();
 			result = execute_command(command);
 			if (result != SUCCESS)
 				exit(result);

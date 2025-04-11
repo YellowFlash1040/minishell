@@ -3,66 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:59:01 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/10 15:13:47 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/11 17:29:42 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
 
-void	choose_handlers(t_sigmode mode, struct sigaction *sigint,
-			struct sigaction *sigquit);
-void	initialize_sigactions(t_sigmode mode, struct sigaction *sigint,
-			struct sigaction *sigquit);
+void	initialize_sigactions(t_sigaction *sigint, t_sigaction *sigquit);
+void	choose_handlers(t_sigmode mode, t_sigaction *sigint,
+			t_sigaction *sigquit);
+void	assign_handlers(t_sigaction *sigint, t_sigaction *sigquit);
 
 void	set_handlers(t_sigmode mode)
 {
-	struct sigaction	act_sigint;
-	struct sigaction	act_sigquit;
+	t_sigaction	sigint;
+	t_sigaction	sigquit;
 
-	ft_memset(&act_sigint, 0, sizeof(struct sigaction));
-	ft_memset(&act_sigquit, 0, sizeof(struct sigaction));
-	initialize_sigactions(mode, &act_sigint, &act_sigquit);
-	choose_handlers(mode, &act_sigint, &act_sigquit);
-	sigaction(SIGINT, &act_sigint, NULL);
-	sigaction(SIGQUIT, &act_sigquit, NULL);
+	initialize_sigactions(&sigint, &sigquit);
+	choose_handlers(mode, &sigint, &sigquit);
+	assign_handlers(&sigint, &sigquit);
 }
 
-void	initialize_sigactions(t_sigmode mode, struct sigaction *sigint,
-	struct sigaction *sigquit)
+void	initialize_sigactions(t_sigaction *sigint, t_sigaction *sigquit)
 {
 	sigset_t	sa_mask;
+	int			sa_flags;
 
+	ft_bzero(sigint, sizeof(t_sigaction));
+	ft_bzero(sigquit, sizeof(t_sigaction));
 	sigemptyset(&sa_mask);
 	sigaddset(&sa_mask, SIGINT);
 	sigaddset(&sa_mask, SIGQUIT);
+	sa_flags = SA_RESTART;
 	sigint->sa_mask = sa_mask;
 	sigquit->sa_mask = sa_mask;
-	if (mode == MainSignals)
-	{
-		sigint->sa_flags = SA_RESTART;
-		sigquit->sa_flags = SA_RESTART;
-	}
+	sigint->sa_flags = sa_flags;
+	sigquit->sa_flags = sa_flags;
 }
 
-void	choose_handlers(t_sigmode mode, struct sigaction *sigint,
-	struct sigaction *sigquit)
+void	choose_handlers(t_sigmode mode, t_sigaction *sigint,
+	t_sigaction *sigquit)
 {
 	if (mode == InteractiveSignals)
 	{
-		sigint->sa_handler = &interactive_sigint_handler;
+		sigint->sa_handler = interactive_sigint_handler;
 		sigquit->sa_handler = SIG_IGN;
 	}
-	else if (mode == MainSignals)
+	else
 	{
-		sigint->sa_handler = &main_sigint_handler;
+		sigint->sa_handler = main_sigint_handler;
 		sigquit->sa_handler = SIG_IGN;
 	}
-	else if (mode == ForkSignals)
-	{
-		sigint->sa_handler = &fork_sigint_handler;
-		sigquit->sa_handler = SIG_DFL;
-	}
+}
+
+void	assign_handlers(t_sigaction *sigint, t_sigaction *sigquit)
+{
+	sigaction(SIGINT, sigint, NULL);
+	sigaction(SIGQUIT, sigquit, NULL);
+}
+
+void	reset_signal_handlers_to_default(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
