@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_env_variable.c                              :+:      :+:    :+:   */
+/*   process_env_variable_manipulation_command.c        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:07:24 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/11 14:10:21 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:37:53 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "set.h"
+#include "set.h"
 
-int process_env_variable_manipulation_command(t_command *command,
+int	process_env_variable_manipulation_command(t_command *command,
 	bool is_exported)
 {
 	t_list			*env;
