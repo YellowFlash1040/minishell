@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:01:31 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/02 18:11:12 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:37:33 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ int	change_directory(t_string new_dir, t_command *command)
 			if (index_of('~', new_dir) != -1)
 				print_error_message("cd: we don't support '~' expansion\n");
 			else
-				perror("cd");
+			{
+				print_error_message("cd: ");
+				print_no_such_file_err(new_dir);
+			}
 			return (SUCCESS);
 		}
 		return (perror("cd"), FAILURE);
