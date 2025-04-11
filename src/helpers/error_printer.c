@@ -25,7 +25,7 @@ int	print_error_message(t_string message)
 int	print_permission_denied_err(t_string file_path)
 {
 	int	result;
-	
+
 	result = print_error_message(file_path);
 	if (result != SUCCESS)
 		return (result);
