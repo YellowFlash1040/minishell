@@ -85,12 +85,14 @@ LIST_LIB_DIR			:= $(LIB_DIR)/list
 STRING_ARRAY_LIB_DIR	:= $(LIB_DIR)/string_array
 STRING_LIB_DIR			:= $(LIB_DIR)/ft_string
 CONVERTER_LIB_DIR		:= $(LIB_DIR)/converter
+FT_MEMORY_LIB_DIR		:= $(LIB_DIR)/ft_memory
 
 # List of all library directories
 LIB_DIRS				:= $(LIST_LIB_DIR) \
 							$(STRING_ARRAY_LIB_DIR) \
 							$(STRING_LIB_DIR) \
-							$(CONVERTER_LIB_DIR)
+							$(CONVERTER_LIB_DIR) \
+							$(FT_MEMORY_LIB_DIR)
 
 #-----------------------FILES------------------------------------------------------------
 # Sources
@@ -104,12 +106,14 @@ OBJ     				:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(C_FILES)))
 # Library files
 LIST_LIB				:= $(LIST_LIB_DIR)/list.a
 STRING_ARRAY_LIB		:= $(STRING_ARRAY_LIB_DIR)/string_array.a
-CONVERTER_LIB_DIR		:= $(CONVERTER_LIB_DIR)/converter.a
+CONVERTER_LIB			:= $(CONVERTER_LIB_DIR)/converter.a
+FT_MEMORY_LIB			:= $(FT_MEMORY_LIB_DIR)/ft_memory.a
 
 # Libraries
 LIBRARIES				:= $(LIST_LIB) \
 							$(STRING_ARRAY_LIB) \
-							$(CONVERTER_LIB_DIR)
+							$(CONVERTER_LIB) \
+							$(FT_MEMORY_LIB)
 
 #-----------------------COLORS-----------------------------------------------------------
 # Colors for Output
