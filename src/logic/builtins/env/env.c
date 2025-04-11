@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 17:52:16 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/23 17:59:59 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:44:28 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ int	env(t_command *command)
 		return (FAILURE);
 	i = -1;
 	while (exported_env[++i])
-	{
-		write(STDOUT_FILENO, exported_env[i], ft_strlen(exported_env[i]));
-		write(STDOUT_FILENO, "\n", 1);
-	}
+		printf("%s\n", exported_env[i]);
 	destroy_string_array(&exported_env);
 	return (SUCCESS);
 }
