@@ -13,15 +13,17 @@
 #ifndef PIPELINE_H
 # define PIPELINE_H
 
-# include "list.h"
 # include <stdlib.h>
+# include "list.h"
 # include "command.h"
+# include "p1pe.h"
 
 # define PIPELINE_INIT_ERR 20
 
 typedef struct pipeline
 {
 	t_list	*commands;
+	t_list	*pipes;
 	int		status_code;
 }			t_pipeline;
 

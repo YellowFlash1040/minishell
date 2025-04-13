@@ -6,13 +6,11 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 18:03:39 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/09 14:34:54 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:07:35 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "heredoc_processor.h"
-
-extern int		g_received_signal;
 
 int	capture_heredoc(int pipe_fd, t_string delimiter);
 
@@ -41,7 +39,7 @@ int	capture_heredoc(int pipe_fd, t_string delimiter)
 	line = readline("> ");
 	while (line)
 	{
-		if (g_received_signal != -1 || ft_strcmp(line, delimiter))
+		if (ft_strcmp(line, delimiter))
 		{
 			free(line);
 			break ;

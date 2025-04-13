@@ -15,14 +15,9 @@
 
 # include "pipeline.h"
 # include "command_runner.h"
+# include "pipes_controller.h"
 
 # define PIPE_FUNC_ERR 200
-
-typedef enum e_pipe_end
-{
-	READ_END = 0,
-	WRITE_END = 1
-}				t_pipe_end;
 
 int	run_a_pipeline(t_pipeline *pipeline);
 

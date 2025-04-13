@@ -37,12 +37,14 @@ typedef struct command
 	t_list			*redirections;
 	/// @brief Default: `0`
 	int				exit_status_code;
-	/// @brief Default: `-1`
-	int				unused_pipe_end;
 	/// @brief Default: `true`
 	bool			needs_a_subshell;
 	/// @brief Default: `NULL`
 	t_list			*environment;
+	/// @brief Default: `false`
+	bool			is_in_pipeline;
+	/// @brief Default: `NULL`
+	t_list			*pipes;
 }					t_command;
 
 t_command			*init_command(void);
