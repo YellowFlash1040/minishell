@@ -86,7 +86,9 @@ int	process_line(t_string line, t_list *env)
 
 	pipeline = NULL;
 	tokens = create_token_list(line, 0);
-	if (!tokens || parse_pipeline(tokens, &pipeline, env) != SUCCESS)
+	if (!tokens
+		|| (parse_pipeline(tokens, &pipeline, env) != SUCCESS
+			&& tokens->count > 1))
 		print_error_message("Syntax error\n");
 	else if (read_token(tokens, 0)->type == EndOfInput)
 		return (destroy_list(&tokens, free_token), SUCCESS);
