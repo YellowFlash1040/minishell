@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 13:50:25 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/23 14:54:37 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:29:36 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ int	set_env_variable(t_list *env, t_string name, t_string value,
 	if (node)
 	{
 		variable = (t_variable *)node->value;
+		if (is_exported)
+			variable->is_exported = true;
 		if (value != NULL)
 		{
 			free(variable->value);
 			variable->value = value;
 		}
-		variable->is_exported = is_exported;
 		return (SUCCESS);
 	}
 	else

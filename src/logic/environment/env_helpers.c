@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:23:56 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/16 15:27:34 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:25:24 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ t_string_array	construct_environment_for_export(t_list *env)
 			export_env[i] = convert_variable_to_string(variable);
 			if (!export_env[i])
 				return (destroy_string_array(&export_env), NULL);
+			i++;
 		}
 		node = node->next;
-		i++;
 	}
 	return (export_env);
 }

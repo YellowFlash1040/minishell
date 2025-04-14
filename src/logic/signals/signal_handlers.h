@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:01:27 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/09 14:06:32 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:32:21 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 
 # include <readline/readline.h>
 # include <unistd.h>
-# include <stdlib.h>
 
 void	interactive_sigint_handler(int signum);
 void	main_sigint_handler(int signum);
-void	fork_sigint_handler(int signum);
 
 #endif

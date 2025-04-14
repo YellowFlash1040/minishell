@@ -26,17 +26,17 @@ t_pipeline	*init_pipeline(void)
 	return (pipeline);
 }
 
-void	destroy_pipeline(t_pipeline **pipeline)
+void	destroy_pipeline(t_pipeline **pipeline_ref)
 {
-	t_pipeline	*pipeline_v;
+	t_pipeline	*pipeline;
 
-	if (!pipeline || !*pipeline)
+	if (!pipeline_ref || !*pipeline_ref)
 		return ;
-	pipeline_v = *pipeline;
-	if (pipeline_v->commands)
-		destroy_list(&pipeline_v->commands, free_command);
-	free(pipeline_v);
-	*pipeline = NULL;
+	pipeline = *pipeline_ref;
+	if (pipeline->commands)
+		destroy_list(&pipeline->commands, free_command);
+	free(pipeline);
+	*pipeline_ref = NULL;
 }
 
 void	free_command(void *value)

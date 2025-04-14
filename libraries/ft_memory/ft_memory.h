@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   ft_memory.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 14:02:49 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/11 14:37:19 by akovtune         ###   ########.fr       */
+/*   Created: 2025/04/11 17:08:32 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/11 17:17:06 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "export.h"
+#ifndef FT_MEMORY_H
+# define FT_MEMORY_H
 
-int	process_env_variable_manipulation_command(t_command *command,
-		bool is_exported);
+void	ft_bzero(void *s, size_t n);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_memchr(const void *s, int c, size_t n);
+int		ft_memcmp(const void *s1, const void *s2, size_t n);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
+void	*ft_memmove(void *dest, const void *src, size_t n);
+void	*ft_memset(void *s, int c, size_t n);
 
-int	export(t_command *command)
-{
-	int	result;
-
-	result = process_env_variable_manipulation_command(command, true);
-	return (result);
-}
+#endif

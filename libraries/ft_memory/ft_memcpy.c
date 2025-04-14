@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 14:02:49 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/11 14:37:19 by akovtune         ###   ########.fr       */
+/*   Created: 2024/10/10 17:52:46 by akovtune          #+#    #+#             */
+/*   Updated: 2024/10/18 13:52:55 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "export.h"
+#include <stdlib.h>
 
-int	process_env_variable_manipulation_command(t_command *command,
-		bool is_exported);
-
-int	export(t_command *command)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	int	result;
+	unsigned char		*dest_p;
+	const unsigned char	*src_p;
 
-	result = process_env_variable_manipulation_command(command, true);
-	return (result);
+	if (dest == src)
+		return (dest);
+	dest_p = dest;
+	src_p = src;
+	while (n--)
+		*dest_p++ = *src_p++;
+	return (dest);
 }

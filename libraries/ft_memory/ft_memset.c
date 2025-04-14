@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 14:02:49 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/11 14:37:19 by akovtune         ###   ########.fr       */
+/*   Created: 2024/10/10 16:54:46 by akovtune          #+#    #+#             */
+/*   Updated: 2024/10/18 13:53:13 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "export.h"
+#include <stdlib.h>
 
-int	process_env_variable_manipulation_command(t_command *command,
-		bool is_exported);
-
-int	export(t_command *command)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	int	result;
+	unsigned char	*p;
 
-	result = process_env_variable_manipulation_command(command, true);
-	return (result);
+	p = s;
+	c = (unsigned char)c;
+	while (n--)
+		*p++ = c;
+	return (s);
 }

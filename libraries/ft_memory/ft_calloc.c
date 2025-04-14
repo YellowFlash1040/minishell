@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 14:02:49 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/11 14:37:19 by akovtune         ###   ########.fr       */
+/*   Created: 2024/10/11 15:30:31 by akovtune          #+#    #+#             */
+/*   Updated: 2024/10/15 19:23:52 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "export.h"
+#include <stdlib.h>
+#include <limits.h>
 
-int	process_env_variable_manipulation_command(t_command *command,
-		bool is_exported);
-
-int	export(t_command *command)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	int	result;
+	char	*p;
+	int		bytes_count;
 
-	result = process_env_variable_manipulation_command(command, true);
-	return (result);
+	if (!nmemb || !size)
+		return (malloc(0));
+	if (nmemb > INT_MAX / size)
+		return (NULL);
+	bytes_count = nmemb * size;
+	p = (char *)malloc(bytes_count);
+	if (!p)
+		return (NULL);
+	while (bytes_count--)
+		*p++ = '\0';
+	return (p - nmemb * size);
 }
