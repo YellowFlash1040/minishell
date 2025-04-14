@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/06 16:59:01 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/11 17:29:42 by akovtune         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   signals.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: akovtune <akovtune@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/04/06 16:59:01 by ismo          #+#    #+#                 */
+/*   Updated: 2025/04/14 10:58:07 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	initialize_sigactions(t_sigaction *sigint, t_sigaction *sigquit)
 
 	ft_bzero(sigint, sizeof(t_sigaction));
 	ft_bzero(sigquit, sizeof(t_sigaction));
-	sigemptyset(&sa_mask);
 	sigaddset(&sa_mask, SIGINT);
 	sigaddset(&sa_mask, SIGQUIT);
 	sa_flags = SA_RESTART;
