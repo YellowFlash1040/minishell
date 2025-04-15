@@ -3,7 +3,7 @@
 .*
 !.gitignore
 !.github/
-!./Makefile
+!Makefile
 !src/**/*.c
 !src/**/*.h
 !libraries/**/*.c
@@ -13,3 +13,5 @@
 !tests/**/*.h
 !tests/**/Makefile
 !CleanMakefile
+debug/
+other/

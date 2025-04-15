@@ -68,11 +68,14 @@ void	run_shell_loop(t_list *env)
 		if (*line)
 		{
 			result = process_line(line, env);
-			free(line);
 			if (result != SUCCESS)
+			{
+				free(line);
 				break ;
+			}
 			print_optional_newline();
 		}
+		free(line);
 		set_handlers(InteractiveSignals);
 		line = readline("$> ");
 		set_handlers(MainSignals);

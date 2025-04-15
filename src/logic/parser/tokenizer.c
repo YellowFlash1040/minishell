@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 14:25:15 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/10 14:26:08 by ibenne           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   tokenizer.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: ibenne <ibenne@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/03/10 14:25:15 by ismo          #+#    #+#                 */
+/*   Updated: 2025/04/14 14:34:45 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_list	*create_token_list(char *prompt, int is_variable)
 		return (NULL);
 	tokens = init_list();
 	if (!tokens)
-		return (NULL);
+		return (free(token), NULL);
 	while (token && token->type != EndOfInput)
 	{
 		add_to_list(tokens, token);
