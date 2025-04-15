@@ -29,11 +29,11 @@ BUILTINS_DIR			:= $(LOGIC_DIR)/builtins
 ENVIRONMENT_DIR			:= $(LOGIC_DIR)/environment
 PARSER_DIR				:= $(LOGIC_DIR)/parser
 SIGNALS_DIR				:= $(LOGIC_DIR)/signals
+EXPANDER_DIR			:= $(LOGIC_DIR)/expander
 
 # Executor directories (src/logic/executor/)
 COMMAND_RUNNER_DIR		:= $(EXECUTOR_DIR)/command_runner
 PIPELINE_RUNNER_DIR		:= $(EXECUTOR_DIR)/pipeline_runner
-VARIABLES_EXPANDER_DIR	:= $(EXECUTOR_DIR)/variables_expander
 FDS_DIR					:= $(COMMAND_RUNNER_DIR)/fds
 
 # Builtin directories (src/logic/builtins/)
@@ -78,7 +78,8 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(ENVIRONMENT_MODEL_DIR) \
 							$(GENERAL_MODEL_DIR) \
 							$(IO_MODEL_DIR) \
-							$(SIGNALS_DIR)
+							$(SIGNALS_DIR) \
+							$(EXPANDER_DIR)
 
 # Library directories (libraries/)
 LIST_LIB_DIR			:= $(LIB_DIR)/list
@@ -116,6 +117,9 @@ C_FILES 				:= main.c \
 							pipeline_runner.c \
 							pipeline_runner_2.c \
 							save_result_to_env.c \
+							expander.c \
+							expander_utils.c \
+							expanders.c \
 							cd.c \
 							path_resolver.c \
 							echo.c \
@@ -129,9 +133,6 @@ C_FILES 				:= main.c \
 							env_helpers.c \
 							environment.c \
 							set_unset_env_var.c \
-							expander.c \
-							expander_utils.c \
-							expanders.c \
 							non_terminals.c \
 							parse_redirs.c \
 							parser.c \
@@ -150,7 +151,10 @@ C_FILES 				:= main.c \
 							redirection_target.c \
 							stream.c \
 							signal_handlers.c \
-							signals.c
+							signals.c \
+							expander.c \
+							expander_utils.c \
+							expanders.c
 
 HEADERS 				:= command_builder.h \
 							pipeline_builder.h \
@@ -166,6 +170,9 @@ HEADERS 				:= command_builder.h \
 							io.h \
 							redirection_processor.h \
 							pipeline_runner.h \
+							expander.h \
+							expander_utils.h \
+							expanders.h \
 							cd.h \
 							echo.h \
 							export.h \
@@ -175,9 +182,6 @@ HEADERS 				:= command_builder.h \
 							pwd.h \
 							exit_builtin.h \
 							environment.h \
-							expander.h \
-							expander_utils.h \
-							expanders.h \
 							non_terminals.h \
 							parse_redirs.h \
 							parser.h \
@@ -196,7 +200,10 @@ HEADERS 				:= command_builder.h \
 							redirection_target.h \
 							stream.h \
 							signal_handlers.h \
-							signals.h
+							signals.h \
+							expander.h \
+							expander_utils.h \
+							expanders.h
 
 # Objects
 OBJ     				:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(C_FILES))

@@ -176,5 +176,9 @@ compile_leaks: $(OBJ) $(LIBRARIES)
 # Rebuild the Project
 re: fclean all
 
+print:
+	@echo $(notdir $(C_FILES)) | tr ' ' '\n' > c_files.txt
+	@echo $(notdir $(HEADERS)) | tr ' ' '\n' > headers.txt
+
 # Phony Targets
 .PHONY: all clean fclean re
