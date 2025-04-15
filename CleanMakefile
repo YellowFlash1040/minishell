@@ -78,9 +78,8 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(ENVIRONMENT_MODEL_DIR) \
 							$(GENERAL_MODEL_DIR) \
 							$(IO_MODEL_DIR) \
-							$(SIGNALS_DIR) \
-							$(EXPANDER_DIR)
-
+							$(SIGNALS_DIR)
+							
 # Library directories (libraries/)
 LIST_LIB_DIR			:= $(LIB_DIR)/list
 STRING_ARRAY_LIB_DIR	:= $(LIB_DIR)/string_array
