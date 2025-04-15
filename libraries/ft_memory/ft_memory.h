@@ -6,12 +6,14 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:08:32 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/11 17:17:06 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:18:41 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MEMORY_H
 # define FT_MEMORY_H
+
+# include <stdlib.h> // for size_t
 
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);

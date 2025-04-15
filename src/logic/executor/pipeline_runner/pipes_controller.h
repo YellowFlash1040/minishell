@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.h                                          :+:      :+:    :+:   */
+/*   pipes_controller.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/06 17:27:12 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/13 20:17:39 by akovtune         ###   ########.fr       */
+/*   Created: 2025/04/13 19:31:25 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/13 19:34:23 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNALS_H
-# define SIGNALS_H
+#ifndef PIPES_CONTROLLER_H
+# define PIPES_CONTROLLER_H
 
-# include "ft_memory.h"
-# include "signal_handlers.h"
+# include "list.h"
+# include "p1pe.h"
+# include "global_status_codes.h"
 
-typedef struct sigaction	t_sigaction;
+int	create_all_pipes(t_list *pipes, int amount);
+int	close_all_pipes(t_list *pipes);
 
-typedef enum sigmode
-{
-	MainSignals,
-	InteractiveSignals
-}	t_sigmode;
-
-void	set_handlers(t_sigmode mode);
-void	reset_signal_handlers_to_default(void);
 #endif

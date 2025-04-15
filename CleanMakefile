@@ -73,7 +73,6 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(PWD_DIR) \
 							$(EXIT_DIR) \
 							$(ENVIRONMENT_DIR) \
-							$(VARIABLES_EXPANDER_DIR) \
 							$(PARSER_DIR) \
 							$(ENVIRONMENT_MODEL_DIR) \
 							$(GENERAL_MODEL_DIR) \
@@ -114,11 +113,9 @@ C_FILES 				:= main.c \
 							redirection_processor.c \
 							standard_fds.c \
 							pipeline_runner.c \
-							pipeline_runner_2.c \
+							pipes_controller.c \
+							run_commands.c \
 							save_result_to_env.c \
-							expander.c \
-							expander_utils.c \
-							expanders.c \
 							cd.c \
 							path_resolver.c \
 							echo.c \
@@ -141,6 +138,7 @@ C_FILES 				:= main.c \
 							tokenizers.c \
 							variable.c \
 							command.c \
+							p1pe.c \
 							pipeline.c \
 							prompt.c \
 							token.c \
@@ -150,7 +148,10 @@ C_FILES 				:= main.c \
 							redirection_target.c \
 							stream.c \
 							signal_handlers.c \
-							signals.c
+							signals.c \
+							expander.c \
+							expander_utils.c \
+							expanders.c
 
 HEADERS 				:= command_builder.h \
 							pipeline_builder.h \
@@ -166,9 +167,7 @@ HEADERS 				:= command_builder.h \
 							io.h \
 							redirection_processor.h \
 							pipeline_runner.h \
-							expander.h \
-							expander_utils.h \
-							expanders.h \
+							pipes_controller.h \
 							cd.h \
 							echo.h \
 							export.h \
@@ -187,6 +186,7 @@ HEADERS 				:= command_builder.h \
 							tokenizers.h \
 							variable.h \
 							command.h \
+							p1pe.h \
 							pipeline.h \
 							prompt.h \
 							token.h \
@@ -196,7 +196,10 @@ HEADERS 				:= command_builder.h \
 							redirection_target.h \
 							stream.h \
 							signal_handlers.h \
-							signals.h
+							signals.h \
+							expander.h \
+							expander_utils.h \
+							expanders.h
 
 # Objects
 OBJ     				:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(C_FILES))

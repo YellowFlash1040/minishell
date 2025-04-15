@@ -39,7 +39,9 @@ int	run_a_command(t_command *command)
 				exit(result);
 			exit(command->exit_status_code);
 		}
-		return (handle_child_process(command));
+		if (!command->is_in_pipeline)
+			return (handle_child_process(command));
+		return (SUCCESS);
 	}
 	return (execute_command(command));
 }
@@ -62,14 +64,7 @@ int	handle_child_process(t_command *command)
 	if (WIFEXITED(exit_status))
 		command->exit_status_code = WEXITSTATUS(exit_status);
 	else if (WIFSIGNALED(exit_status))
-	{
-		exit_status = WTERMSIG(exit_status);
-		command->exit_status_code = 128 + exit_status;
-		if (exit_status == SIGINT)
-			printf("\n");
-		else if (exit_status == SIGQUIT)
-			printf("Quit (core dumped)\n");
-	}
+		command->exit_status_code = 128 + WTERMSIG(exit_status);
 	else if (WIFSTOPPED(exit_status))
 		command->exit_status_code = WSTOPSIG(exit_status);
 	else

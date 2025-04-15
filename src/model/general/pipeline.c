@@ -12,7 +12,8 @@
 
 #include "pipeline.h"
 
-void		free_command(void *value);
+void	free_command(void *value);
+void	free_pipe(void *value);
 
 t_pipeline	*init_pipeline(void)
 {
@@ -23,6 +24,7 @@ t_pipeline	*init_pipeline(void)
 		return (NULL);
 	pipeline->commands = NULL;
 	pipeline->status_code = 0;
+	pipeline->pipes = NULL;
 	return (pipeline);
 }
 
@@ -35,6 +37,8 @@ void	destroy_pipeline(t_pipeline **pipeline_ref)
 	pipeline = *pipeline_ref;
 	if (pipeline->commands)
 		destroy_list(&pipeline->commands, free_command);
+	if (pipeline->pipes)
+		destroy_list(&pipeline->pipes, free_pipe);
 	free(pipeline);
 	*pipeline_ref = NULL;
 }
@@ -45,4 +49,12 @@ void	free_command(void *value)
 
 	command = (t_command *)value;
 	destroy_command(&command);
+}
+
+void	free_pipe(void *value)
+{
+	t_p1pe	*p1pe;
+
+	p1pe = (t_p1pe *)value;
+	destroy_p1pe(&p1pe);
 }

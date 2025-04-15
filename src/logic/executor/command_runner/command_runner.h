@@ -32,5 +32,6 @@
 # define WRITE_FUNC_ERR 196
 
 int	run_a_command(t_command *command);
+int	handle_child_process(t_command *command);
 
 #endif

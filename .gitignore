@@ -13,3 +13,5 @@
 !tests/**/*.h
 !tests/**/Makefile
 !CleanMakefile
+debug/
+other/

@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.h                                          :+:      :+:    :+:   */
+/*   p1pe.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/06 17:27:12 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/13 20:17:39 by akovtune         ###   ########.fr       */
+/*   Created: 2025/04/13 17:15:22 by akovtune          #+#    #+#             */
+/*   Updated: 2025/04/13 17:16:59 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNALS_H
-# define SIGNALS_H
+#ifndef P1PE_H
+# define P1PE_H
 
-# include "ft_memory.h"
-# include "signal_handlers.h"
+# include <stdlib.h>
+# include <unistd.h>
 
-typedef struct sigaction	t_sigaction;
+# define P1PE_INIT_ERR 1
 
-typedef enum sigmode
+typedef enum e_pipe_end
 {
-	MainSignals,
-	InteractiveSignals
-}	t_sigmode;
+	READ_END = 0,
+	WRITE_END = 1
+}	t_pipe_end;
 
-void	set_handlers(t_sigmode mode);
-void	reset_signal_handlers_to_default(void);
+typedef struct p1pe
+{
+	int	read_end;
+	int	write_end;
+}	t_p1pe;
+
+t_p1pe	*init_p1pe(void);
+void	destroy_p1pe(t_p1pe **p1pe_ref);
+
 #endif

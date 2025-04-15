@@ -18,6 +18,7 @@
 
 # define EMPTY_PIPELINE_REF_ERR 110
 # define COMMANDS_LIST_INIT_ERR 111
+# define PIPES_LIST_INIT_ERR 112
 
 int	build_pipeline(t_pipeline **pipeline);
 

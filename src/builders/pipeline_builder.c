@@ -25,5 +25,8 @@ int	build_pipeline(t_pipeline **pipeline_ref)
 	pipeline->commands = init_list();
 	if (!pipeline->commands)
 		return (destroy_pipeline(pipeline_ref), COMMANDS_LIST_INIT_ERR);
+	pipeline->pipes = init_list();
+	if (!pipeline->pipes)
+		return (destroy_pipeline(pipeline_ref), PIPES_LIST_INIT_ERR);
 	return (SUCCESS);
 }

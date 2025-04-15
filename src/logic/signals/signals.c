@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   signals.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: akovtune <akovtune@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/04/06 16:59:01 by ismo          #+#    #+#                 */
-/*   Updated: 2025/04/14 14:17:42 by ismo          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/06 16:59:01 by ismo              #+#    #+#             */
+/*   Updated: 2025/04/13 20:23:41 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	choose_handlers(t_sigmode mode, t_sigaction *sigint,
 	else
 	{
 		sigint->sa_handler = main_sigint_handler;
-		sigquit->sa_handler = SIG_IGN;
+		sigquit->sa_handler = main_sigint_handler;
 	}
 }
 

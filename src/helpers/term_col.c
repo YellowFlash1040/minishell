@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   term_col.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:24:30 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/10 16:15:50 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/13 20:08:31 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include <termios.h>
 #include <stdbool.h>
 #include <sys/ioctl.h>
-
-extern int	g_received_signal;
 
 void	set_term_attr(void)
 {

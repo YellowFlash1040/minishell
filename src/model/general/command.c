@@ -30,8 +30,9 @@ t_command	*init_command(void)
 	command->redirections = NULL;
 	command->environment = NULL;
 	command->exit_status_code = 0;
-	command->unused_pipe_end = -1;
 	command->needs_a_subshell = true;
+	command->is_in_pipeline = false;
+	command->pipes = NULL;
 	return (command);
 }
 
