@@ -63,7 +63,6 @@ SRC_DIRS				:= $(SRC_DIR) \
 							$(COMMAND_RUNNER_DIR) \
 							$(FDS_DIR) \
 							$(PIPELINE_RUNNER_DIR) \
-							$(EXPANDER_DIR) \
 							$(CD_DIR) \
 							$(ECHO_DIR) \
 							$(EXPORT_DIR) \

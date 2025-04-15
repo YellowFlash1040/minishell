@@ -151,10 +151,7 @@ C_FILES 				:= main.c \
 							redirection_target.c \
 							stream.c \
 							signal_handlers.c \
-							signals.c \
-							expander.c \
-							expander_utils.c \
-							expanders.c
+							signals.c
 
 HEADERS 				:= command_builder.h \
 							pipeline_builder.h \
@@ -200,10 +197,7 @@ HEADERS 				:= command_builder.h \
 							redirection_target.h \
 							stream.h \
 							signal_handlers.h \
-							signals.h \
-							expander.h \
-							expander_utils.h \
-							expanders.h
+							signals.h
 
 # Objects
 OBJ     				:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(C_FILES))
