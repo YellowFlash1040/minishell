@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:27:12 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/13 20:17:39 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:55:43 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ typedef struct sigaction	t_sigaction;
 typedef enum sigmode
 {
 	MainSignals,
-	InteractiveSignals
+	InteractiveSignals,
+	ForkedProcessSignals
 }	t_sigmode;
 
 void	set_handlers(t_sigmode mode);

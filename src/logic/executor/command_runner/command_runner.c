@@ -33,7 +33,7 @@ int	run_a_command(t_command *command)
 		command->id = pid;
 		if (pid == 0)
 		{
-			reset_signal_handlers_to_default();
+			set_handlers(ForkedProcessSignals);
 			result = execute_command(command);
 			if (result != SUCCESS)
 				exit(result);
@@ -64,7 +64,16 @@ int	handle_child_process(t_command *command)
 	if (WIFEXITED(exit_status))
 		command->exit_status_code = WEXITSTATUS(exit_status);
 	else if (WIFSIGNALED(exit_status))
+	{
 		command->exit_status_code = 128 + WTERMSIG(exit_status);
+		if (!is_builtin(command->executable))
+		{
+			if (command->exit_status_code == 130)
+				printf("\n");
+			else if (command->exit_status_code == 131)
+				printf("Quit (core dumped)\n");
+		}
+	}
 	else if (WIFSTOPPED(exit_status))
 		command->exit_status_code = WSTOPSIG(exit_status);
 	else
