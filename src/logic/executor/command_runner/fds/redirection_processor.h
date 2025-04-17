@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   redirection_processor.h                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/06 16:39:06 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/06 16:50:04 by akovtune         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   redirection_processor.h                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: akovtune <akovtune@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/04/06 16:39:06 by akovtune      #+#    #+#                 */
+/*   Updated: 2025/04/17 14:10:34 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # include "heredoc_processor.h"
 # include "file_processor.h"
 
-int	process_redirections(t_list *redirections);
+int	process_redirections(t_list *redirections, int pipe_fd[2]);
 
 #endif

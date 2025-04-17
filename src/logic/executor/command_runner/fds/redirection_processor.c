@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   redirection_processor.c                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 12:40:49 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/06 18:34:11 by akovtune         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   redirection_processor.c                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: akovtune <akovtune@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/03/26 12:40:49 by akovtune      #+#    #+#                 */
+/*   Updated: 2025/04/17 14:12:39 by ismo          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "io.h"
 
-int	process_redirection(t_redirection *redirection);
-int	get_target_fd(t_redirection_target *target, int *fd);
+int	process_redirection(t_redirection *redirection, int pipe_fd[2]);
+int	get_target_fd(t_redirection_target *target, int *fd, int pipe_fd[2]);
 int	setup_stream(t_stream *stream, int fd);
 
-int	process_redirections(t_list *redirections)
+int	process_redirections(t_list *redirections, int pipe_fd[2])
 {
 	int				result;
 	t_list_node		*node;
@@ -28,7 +28,7 @@ int	process_redirections(t_list *redirections)
 	while (++i < redirections->count)
 	{
 		redirection = (t_redirection *)node->value;
-		result = process_redirection(redirection);
+		result = process_redirection(redirection, pipe_fd);
 		if (result != SUCCESS)
 			return (result);
 		node = node->next;
@@ -36,12 +36,12 @@ int	process_redirections(t_list *redirections)
 	return (SUCCESS);
 }
 
-int	process_redirection(t_redirection *redirection)
+int	process_redirection(t_redirection *redirection, int pipe_fd[2])
 {
 	int						result;
 	int						fd;
 
-	result = get_target_fd(redirection->target, &fd);
+	result = get_target_fd(redirection->target, &fd, pipe_fd);
 	if (result != SUCCESS)
 		return (result);
 	result = setup_stream(redirection->stream, fd);
@@ -50,7 +50,7 @@ int	process_redirection(t_redirection *redirection)
 	return (SUCCESS);
 }
 
-int	get_target_fd(t_redirection_target *target, int *fd)
+int	get_target_fd(t_redirection_target *target, int *fd, int pipe_fd[2])
 {
 	int			result;
 	t_file		*file;
@@ -68,7 +68,7 @@ int	get_target_fd(t_redirection_target *target, int *fd)
 	else if (target->type == HERE_DOC)
 	{
 		heredoc = (t_heredoc *)target->value;
-		result = process_heredoc(heredoc);
+		result = process_heredoc(heredoc, pipe_fd);
 		if (result != SUCCESS)
 			return (result);
 		*fd = heredoc->fd;
