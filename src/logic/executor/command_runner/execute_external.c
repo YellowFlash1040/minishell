@@ -6,13 +6,12 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:25:09 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/05 17:04:44 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:29:12 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command_runner.h"
 
-int	setup_command_io(t_command *command);
 int	launch_binary(t_string name, t_string_array args, t_list *env);
 int	setup_binary_path(t_string *name_ref, t_list *env);
 int	find_binary(t_string path, t_list *env, t_string *result);

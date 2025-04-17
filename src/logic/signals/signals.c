@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:59:01 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/13 20:23:41 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:11:24 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,15 @@ void	choose_handlers(t_sigmode mode, t_sigaction *sigint,
 		sigint->sa_handler = interactive_sigint_handler;
 		sigquit->sa_handler = SIG_IGN;
 	}
+	else if (MainSignals)
+	{
+		sigint->sa_handler = main_signals_handler;
+		sigquit->sa_handler = SIG_IGN;
+	}
 	else
 	{
-		sigint->sa_handler = main_sigint_handler;
-		sigquit->sa_handler = main_sigint_handler;
+		sigint->sa_handler = forked_signals_handler;
+		sigquit->sa_handler = forked_signals_handler;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 16:33:09 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/06 18:32:03 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:28:48 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,7 @@ typedef struct stream_binding
 	int				standard_fd;
 	t_stream		*stream;
 }	t_stream_binding;
+
+int	setup_command_io(t_command *command);
 
 #endif

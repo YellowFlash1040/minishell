@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_processor.h                                :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/06 16:36:20 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/16 16:38:23 by akovtune         ###   ########.fr       */
+/*   Created: 2024/11/08 14:04:44 by akovtune          #+#    #+#             */
+/*   Updated: 2025/01/08 14:05:18 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEREDOC_PROCESSOR_H
-# define HEREDOC_PROCESSOR_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
+# include <stdbool.h>
+# include <stdlib.h>
 # include <unistd.h>
-# include <sys/wait.h>
-# include <signal.h>
-# include "heredoc.h"
-# include "global_status_codes.h"
-# include "get_next_line.h"
-# include "signal_handlers.h"
 
-# define FORK_FUNC_ERR 193
-# define CHILD_HANDLER_ERR 191
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
-# include "pipeline_runner.h"
+char	*get_next_line(int fd);
 
-int	process_heredoc(t_heredoc *heredoc);
+typedef struct gnl
+{
+	char	*buffer;
+	char	*temp;
+	int		nl_index;
+	ssize_t	rb_c;
+}	t_gnl;
+
+char	*read_buffer_size(int fd, ssize_t *rb_c);
+char	*extractn(char *s, size_t n);
+char	*join(char *s1, char *s2);
+size_t	len(char *str);
 
 #endif

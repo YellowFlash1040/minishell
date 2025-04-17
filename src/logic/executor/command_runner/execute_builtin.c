@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:21:03 by akovtune          #+#    #+#             */
-/*   Updated: 2025/03/30 15:01:24 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:05:34 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int		execute_with_exit_flow(t_command *command);
 int		execute_with_subshell_flow(t_command *command);
 int		execute_with_std_flow(t_command *command);
-int		setup_command_io(t_command *command);
 int		remember_standard_fds(int standard_fds[3]);
 int		restore_standard_fds(int standard_fds[3]);
 void	close_std_fd_copies(int fd_copies[3]);
