@@ -48,7 +48,6 @@ int	capture_heredoc(int pipefd[2], t_string delimiter)
 		return (perror("fork"), FAILURE);
 	if (pid == 0)
 	{
-		close_unused_fds();
 		close(pipefd[READ_END]);
 		heredoc_child(pipefd[WRITE_END], delimiter);
 	}
@@ -78,6 +77,7 @@ void	heredoc_child(int write_fd, t_string delimiter)
 		exit (FAILURE);
 	collect_input(write_fd, delimiter_with_nl);
 	free(delimiter_with_nl);
+	close_unused_fds();
 	close(write_fd);
 	if (g_received_signal == -1)
 		exit(SUCCESS);
