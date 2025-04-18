@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:38:15 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/08 17:02:20 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/18 17:41:06 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,27 @@ int	expand_command(t_command *command)
 	while (redir_node && redir_node->value)
 	{
 		redir = (t_redirection *) redir_node->value;
-		if (redir->target->type == FILE_TYPE)
-			expand_path(command->environment, redir->target->value);
+		if (!redir->target->value)
+			return (FAILURE);
+		if (redir->target->type == FILE_TYPE
+			&& expand_path(command->environment, redir->target->value)
+			!= SUCCESS)
+			return (FAILURE);
 		redir_node = redir_node->next;
 	}
 	return (SUCCESS);
 }
 
-void	expand_commands(t_list **commands)
+int	expand_commands(t_list **commands)
 {
 	t_list_node	*node;
 
 	node = (*commands)->head;
 	while (node)
 	{
-		expand_command((t_command *)node->value);
+		if (expand_command((t_command *)node->value) != SUCCESS)
+			return (FAILURE);
 		node = node->next;
 	}
+	return (SUCCESS);
 }

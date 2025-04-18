@@ -52,6 +52,7 @@ int	main(int argc, char *argv[], char *envp[])
 		return (FAILURE);
 	run_shell_loop(env);
 	destroy_environment(&env);
+	clear_history();
 	return (0);
 }
 
@@ -97,9 +98,11 @@ int	process_line(t_string line, t_list *env)
 		return (destroy_list(&tokens, free_token), SUCCESS);
 	else if (pipeline)
 	{
-		expand_commands(&pipeline->commands);
 		g_received_signal = -1;
-		run_a_pipeline(pipeline);
+		if (expand_commands(&pipeline->commands) != SUCCESS
+			|| run_a_pipeline(pipeline) != SUCCESS)
+			return (destroy_pipeline(&pipeline),
+				destroy_list(&tokens, free_token), FAILURE);
 		destroy_pipeline(&pipeline);
 	}
 	add_history(line);
