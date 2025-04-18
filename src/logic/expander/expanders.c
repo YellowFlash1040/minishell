@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:47:23 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/18 16:30:08 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:53:37 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	expand_token(t_list *env, t_token *token, t_list *list)
 	else if (token->type == EnvVariable)
 		expanded_tok = dup_env_var(env, token->value);
 	if (!expanded_tok || !add_to_list(list, expanded_tok))
-		return (false);
+		return (free(expanded_tok), false);
 	return (true);
 }
 
@@ -57,7 +57,8 @@ char	*expand_comb(t_list *env, char *arg)
 	while (token && is_file(token->type))
 	{
 		if (!expand_token(env, token, result))
-			return (NULL);
+			return (destroy_list(&tokens, free_token),
+				destroy_list(&result, free), free_token(token), NULL);
 		token = read_token(tokens, t++);
 	}
 	destroy_list(&tokens, free_token);
