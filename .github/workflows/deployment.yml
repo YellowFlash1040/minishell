@@ -21,6 +21,12 @@ jobs:
           cp -r -t prod/ src libraries .gitignore
           cp CleanMakefile prod/Makefile
 
+      - name: Verify build
+        run: |
+          cd prod
+          make
+          make fclean
+
       - name: Commit and push to prod
         run: |
           cd prod
