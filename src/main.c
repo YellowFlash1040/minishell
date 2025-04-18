@@ -98,11 +98,11 @@ int	process_line(t_string line, t_list *env)
 		return (destroy_list(&tokens, free_token), SUCCESS);
 	else if (pipeline)
 	{
-		if (expand_commands(&pipeline->commands) != SUCCESS)
-			return (destroy_pipeline(&pipeline), destroy_list(&tokens, free_token), FAILURE);
 		g_received_signal = -1;
-		if (run_a_pipeline(pipeline) != SUCCESS)
-			return (destroy_pipeline(&pipeline), destroy_list(&tokens, free_token), FAILURE);
+		if (expand_commands(&pipeline->commands) != SUCCESS
+			|| run_a_pipeline(pipeline) != SUCCESS)
+			return (destroy_pipeline(&pipeline),
+				destroy_list(&tokens, free_token), FAILURE);
 		destroy_pipeline(&pipeline);
 	}
 	add_history(line);
