@@ -97,7 +97,8 @@ int	process_line(t_string line, t_list *env)
 		return (destroy_list(&tokens, free_token), SUCCESS);
 	else if (pipeline)
 	{
-		expand_commands(&pipeline->commands);
+		if (expand_commands(&pipeline->commands) != SUCCESS)
+			return (destroy_list(&tokens, free_token), FAILURE);
 		g_received_signal = -1;
 		run_a_pipeline(pipeline);
 		destroy_pipeline(&pipeline);

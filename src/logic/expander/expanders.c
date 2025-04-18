@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:47:23 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/10 16:55:39 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:30:08 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,20 @@
 #include "parser_utils.h"
 #include "expander_utils.h"
 
-void	expand_token(t_list *env, t_token *token, t_list *list)
+bool	expand_token(t_list *env, t_token *token, t_list *list)
 {
+	char	*expanded_tok;
+
+	expanded_tok = NULL;
 	if (token->type == SingleQuote || token->type == Word)
-		add_to_list(list, ft_strdup(token->value));
+		expanded_tok = ft_strdup(token->value);
 	else if (token->type == DoubleQuote)
-		add_to_list(list, expand_double_quote(env, token->value));
+		expanded_tok = expand_double_quote(env, token->value);
 	else if (token->type == EnvVariable)
-		add_to_list(list, dup_env_var(env, token->value));
+		expanded_tok = dup_env_var(env, token->value);
+	if (!expanded_tok || !add_to_list(list, expanded_tok))
+		return (false);
+	return (true);
 }
 
 char	*expand_comb(t_list *env, char *arg)
@@ -40,8 +46,6 @@ char	*expand_comb(t_list *env, char *arg)
 	int		t;
 	t_token	*token;
 
-	if (!arg || !env)
-		return (NULL);
 	tokens = create_token_list(arg, 0);
 	if (!tokens)
 		return (NULL);
@@ -52,7 +56,8 @@ char	*expand_comb(t_list *env, char *arg)
 	token = read_token(tokens, t++);
 	while (token && is_file(token->type))
 	{
-		expand_token(env, token, result);
+		if (!expand_token(env, token, result))
+			return (NULL);
 		token = read_token(tokens, t++);
 	}
 	destroy_list(&tokens, free_token);
@@ -61,16 +66,16 @@ char	*expand_comb(t_list *env, char *arg)
 	return (expanded_arg);
 }
 
-void	expand_path(t_list *env, t_file *file)
+int	expand_path(t_list *env, t_file *file)
 {
 	char	*expanded_path;
 
 	expanded_path = expand_comb(env, file->path);
-	if (expanded_path)
-	{
-		free(file->path);
-		file->path = expanded_path;
-	}
+	if (!expanded_path)
+		return (FAILURE);
+	free(file->path);
+	file->path = expanded_path;
+	return (SUCCESS);
 }
 
 int	expand_arguments(t_command *command)

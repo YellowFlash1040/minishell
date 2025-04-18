@@ -6,7 +6,7 @@
 /*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:07:18 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/02 13:24:13 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:28:56 by ibenne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*read_token(t_list *tokens, int index)
 	t_list_node	*node;
 
 	node = get_node(index, tokens);
-	if (index >= tokens->count)
+	if (!node || index >= tokens->count)
 		return (NULL);
 	return ((t_token *) node->value);
 }
