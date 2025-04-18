@@ -29,7 +29,7 @@ int	run_a_command(t_command *command)
 	{
 		pid = fork();
 		if (pid == -1)
-			return (FORK_FUNC_ERR);
+			return (perror("fork"), FORK_FUNC_ERR);
 		command->id = pid;
 		if (pid == 0)
 		{

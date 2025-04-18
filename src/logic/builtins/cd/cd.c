@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:01:31 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/11 16:37:33 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:23:04 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,15 @@ int	change_directory(t_string new_dir, t_command *command)
 int	update_env_variables(t_list *env, t_string new_oldpwd)
 {
 	int			result;
+	t_string	new_pwd;
 
 	result = set_env_variable(env, "OLDPWD", new_oldpwd, true);
 	if (result != SUCCESS)
 		return (result);
-	result = set_env_variable(env, "PWD", getcwd(NULL, 0), true);
+	new_pwd = getcwd(NULL, 0);
+	if (!new_pwd)
+		return (FAILURE);
+	result = set_env_variable(env, "PWD", new_pwd, true);
 	if (result != SUCCESS)
 		return (result);
 	return (SUCCESS);

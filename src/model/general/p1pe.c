@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:15:25 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/13 17:18:14 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:14:36 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_p1pe	*init_p1pe(void)
 
 	result = pipe(pipe_fd);
 	if (result == -1)
-		return (NULL);
+		return (perror("pipe"), NULL);
 	p1pe = (t_p1pe *)malloc(sizeof(t_p1pe));
 	if (!p1pe)
 	{
