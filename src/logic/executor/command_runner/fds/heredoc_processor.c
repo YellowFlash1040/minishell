@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 18:03:39 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/13 20:07:35 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:37:06 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	process_heredoc(t_heredoc *heredoc)
 		return (FAILURE);
 	result = pipe(pipe_fd);
 	if (result == -1)
-		return (result);
+		return (perror("pipe"), FAILURE);
 	result = capture_heredoc(pipe_fd[1], heredoc->delimiter);
 	close(pipe_fd[1]);
 	if (result != SUCCESS)

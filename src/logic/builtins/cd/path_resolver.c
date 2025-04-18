@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:01:51 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/07 12:43:51 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:25:04 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ t_string	get_home_directory(t_list *env)
 
 	user_home_directory = get_env_variable(env, "HOME");
 	if (!user_home_directory)
+	{
 		user_home_directory = getenv("HOME");
+		if (!user_home_directory)
+			return (NULL);
+	}
 	return (user_home_directory);
 }
 
