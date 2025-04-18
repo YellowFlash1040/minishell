@@ -155,7 +155,9 @@ clean:
 	@rm -rf $(OBJ_DIR)
 	@echo "$(RED)Removed object files$(RESET)"
 	@for lib in $(LIB_DIR)/*; do \
-		$(MAKE) -C $$lib clean > /dev/null; \
+		if [ -f $$lib/Makefile ]; then \
+			$(MAKE) -C $$lib clean > /dev/null; \
+		fi \
 	done
 
 # Clean up All Generated Files
@@ -163,7 +165,9 @@ fclean: clean
 	@rm -rf $(NAME)
 	@echo "$(RED)Removed $(NAME)$(RESET)"
 	@for lib in $(LIB_DIR)/*; do \
-		$(MAKE) -C $$lib fclean > /dev/null; \
+		if [ -f $$lib/Makefile ]; then \
+			$(MAKE) -C $$lib fclean > /dev/null; \
+		fi \
 	done
 
 leaks: fclean compile_leaks
