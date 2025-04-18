@@ -52,7 +52,7 @@ int	main(int argc, char *argv[], char *envp[])
 		return (FAILURE);
 	run_shell_loop(env);
 	destroy_environment(&env);
-	clear_history();
+	rl_clear_history();
 	return (0);
 }
 
