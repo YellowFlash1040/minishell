@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:15:22 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/13 17:16:59 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/18 18:37:35 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 
 # define P1PE_INIT_ERR 1
 
