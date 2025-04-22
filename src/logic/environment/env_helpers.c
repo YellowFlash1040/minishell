@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:23:56 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/11 16:25:24 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:05:00 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_string_array	construct_environment_for_export(t_list *env)
 	while (node)
 	{
 		variable = (t_variable *)node->value;
-		if (variable->is_exported)
+		if (variable->is_exported && variable->value != NULL)
 		{
 			export_env[i] = convert_variable_to_string(variable);
 			if (!export_env[i])
@@ -88,7 +88,7 @@ int	count_variables_for_export(t_list *env)
 	while (node)
 	{
 		variable = (t_variable *)node->value;
-		if (variable->is_exported)
+		if (variable->is_exported && variable->value != NULL)
 			count++;
 		node = node->next;
 	}

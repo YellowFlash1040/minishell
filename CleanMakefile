@@ -132,6 +132,7 @@ C_FILES 				:= main.c \
 							non_terminals.c \
 							parse_redirs.c \
 							parser.c \
+							variable_parser.c \
 							parser_utils.c \
 							tokenizer.c \
 							tokenizer_utils.c \
