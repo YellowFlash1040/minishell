@@ -25,6 +25,9 @@ int	run_a_command(t_command *command)
 	pid_t	pid;
 	int		result;
 
+	result = expand_command(command);
+	if (result != SUCCESS)
+		return (perror("malloc"), result);
 	if (command->needs_a_subshell)
 	{
 		pid = fork();

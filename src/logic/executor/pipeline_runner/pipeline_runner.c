@@ -19,6 +19,8 @@ void	set_commands_to_pipeline_mode(t_pipeline *pipeline);
 int		run_commands(t_pipeline *pipeline);
 int		save_result_to_env(t_list *env, int pipeline_status_code);
 
+extern int		g_received_signal;
+
 int	run_a_pipeline(t_pipeline *pipeline)
 {
 	int			result;
@@ -31,6 +33,9 @@ int	run_a_pipeline(t_pipeline *pipeline)
 		return (FAILURE);
 	if (pipeline->commands->count == 1 && is_builtin(first_command->executable))
 		first_command->needs_a_subshell = false;
+	if (g_received_signal != -1)
+		set_env_variable_int(first_command->environment,
+			"?", 128 + g_received_signal, false);
 	result = create_all_pipes(pipeline->pipes, pipeline->commands->count - 1);
 	if (result != SUCCESS)
 		return (FAILURE);
