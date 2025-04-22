@@ -6,7 +6,7 @@
 /*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 13:50:25 by akovtune          #+#    #+#             */
-/*   Updated: 2025/04/11 16:29:36 by akovtune         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:47:10 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,21 @@ bool	compare_variables_by_name(void *value1, void *value2);
 void	free_variable(void *value);
 int		add_env_variable(t_list *env, t_string name, t_string value,
 			bool is_exported);
+
+int	set_env_variable_int(t_list *env, t_string name, int value,
+				bool is_exported)
+{
+	int			result;
+	t_string	str_value;
+
+	str_value = ft_itoa(value);
+	if (!str_value)
+		return (FAILURE);
+	result = set_env_variable(env, name, str_value, is_exported);
+	if (result != SUCCESS)
+		return (result);
+	return (SUCCESS);
+}
 
 int	set_env_variable(t_list *env, t_string name, t_string value,
 	bool is_exported)
@@ -58,13 +73,6 @@ int	add_env_variable(t_list *env, t_string name, t_string value,
 	if (!add_to_list(env, variable))
 		return (destroy_variable(&variable), FAILURE);
 	return (SUCCESS);
-}
-
-int	unset_env_variable(t_list *env, t_string name)
-{
-	if (remove_from_list(name, env, compare_variables_by_name, free_variable))
-		return (SUCCESS);
-	return (FAILURE);
 }
 
 bool	compare_variables_by_name(void *value1, void *value2)

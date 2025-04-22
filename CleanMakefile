@@ -128,7 +128,8 @@ C_FILES 				:= main.c \
 							exit_builtin.c \
 							env_helpers.c \
 							environment.c \
-							set_unset_env_var.c \
+							set_env_var.c \
+							unset_env_var.c \
 							non_terminals.c \
 							parse_redirs.c \
 							parser.c \
