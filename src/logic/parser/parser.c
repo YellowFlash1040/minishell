@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibenne <ibenne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akovtune <akovtune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:11:42 by ismo              #+#    #+#             */
-/*   Updated: 2025/04/08 17:32:17 by ibenne           ###   ########.fr       */
+/*   Updated: 2025/04/22 17:16:41 by akovtune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,6 @@
 #include "global_status_codes.h"
 #include "lst_to_str.h"
 #include "non_terminals.h"
-
-int	parse_variable(t_list *tokens, char **name, char **value)
-{
-	int		index;
-	t_token	*token;
-
-	if (!name || !value)
-		return (FAILURE);
-	index = 0;
-	token = read_token(tokens, index++);
-	if (!token || token->type != Word)
-		return (FAILURE);
-	*name = ft_strdup(token->value);
-	token = read_token(tokens, index);
-	if (!name || !token)
-		return (free(*name), FAILURE);
-	if (token->type == EndOfInput)
-	{
-		*value = NULL;
-		return (SUCCESS);
-	}
-	while (token->type == EqualSign)
-		token = read_token(tokens, ++index);
-	if (!token || nt_comb(tokens, &index, value) != SUCCESS)
-		return (free(*name), FAILURE);
-	return (SUCCESS);
-}
 
 int	parse_pipeline(t_list *tokens, t_pipeline **pipeline, t_list *env)
 {
