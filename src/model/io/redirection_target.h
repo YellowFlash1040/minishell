@@ -22,14 +22,21 @@
 typedef enum target_type
 {
 	FILE_TYPE, //word FILE was already taken by some of the standard libraries
-	HERE_DOC
+	HERE_DOC,
+	PIPE_TYPE
 }	t_target_type;
 
 typedef struct redirection_target
 {
-	/// @brief Default: `NULL`. Possible values: `t_file *`, `t_heredoc *`
+	/**
+	 * @brief Default: `NULL`. 
+	 * Possible values: `t_file *`, `t_heredoc *`, `int *`
+	 */
 	void				*value;
-	/// @brief Default: `FILE`. Possible values: `FILE`, `HERE_DOC`
+	/**
+	* @brief Default: `FILE`. 
+	* Possible values: `FILE`, `HERE_DOC`, `PIPE_TYPE`
+	*/
 	t_target_type		type;
 }	t_redirection_target;
 
