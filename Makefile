@@ -118,6 +118,8 @@ LIBRARIES				:= $(LIST_LIB) \
 # Colors for Output
 GREEN					:= \033[0;32m
 RED						:= \033[31m
+BLUE					:= \033[0;34m
+YELLOW					:= \033[0;33m
 RESET					:= \033[0m
 
 #-----------------------RULES------------------------------------------------------------
@@ -134,6 +136,8 @@ $(NAME): $(OBJ) $(LIBRARIES)
 
 # Compile Object Files
 $(OBJ_DIR)/%.o: %.c $(HEADERS)
+	$(if $(COMPILE_MSG_SHOWN),,$(eval COMPILE_MSG_SHOWN := 1) \
+	@echo "$(YELLOW)>> Compiling object files...$(RESET)")
 	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
