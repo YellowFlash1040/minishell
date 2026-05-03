@@ -56,7 +56,7 @@ Have fun!
   - `>>` append output
   - `<` redirect input
   - `<<` heredoc
-- Signal handling (Ctrl+C, Ctrl+D, Ctrl+\\)
+- Signal handling (`Ctrl+C`, `Ctrl+D`, `Ctrl+\`)
 - Built-in commands:
   - `echo`
   - `cd`
