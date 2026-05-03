@@ -2,7 +2,7 @@
 
 A simple Unix shell built in C that replicates core features of Bash, including command execution, piping, redirections, and environment variable handling.
 
-This project is part of the 42 School curriculum and demonstrates proficiency in process management, file descriptors, parsing, and system calls.
+This project is part of the [Codam](https://www.codam.nl/en/) curriculum, [42 School](https://42.fr/en/homepage/) campus, and demonstrates proficiency in process management, file descriptors, parsing, and system calls.
 
 ## Prerequisites:
 
