@@ -13,73 +13,15 @@ EXECUTOR				:= libminishell.a
 #-----------------------FOLDERS----------------------------------------------------------
 # Directories
 SRC_DIR					:= src
-OBJ_DIR					:= obj
-LIB_DIR 				:= libraries
+BUILD_DIR				:= build
+OBJ_DIR					:= $(BUILD_DIR)/obj
+TESTS_DIR				:= tests
+TESTS_BIN_FOLDER		:= $(BUILD_DIR)/tests
 
-# Source directories (src/)
-BUILDERS_DIR			:= $(SRC_DIR)/builders
-HELPERS_DIR				:= $(SRC_DIR)/helpers
-LOGIC_DIR				:= $(SRC_DIR)/logic
-MODEL_DIR				:= $(SRC_DIR)/model
-SHARED_DIR				:= $(SRC_DIR)/shared
-
-# Logic directories (src/logic/)
-EXECUTOR_DIR			:= $(LOGIC_DIR)/executor
-BUILTINS_DIR			:= $(LOGIC_DIR)/builtins
-ENVIRONMENT_DIR			:= $(LOGIC_DIR)/environment
-PARSER_DIR				:= $(LOGIC_DIR)/parser
-SIGNALS_DIR				:= $(LOGIC_DIR)/signals
-EXPANDER_DIR			:= $(LOGIC_DIR)/expander
-
-# Executor directories (src/logic/executor/)
-COMMAND_RUNNER_DIR		:= $(EXECUTOR_DIR)/command_runner
-PIPELINE_RUNNER_DIR		:= $(EXECUTOR_DIR)/pipeline_runner
-FDS_DIR					:= $(COMMAND_RUNNER_DIR)/fds
-
-# Builtin directories (src/logic/builtins/)
-CD_DIR					:= $(BUILTINS_DIR)/cd
-ECHO_DIR				:= $(BUILTINS_DIR)/echo
-EXPORT_DIR				:= $(BUILTINS_DIR)/export
-SET_DIR					:= $(BUILTINS_DIR)/set
-UNSET_DIR				:= $(BUILTINS_DIR)/unset
-ENV_DIR					:= $(BUILTINS_DIR)/env
-PWD_DIR					:= $(BUILTINS_DIR)/pwd
-EXIT_DIR				:= $(BUILTINS_DIR)/exit_builtin
-
-# Logic directories (src/model/)
-ENVIRONMENT_MODEL_DIR	:= $(MODEL_DIR)/environment
-GENERAL_MODEL_DIR		:= $(MODEL_DIR)/general
-IO_MODEL_DIR			:= $(MODEL_DIR)/io
-
-# List of all source directories
-SRC_DIRS				:= $(SRC_DIR) \
-							$(BUILDERS_DIR) \
-							$(HELPERS_DIR) \
-							$(LOGIC_DIR) \
-							$(MODEL_DIR) \
-							$(SHARED_DIR) \
-							$(EXECUTOR_DIR) \
-							$(BUILTINS_DIR) \
-							$(COMMAND_RUNNER_DIR) \
-							$(FDS_DIR) \
-							$(PIPELINE_RUNNER_DIR) \
-							$(EXPANDER_DIR) \
-							$(CD_DIR) \
-							$(ECHO_DIR) \
-							$(EXPORT_DIR) \
-							$(SET_DIR) \
-							$(UNSET_DIR) \
-							$(ENV_DIR) \
-							$(PWD_DIR) \
-							$(EXIT_DIR) \
-							$(ENVIRONMENT_DIR) \
-							$(PARSER_DIR) \
-							$(ENVIRONMENT_MODEL_DIR) \
-							$(GENERAL_MODEL_DIR) \
-							$(IO_MODEL_DIR) \
-							$(SIGNALS_DIR)
+SRC_DIRS				 = $(patsubst %/, %, $(sort $(dir $(HEADERS))))
 							
 # Library directories (libraries/)
+LIB_DIR					:= libraries
 LIST_LIB_DIR			:= $(LIB_DIR)/list
 STRING_ARRAY_LIB_DIR	:= $(LIB_DIR)/string_array
 STRING_LIB_DIR			:= $(LIB_DIR)/ft_string
@@ -95,11 +37,11 @@ LIB_DIRS				:= $(LIST_LIB_DIR) \
 
 #-----------------------FILES------------------------------------------------------------
 # Sources
-C_FILES 				:= $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
-HEADERS 				:= $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.h))
+C_FILES 				:= $(shell find $(SRC_DIR) -name '*.c')
+HEADERS 				:= $(shell find $(SRC_DIR) -name '*.h')
 
 # Objects
-OBJ     				:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(C_FILES)))
+OBJ     				:= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(C_FILES))
 
 #-----------------------LIBRARIES--------------------------------------------------------
 # Library files
@@ -123,9 +65,6 @@ YELLOW					:= \033[0;33m
 RESET					:= \033[0m
 
 #-----------------------RULES------------------------------------------------------------
-vpath %.c $(SRC_DIRS)
-vpath %.h $(SRC_DIRS)
-
 # Default Target
 all: $(NAME)
 
@@ -135,10 +74,11 @@ $(NAME): $(OBJ) $(LIBRARIES)
 	@echo "$(GREEN)Compiled $@ successfully!$(RESET)"
 
 # Compile Object Files
-$(OBJ_DIR)/%.o: %.c $(HEADERS)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) Makefile
 	$(if $(COMPILE_MSG_SHOWN),,$(eval COMPILE_MSG_SHOWN := 1) \
-	@echo "$(YELLOW)>> Compiling object files...$(RESET)")
-	@mkdir -p $(OBJ_DIR)
+	@echo "$(YELLOW)>> Compiling object files:$(RESET)")
+	@printf "$(YELLOW)   %-38.38s\r" $(notdir $@)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 # Compile libraries
