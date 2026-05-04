@@ -4,6 +4,10 @@ A simple Unix shell built in C that replicates core features of Bash, including 
 
 This project is part of the [Codam](https://www.codam.nl/en/) curriculum, [42 School](https://42.fr/en/homepage/) campus, and demonstrates proficiency in process management, file descriptors, parsing, and system calls.
 
+<p align="center">
+<img src="images/preview.png" alt="minishell preview" />
+</p>
+
 ## Prerequisites:
 
 Before building the project, ensure you have the following installed:
